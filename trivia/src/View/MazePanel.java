@@ -29,6 +29,21 @@ public class MazePanel extends JPanel {
             g.drawLine(originX + i*cellSide, originY, originX + i * cellSide, originY + rows * cellSide);
         }
 
+        //doors
+        g.setColor(Color.GREEN);
+        //horizontal doors
+        for (int i = 1; i < rows; i++) {
+            g.fillRect(originX + cellSide / 4, originY + i * cellSide - cellSide / 4, cellSide / 2, cellSide / 3);
+        }
+
+// Vertical doors
+        for (int i = 1; i < cols; i++) {
+            g.fillRect(originX + i * cellSide - cellSide / 4, originY + cellSide / 4, cellSide / 3, cellSide / 2);
+        }
+
+
+        //character
+
         int characterX = originX + myCharacter.getCol() * cellSide;
         int characterY = originY + myCharacter.getRow() * cellSide;
         g.setColor(Color.BLUE);
@@ -44,6 +59,7 @@ public class MazePanel extends JPanel {
 
          */
 
+        //exit
   //it's position in relation to the maze/square
         int exitX = originX + exitCol * cellSide + cellSide / 4;
         int exitY = originY + exitRow * cellSide + cellSide / 2;
@@ -53,6 +69,8 @@ public class MazePanel extends JPanel {
         g.drawString("Exit", exitX, exitY);
 
     }
+
+
 
     public MazePanel() {
         myCharacter = new CharacterModel(0, 0);
