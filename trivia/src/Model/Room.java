@@ -2,8 +2,17 @@ package Model;
 
 public class Room {
 
-   // private int Door [][];
+    private boolean upDoor;
+    private boolean downDoor;
+    private boolean leftDoor;
+    private boolean rightDoor;
 
-    //door
-    //door directions--> left, right, up, down
+    public Room(){
+
+    }
+
+
+
+
+
 }

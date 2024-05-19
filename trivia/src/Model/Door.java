@@ -1,15 +1,32 @@
 package Model;
 
 public class Door {
+    
+    private int myDoorStatus;
 
-    private Boolean myDoorIsLocked;
+    public static final int OPEN = 0;
+    public static final int CLOSED = 1;
+    public static final int LOCKED = 2;
+
 
     public Door(){
-        myDoorIsLocked = true;
+        myDoorStatus = CLOSED;
 
     }
 
+    public void unlock() {
+        setDoorStatus(OPEN);
+    }
+
     public Boolean getMyDoorIsLocked() {
-        return myDoorIsLocked;
+        return myDoorStatus == LOCKED;
+    }
+
+    public int getDoorStatus(){
+        return myDoorStatus;
+    }
+
+    public void setDoorStatus(int theDoorStatus){
+        myDoorStatus = theDoorStatus;
     }
 }
