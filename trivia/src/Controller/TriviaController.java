@@ -114,6 +114,7 @@ public class TriviaController extends JPanel {
         frame.setResizable(false);
         frame.setSize(800, 830);
         frame.setTitle("Trivia Game");
+        frame.setBackground(Color.BLACK);
 
         SwingUtilities.invokeLater(() -> {
             frame.setVisible(true);
