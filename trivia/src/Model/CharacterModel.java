@@ -1,13 +1,11 @@
 package Model;
 
-import View.ArrowsPanel;
-
-import javax.swing.*;
 
 public class CharacterModel {
-
     private int row;
    private  int col;
+
+    private Room [][] currentRoom;
 
    //make the maze a 2D array?[row][col]
 
@@ -15,6 +13,9 @@ public class CharacterModel {
     public CharacterModel(int initialRow, int initialCol) {
         this.row = initialRow;
         this.col = initialCol;
+        this.currentRoom = new Room[row][col];
+        //currentRoom = null;
+
 
     }
 
@@ -26,27 +27,22 @@ public class CharacterModel {
         return col;
     }
 
-    //shoudl this be in controller
+    //should this be in controller
     public void moveUp() {
         if (row > 0) {
             row--;
-
         }
-
     }
 
     public void moveDown() {
         if (row < 4) {
             row++;
-
         }
     }
 
     public void moveLeft() {
         if (col > 0) {
             col--;
-
-
         }
     }
 
@@ -54,6 +50,20 @@ public class CharacterModel {
         if (col < 4) {
             col++;
         }
+    }
+
+    public Room getCurrentRoom() {
+      //  System.out.println(currentRoom[getRow()][getCol()]);
+        return currentRoom[getRow()][getCol()];
+    }
+
+    public void setCurrentRoom(Room [][] room) {
+      //  if (room != null && row >= 0 && row < room.length && col >= 0 && col < room[0].length) {
+            currentRoom = room;
+     //   } else {
+           // System.out.println("Invalid room values");
+        //}
+
     }
 
 }

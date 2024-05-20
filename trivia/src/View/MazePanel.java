@@ -14,7 +14,7 @@ public class MazePanel extends JPanel {
     private Image doorImage;
     static final int cols = 5;
     static final int rows = 5;
-    //starting x posotion
+    //starting x position
     static final int originX = 23;
 
     //starting y position
@@ -26,10 +26,14 @@ public class MazePanel extends JPanel {
     private static final int exitRow = 4;
     private static final int exitCol = 4;
 
-    private int[][] mazeGrid;
+    private Room[][] room;
     public MazePanel() {
-        mazeGrid = new int[rows][cols];
+        //mazeGrid = new int[rows][cols];
+        room = new Room[rows][cols];
         myCharacter = new CharacterModel(0, 0);
+        initializeDoors();
+        myCharacter.setCurrentRoom(room);
+
         //loadDoorImage();
 
         setPreferredSize(new Dimension(cols * cellSide + originX, rows * cellSide + originY));
@@ -38,6 +42,195 @@ public class MazePanel extends JPanel {
 
 
     }
+
+    public Room[][] getRoom(){
+        return room;
+    }
+/*
+    private void initializeDoors() {
+        doors = new Door[rows][cols];
+
+        for(int i =0; i <rows; i++){
+            for(int j =0; j <cols; j++){
+                doors[i][j] = new Door();
+            }
+        }
+       // doors[0][0].unlock();
+        doors[0][0].setDoorStatus(Door.LOCKED);
+        doors[0][1].setDoorStatus(Door.LOCKED);
+        doors[0][2].setDoorStatus(Door.LOCKED);
+        doors[0][3].setDoorStatus(Door.LOCKED);
+        doors[0][4].setDoorStatus(Door.LOCKED);
+        doors[1][0].setDoorStatus(Door.LOCKED);
+
+
+    }
+
+ */
+
+    private void initializeDoors() {
+        room = new Room[rows][cols];
+
+        for(int i =0; i <rows; i++){
+            for(int j =0; j <cols; j++){
+                room[i][j] = new Room();
+                System.out.println("room length: " + room.length); // = 5
+                System.out.println("room[0][0]: " + room[0][0]);
+                System.out.println("room[0][1]: " + room[0][1]);
+            }
+        }
+         //room 1
+        room[0][0].setUpDoor(false);
+        room[0][0].setDownDoor(true);
+        room[0][0].setLeftDoor(false);
+        room[0][0].setRightDoor(true);
+        //room 2
+        room[0][1].setUpDoor(false);
+        room[0][1].setDownDoor(true);
+        room[0][1].setLeftDoor(true);
+        room[0][1].setRightDoor(true);
+
+
+          //room 3
+        room[0][2].setUpDoor(false);
+        room[0][2].setDownDoor(true);
+        room[0][2].setLeftDoor(true);
+        room[0][2].setRightDoor(true);
+
+        //room 4
+        room[0][3].setUpDoor(false);
+        room[0][3].setDownDoor(true);
+        room[0][3].setLeftDoor(true);
+        room[0][3].setRightDoor(false);
+        //room 5
+        room[0][4].setUpDoor(false);
+        room[0][4].setDownDoor(true);
+        room[0][4].setLeftDoor(true);
+        room[0][4].setRightDoor(false);
+        //room 6
+        room[1][0].setUpDoor(true);
+        room[1][0].setDownDoor(true);
+        room[1][0].setLeftDoor(false);
+        room[1][0].setRightDoor(true);
+
+        //room 7
+        room[1][1].setUpDoor(true);
+        room[1][1].setDownDoor(true);
+        room[1][1].setLeftDoor(true);
+        room[1][1].setRightDoor(true);
+
+        //room 8
+        room[1][2].setUpDoor(true);
+        room[1][2].setDownDoor(true);
+        room[1][2].setLeftDoor(true);
+        room[1][2].setRightDoor(true);
+
+        //room 9
+        room[1][3].setUpDoor(true);
+        room[1][3].setDownDoor(true);
+        room[1][3].setLeftDoor(true);
+        room[1][3].setRightDoor(true);
+
+        //room 10
+        room[1][4].setUpDoor(true);
+        room[1][4].setDownDoor(true);
+        room[1][4].setLeftDoor(true);
+        room[1][4].setRightDoor(false);
+
+
+        //room 11
+        room[2][0].setUpDoor(true);
+        room[2][0].setDownDoor(true);
+        room[2][0].setLeftDoor(false);
+        room[2][0].setRightDoor(true);
+
+        //room 12
+        room[2][1].setUpDoor(true);
+        room[2][1].setDownDoor(true);
+        room[2][1].setLeftDoor(true);
+        room[2][1].setRightDoor(true);
+
+        //room 13
+        room[3][2].setUpDoor(true);
+        room[3][2].setDownDoor(true);
+        room[3][2].setLeftDoor(true);
+        room[3][2].setRightDoor(true);
+
+        //room 14
+        room[2][3].setUpDoor(true);
+        room[2][3].setDownDoor(true);
+        room[2][3].setLeftDoor(true);
+        room[2][3].setRightDoor(true);
+
+        //room 15
+        room[2][4].setUpDoor(true);
+        room[2][4].setDownDoor(true);
+        room[2][4].setLeftDoor(true);
+        room[2][4].setRightDoor(false);
+
+        //room 16
+        room[3][0].setUpDoor(true);
+        room[3][0].setDownDoor(true);
+        room[3][0].setLeftDoor(false);
+        room[3][0].setRightDoor(true);
+
+        //room 17
+        room[3][1].setUpDoor(true);
+        room[3][1].setDownDoor(true);
+        room[3][1].setLeftDoor(true);
+        room[3][1].setRightDoor(true);
+
+        //room 18
+        room[3][2].setUpDoor(true);
+        room[3][2].setDownDoor(true);
+        room[3][2].setLeftDoor(true);
+        room[3][2].setRightDoor(true);
+
+        //room 19
+        room[3][3].setUpDoor(true);
+        room[3][3].setDownDoor(true);
+        room[3][3].setLeftDoor(true);
+        room[3][3].setRightDoor(true);
+
+        //room 20
+        room[3][4].setUpDoor(true);
+        room[3][4].setDownDoor(true);
+        room[3][4].setLeftDoor(true);
+        room[3][4].setRightDoor(false);
+
+         //room 21
+        room[4][0].setUpDoor(true);
+        room[4][0].setDownDoor(true);
+        room[4][0].setLeftDoor(false);
+        room[4][0].setRightDoor(true);
+
+        //room 22
+        room[4][1].setUpDoor(true);
+        room[4][1].setDownDoor(true);
+        room[4][1].setLeftDoor(true);
+        room[4][1].setRightDoor(true);
+
+        //room 23
+        room[4][2].setUpDoor(true);
+        room[4][2].setDownDoor(true);
+        room[4][2].setLeftDoor(true);
+        room[4][2].setRightDoor(true);
+
+        //room 24
+        room[4][3].setUpDoor(true);
+        room[4][3].setDownDoor(true);
+        room[4][3].setLeftDoor(true);
+        room[4][3].setRightDoor(true);
+
+        //room 25
+        room[4][4].setUpDoor(true);
+        room[4][4].setDownDoor(true);
+        room[4][4].setLeftDoor(true);
+        room[4][4].setRightDoor(false);
+
+    }
+
+
     protected void paintComponent(Graphics g) {
         //the maze will be a 2d array where each index is either a wall, door, or walkable space
         //should we add some free spaces on maze where player doesnt need to answer question to pass
@@ -133,17 +326,29 @@ public class MazePanel extends JPanel {
    switch(direction){
            case "up":
                 myCharacter.moveUp();
+               myCharacter.setCurrentRoom(room);
                 break;
             case "down":
                 myCharacter.moveDown();
+                myCharacter.setCurrentRoom(room);
                 break;
          case"left":
               myCharacter.moveLeft();
+             myCharacter.setCurrentRoom(room);
                 break;
             case "right":
                 myCharacter.moveRight();
+                myCharacter.setCurrentRoom(room);
                 break;
      }
+       //myCharacter.setCurrentRoom(room[myCharacter.getRow()][myCharacter.getCol()]);
+
+
+   //System.out.println("CurrentRoomLocation:" + room[myCharacter.getRow()][myCharacter.getCol()]);
+        System.out.println("row:" + myCharacter.getRow() + "col:" + myCharacter.getCol());
+        System.out.println("Right door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getRightDoor());
+        System.out.println("Current room: " + myCharacter.getCurrentRoom());
+
         repaint();
     }
 
@@ -153,6 +358,14 @@ public class MazePanel extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getCols(){
+        return cols;
+    }
+
+    public int getRows(){
+        return rows;
     }
 
     private void layoutComponents() {

@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
+import Model.Door;
+import Model.Room;
 import Model.TriviaModel;
 import Model.CharacterModel;
 import View.ArrowsPanel;
@@ -28,6 +30,12 @@ public class TriviaController extends JPanel {
 
     private final MazePanel myMazePanel;
 
+    private final Door myDoor;
+
+    private Room[][] myRoom ;
+
+    private int myRoomCounter;
+
 
     private JMenu myMenu2;
 
@@ -40,9 +48,7 @@ public class TriviaController extends JPanel {
 
     private static JMenuItem myRules;
 
-  // public static QuestionFactory factory;
-
-
+    // public static QuestionFactory factory;
 
 
     private static JMenuItem myStart;
@@ -50,14 +56,18 @@ public class TriviaController extends JPanel {
     private static JMenuItem myExit;
 
     public TriviaController(final TriviaModel theModel) {
-      // super(new GridLayout(2, 1));
-       // super(new BorderLayout());
+        // super(new GridLayout(2, 1));
+        // super(new BorderLayout());
 
-       // factory = new QuestionFactory();
+        // factory = new QuestionFactory();
+
         myArrowsPanel = new ArrowsPanel();
         myQuestionPanel = new QuestionPanel();
         myMazePanel = new MazePanel();
         myCharacter = new CharacterModel(0, 0);
+        myDoor = new Door();
+        myRoomCounter = 0;
+        myRoom = myMazePanel.getRoom();
         createAndShowGUI();
         createMenuBar();
         layoutComponents();
@@ -66,9 +76,37 @@ public class TriviaController extends JPanel {
         addRadioListeners();
 
 
+    }
+/*
+    private void initializeDoors() {
+        myRoom = new Room[myMazePanel.getRows()][myMazePanel.getCols()];
+        for(int i =0; i <myMazePanel.getRows(); i++){
+            for(int j =0; j <myMazePanel.getCols(); j++){
+                myRoom[i][j] = new Room();
+                System.out.println("room length: " + myRoom.length); // = 5
+            }
+        }
+        //room 1
+        myRoom[0][0].setUpDoor(false);
+        myRoom[0][0].setDownDoor(true);
+        myRoom[0][0].setLeftDoor(false);
+        myRoom[0][0].setRightDoor(true);
+        //room 2
+        myRoom[0][1].setUpDoor(false);
+        myRoom[0][1].setDownDoor(true);
+        myRoom[0][1].setLeftDoor(true);
+        myRoom[0][1].setRightDoor(true);
+
+        //room[0][1].
+        //  room[0][2].
+        // room[0][3].
+        //  room[0][4].
+        // room[1][0].
 
 
     }
+
+ */
 
     private void layoutComponents() {
 
@@ -83,38 +121,39 @@ public class TriviaController extends JPanel {
 
         add(myQuestionPanel, BorderLayout.SOUTH);
         myQuestionPanel.setPreferredSize(new Dimension(100, 200));
-       // JPanel myTopPanel = new JPanel(new GridLayout(1, 1, 10, 10));
+        // JPanel myTopPanel = new JPanel(new GridLayout(1, 1, 10, 10));
 
-       // this.setLayout(new BorderLayout());
-     //  this.add(myMazePanel, BorderLayout.NORTH);
+        // this.setLayout(new BorderLayout());
+        //  this.add(myMazePanel, BorderLayout.NORTH);
         //this.add(myMazePanel);
-       // this.add(myArrowsPanel, BorderLayout.CENTER);
-      // this.add(myQuestionPanel, BorderLayout.SOUTH);
+        // this.add(myArrowsPanel, BorderLayout.CENTER);
+        // this.add(myQuestionPanel, BorderLayout.SOUTH);
 
-      //  JPanel myTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-       // myTopPanel.add(myMazePanel);
-      //  myTopPanel.add(myArrowsPanel);
+        //  JPanel myTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        // myTopPanel.add(myMazePanel);
+        //  myTopPanel.add(myArrowsPanel);
 
 
-       // this.add(myArrowsPanel);
+        // this.add(myArrowsPanel);
 
-      //  myTopPanel.add(myQuestionPanel);
-       // myTopPanel.add(myMazePanel, BorderLayout.CENTER);
-      //  myTopPanel.add(myArrowsPanel, BorderLayout.CENTER);
+        //  myTopPanel.add(myQuestionPanel);
+        // myTopPanel.add(myMazePanel, BorderLayout.CENTER);
+        //  myTopPanel.add(myArrowsPanel, BorderLayout.CENTER);
         //this.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-       // add( myTopPanel, BorderLayout.SOUTH);
+        // add( myTopPanel, BorderLayout.SOUTH);
 
     }
+
     public void createAndShowGUI() {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(this);
-         frame.requestFocusInWindow();
+        frame.requestFocusInWindow();
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setSize(800, 830);
         frame.setTitle("Trivia Game");
-        frame.setBackground(Color.BLACK);
+
 
         SwingUtilities.invokeLater(() -> {
             frame.setVisible(true);
@@ -143,7 +182,7 @@ public class TriviaController extends JPanel {
         myBar.add(myMenu2);
         frame.setJMenuBar(myBar);
 
-        myAbout.addActionListener(e -> JOptionPane.showMessageDialog(frame, "This is a Trivia Game \nJava Version: 21.0\nAuthor: Rohit Ark, Sado Iman\n " , "About", JOptionPane.ERROR_MESSAGE));
+        myAbout.addActionListener(e -> JOptionPane.showMessageDialog(frame, "This is a Trivia Game \nJava Version: 21.0\nAuthor: Rohit Ark, Sado Iman\n ", "About", JOptionPane.ERROR_MESSAGE));
 
         myRules.addActionListener(e -> JOptionPane.showMessageDialog(frame,
                 "NA.",
@@ -163,78 +202,85 @@ public class TriviaController extends JPanel {
 
 
      */
-    private void addCurrentArrowListeners(){
-            myArrowsPanel.addArrowListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent theEvent) {
-                    if (theEvent.getSource().equals(myArrowsPanel.getMyRightArrow())) {
-                        //myMazePanel.myCharacter.moveRight();
-                        myCharacter.moveRight();
-                        myMazePanel.moveCharacter("right");
+    private void addCurrentArrowListeners() {
+        myArrowsPanel.addArrowListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent theEvent) {
 
-                  enableUpArrow();
-                        enableDownArrow();
-                        enableLeftArrow();
-                        enableRightArrow();
-                        checkWon();
+                //add && canPass
+               // if (theEvent.getSource().equals(myArrowsPanel.getMyRightArrow()) && canPass()) {
+                //&& getRightDoor != false (so a door does exist to the right
+               // if (theEvent.getSource().equals(myArrowsPanel.getMyRightArrow()) && !myDoor.getDoorIsLocked()) {
+                //&&  myRoom.getRightDoor()
+                if (theEvent.getSource().equals(myArrowsPanel.getMyRightArrow())&& myRoom[myCharacter.getRow()][myCharacter.getCol()].getRightDoor()) {
+                    //myMazePanel.myCharacter.moveRight();
+                    myCharacter.moveRight();
+                    myMazePanel.moveCharacter("right");
+                    myRoomCounter++;
 
-
-
-                    } else if (theEvent.getSource().equals(myArrowsPanel.getMyLeftArrow())){
-                        //myMazePanel.character.moveLeft();
-                        myCharacter.moveLeft();
-                        myMazePanel.moveCharacter("left");
-                        enableUpArrow();
-                        enableDownArrow();
-                        enableLeftArrow();
-                        enableRightArrow();
-                        checkWon();
-                    }
-
-                    //and check if space is valid
-                else if (theEvent.getSource().equals(myArrowsPanel.getMyDownArrow())){
-                    //myMazePanel.myCharacter.moveDown();
-                        myCharacter.moveDown();
-                    myMazePanel.moveCharacter("down");
-                        enableUpArrow();
-                        enableDownArrow();
-                        enableLeftArrow();
-                        enableRightArrow();
-                        checkWon();
+                    enableUpArrow();
+                    enableDownArrow();
+                    enableLeftArrow();
+                    enableRightArrow();
+                    checkWon();
 
 
+                } else if (theEvent.getSource().equals(myArrowsPanel.getMyLeftArrow()) && myRoom[myCharacter.getRow()][myCharacter.getCol()].getLeftDoor()) {
+                    //myMazePanel.character.moveLeft();
+                    myCharacter.moveLeft();
+                    myMazePanel.moveCharacter("left");
+                    myRoomCounter++;
+                    enableUpArrow();
+                    enableDownArrow();
+                    enableLeftArrow();
+                    enableRightArrow();
+                    checkWon();
                 }
-                else if (theEvent.getSource().equals(myArrowsPanel.getMyUpArrow())){
+
+                //and check if space is valid
+                else if (theEvent.getSource().equals(myArrowsPanel.getMyDownArrow()) && myRoom[myCharacter.getRow()][myCharacter.getCol()].getDownDoor()) {
+                    //myMazePanel.myCharacter.moveDown();
+                    myCharacter.moveDown();
+                    myMazePanel.moveCharacter("down");
+                    myRoomCounter++;
+                    enableUpArrow();
+                    enableDownArrow();
+                    enableLeftArrow();
+                    enableRightArrow();
+                    checkWon();
+
+
+                } else if (theEvent.getSource().equals(myArrowsPanel.getMyUpArrow()) && myRoom[myCharacter.getRow()][myCharacter.getCol()].getUpDoor()) {
                     myCharacter.moveUp();
                     myMazePanel.moveCharacter("up");
-                        enableUpArrow();
-                        enableDownArrow();
-                        enableLeftArrow();
-                        enableRightArrow();
-                        checkWon();
+                    myRoomCounter++;
+                    enableUpArrow();
+                    enableDownArrow();
+                    enableLeftArrow();
+                    enableRightArrow();
+                    checkWon();
                 }
             }
-    });
+        });
     }
 
 
     //if you select first radio button and touch submit, Joption pane pops up and says right answer
-    private void addRadioListeners(){
+    private void addRadioListeners() {
         myQuestionPanel.getMyRadioOne().addActionListener(e -> {
             if (e.getSource().equals(myQuestionPanel.getMyRadioOne())) {
                 myQuestionPanel.getMySubmit().addActionListener(p -> {
                     if (p.getSource().equals(myQuestionPanel.getMySubmit())) {
                         JOptionPane.showMessageDialog(frame, "Yes, correct answer!");
                     }
-                        });
+                });
 
-                }
+            }
         });
     }
 
 
     private void addMenuListeners() {
-
 
 
         myReset.addActionListener(e -> {
@@ -249,7 +295,6 @@ public class TriviaController extends JPanel {
         myStart.addActionListener(e -> {
             if (e.getSource().equals(myStart)) {
                 myStart.setEnabled(false);
-
 
 
             }
@@ -269,9 +314,19 @@ public class TriviaController extends JPanel {
         });
 
 
+    }
 
+    public boolean canPass() {
+        //for loop that iterates entire maze
+        //if myDoor.getDoorIsLocked then pop up a question
+        if (myCharacter.getRow() == 0 && myCharacter.getRow() == 0){
+            return false;
+    }else{
+        return true;
 
     }
+
+}
 
     public void enableUpArrow(){
         if(  myCharacter.getRow() == 0){
@@ -310,6 +365,7 @@ public class TriviaController extends JPanel {
         }
 
     }
+    //the winning/exit square is located at 4, 4
 
     public void checkWon(){
         if(myCharacter.getRow() == 4 && myCharacter.getCol() == 4 ){

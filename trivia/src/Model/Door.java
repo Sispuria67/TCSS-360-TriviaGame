@@ -1,7 +1,7 @@
 package Model;
 
 public class Door {
-    
+
     private int myDoorStatus;
 
     public static final int OPEN = 0;
@@ -18,7 +18,7 @@ public class Door {
         setDoorStatus(OPEN);
     }
 
-    public Boolean getMyDoorIsLocked() {
+    public Boolean getDoorIsLocked() {
         return myDoorStatus == LOCKED;
     }
 
@@ -26,7 +26,9 @@ public class Door {
         return myDoorStatus;
     }
 
-    public void setDoorStatus(int theDoorStatus){
+    public void setDoorStatus(int theDoorStatus) {
         myDoorStatus = theDoorStatus;
     }
+
+    //instead of setDoorStatus should it be setUpDoor, setDownDoor, etc??
 }
