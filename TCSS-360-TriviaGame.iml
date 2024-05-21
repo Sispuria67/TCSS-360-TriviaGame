@@ -13,10 +13,42 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../sqlite-jdbc-3.34.0.jar!/" />
+          <root url="jar://C:/Users/sqlite-jdbc-3.34.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/OneDrive/Desktop/School/UW 2023-2024/Spring/TCSS 360/SQLiteIntelliJ" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/OneDrive/Desktop/School/UW 2023-2024/Spring/TCSS 360/SQLiteIntelliJ/SQLiteIntelliJ/src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES />
+        <JAVADOC />
+        <NATIVE>
+          <root url="file://$USER_HOME$/OneDrive/Desktop/School/UW 2023-2024/Spring/TCSS 360/SQlite" />
+        </NATIVE>
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/OneDrive/Desktop/School/UW 2023-2024/Spring/TCSS 360/SQLiteIntelliJ/SQLiteIntelliJ" />
+          <root url="file://$USER_HOME$/OneDrive/Desktop/School/UW 2023-2024/Spring/TCSS 360/SQLiteIntelliJ/SQLiteIntelliJ" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/OneDrive/Desktop/School/UW 2023-2024/Spring/TCSS 360/SQLiteIntelliJ/SQLiteIntelliJ" recursive="false" />
       </library>
     </orderEntry>
   </component>
