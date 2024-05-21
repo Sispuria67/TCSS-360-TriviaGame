@@ -78,7 +78,7 @@ public class CharacterModel {
     }
 
     public String toString() {
-        return "room Number is " + currentRoom[getRow()][getCol()].getRoomName().toString();
+        return "room number is " + currentRoom[getRow()][getCol()].getRoomName().toString();
     }
 
 }

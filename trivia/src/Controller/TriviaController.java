@@ -12,6 +12,7 @@ import Model.Room;
 import Model.TriviaModel;
 import Model.CharacterModel;
 import View.ArrowsPanel;
+import View.CurrentRoomPanel;
 import View.QuestionPanel;
 import View.MazePanel;
 
@@ -29,10 +30,13 @@ public class TriviaController extends JPanel {
     private final CharacterModel myCharacter;
 
     private final MazePanel myMazePanel;
+    JLabel myText;
 
     private final Door myDoor;
 
     private Room[][] myRoom ;
+
+    private CurrentRoomPanel myCurrentRoomPanel;
 
 
 
@@ -55,6 +59,8 @@ public class TriviaController extends JPanel {
     private static JMenuItem myExit;
 
     public TriviaController(final TriviaModel theModel) {
+
+
         // super(new GridLayout(2, 1));
         // super(new BorderLayout());
 
@@ -65,8 +71,11 @@ public class TriviaController extends JPanel {
         myMazePanel = new MazePanel();
         myCharacter = new CharacterModel(0, 0);
         myDoor = new Door();
-
+        myCurrentRoomPanel = new CurrentRoomPanel();
         myRoom = myMazePanel.getRoom();
+        myCurrentRoomPanel.setMyTextField("You are currently in Room 0");
+
+        myText = new JLabel();
         createAndShowGUI();
         createMenuBar();
         layoutComponents();
@@ -112,6 +121,8 @@ public class TriviaController extends JPanel {
         JPanel mazeAndArrowsPanel = new JPanel(new BorderLayout());
         mazeAndArrowsPanel.add(myMazePanel, BorderLayout.CENTER);
         mazeAndArrowsPanel.add(myArrowsPanel, BorderLayout.EAST);
+        mazeAndArrowsPanel.add(myCurrentRoomPanel, BorderLayout.SOUTH);
+       // mazeAndArrowsPanel.add(myQuestionPanel, BorderLayout.SOUTH);
 
         setLayout(new BorderLayout());
 
@@ -119,7 +130,9 @@ public class TriviaController extends JPanel {
 
 
         add(myQuestionPanel, BorderLayout.SOUTH);
-        myQuestionPanel.setPreferredSize(new Dimension(100, 200));
+
+        myCurrentRoomPanel.setPreferredSize(new Dimension(100, 100));
+        myQuestionPanel.setPreferredSize(new Dimension(100, 180));
         // JPanel myTopPanel = new JPanel(new GridLayout(1, 1, 10, 10));
 
         // this.setLayout(new BorderLayout());
@@ -212,22 +225,25 @@ public class TriviaController extends JPanel {
                // if (theEvent.getSource().equals(myArrowsPanel.getMyRightArrow()) && !myDoor.getDoorIsLocked()) {
                 //&&  myRoom.getRightDoor()
                 if (theEvent.getSource().equals(myArrowsPanel.getMyRightArrow())&& myRoom[myCharacter.getRow()][myCharacter.getCol()].getRightDoor()) {
-                    //myMazePanel.myCharacter.moveRight();
                     myCharacter.moveRight();
                     myMazePanel.moveCharacter("right");
+                    //myCurrentRoomPanel.setMyTextField("You are currently in room "+  myCharacter.toString());
 
+                    myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom[myCharacter.getRow()][myCharacter.getCol()].getRoomName());
 
                     enableUpArrow();
                     enableDownArrow();
                     enableLeftArrow();
                     enableRightArrow();
                     checkWon();
-
+                    //System.out.println("room::::" + myRoom[myCharacter.getRow()][myCharacter.getCol()].getRoomName());
 
                 } else if (theEvent.getSource().equals(myArrowsPanel.getMyLeftArrow()) && myRoom[myCharacter.getRow()][myCharacter.getCol()].getLeftDoor()) {
                     //myMazePanel.character.moveLeft();
                     myCharacter.moveLeft();
                     myMazePanel.moveCharacter("left");
+                   // myCurrentRoomPanel.setMyTextField("You are currently in room "+  myRoom[myCharacter.getRow()][myCharacter.getCol()].toString());
+                    myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom[myCharacter.getRow()][myCharacter.getCol()].getRoomName());
 
                     enableUpArrow();
                     enableDownArrow();
@@ -241,6 +257,8 @@ public class TriviaController extends JPanel {
                     //myMazePanel.myCharacter.moveDown();
                     myCharacter.moveDown();
                     myMazePanel.moveCharacter("down");
+                    //myCurrentRoomPanel.setMyTextField("You are currently in room "+  myRoom[myCharacter.getRow()][myCharacter.getCol()].toString());
+                    myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom[myCharacter.getRow()][myCharacter.getCol()].getRoomName());
 
                     enableUpArrow();
                     enableDownArrow();
@@ -252,6 +270,8 @@ public class TriviaController extends JPanel {
                 } else if (theEvent.getSource().equals(myArrowsPanel.getMyUpArrow()) && myRoom[myCharacter.getRow()][myCharacter.getCol()].getUpDoor()) {
                     myCharacter.moveUp();
                     myMazePanel.moveCharacter("up");
+                    //myCurrentRoomPanel.setMyTextField("You are currently in room "+  myRoom[myCharacter.getRow()][myCharacter.getCol()].toString());
+                    myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom[myCharacter.getRow()][myCharacter.getCol()].getRoomName());
 
                     enableUpArrow();
                     enableDownArrow();
