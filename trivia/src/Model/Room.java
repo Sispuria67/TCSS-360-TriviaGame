@@ -7,6 +7,8 @@ public class Room {
     private boolean myLeftDoor;
     private boolean myRightDoor;
 
+    private String myRoomName;
+
     public Room(){
        // myUpDoor = false;
        // myDownDoor = false;
@@ -30,6 +32,14 @@ public boolean getUpDoor(){
     }
     public void setUpDoor(boolean theUpDoor){
         myUpDoor = theUpDoor;
+    }
+
+    public void setRoomName(String theRoomName){
+        myRoomName = theRoomName;
+    }
+
+    public String getRoomName(){
+        return myRoomName;
     }
 
     public void setDownDoor(boolean theDownDoor){

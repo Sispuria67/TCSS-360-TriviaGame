@@ -27,12 +27,15 @@ public class MazePanel extends JPanel {
     private static final int exitCol = 4;
 
     private Room[][] room;
+private int myNewCount;
+
     public MazePanel() {
         //mazeGrid = new int[rows][cols];
         room = new Room[rows][cols];
         myCharacter = new CharacterModel(0, 0);
         initializeDoors();
         myCharacter.setCurrentRoom(room);
+        myNewCount = 0;
 
         //loadDoorImage();
 
@@ -74,9 +77,12 @@ public class MazePanel extends JPanel {
         for(int i =0; i <rows; i++){
             for(int j =0; j <cols; j++){
                 room[i][j] = new Room();
-                System.out.println("room length: " + room.length); // = 5
-                System.out.println("room[0][0]: " + room[0][0]);
-                System.out.println("room[0][1]: " + room[0][1]);
+                myNewCount++;
+               // myCharacter.setRoomCounter(myNewCount);
+
+               // System.out.println("room length: " + room.length); // = 5
+                //System.out.println("room[0][0]: " + room[0][0]);
+                //System.out.println("room[0][1]: " + room[0][1]);
             }
         }
          //room 1
@@ -84,11 +90,16 @@ public class MazePanel extends JPanel {
         room[0][0].setDownDoor(true);
         room[0][0].setLeftDoor(false);
         room[0][0].setRightDoor(true);
+        room[0][0].setRoomName("Room 0");
+
+
+
         //room 2
         room[0][1].setUpDoor(false);
         room[0][1].setDownDoor(true);
         room[0][1].setLeftDoor(true);
         room[0][1].setRightDoor(true);
+        room[0][1].setRoomName("Room 1");
 
 
           //room 3
@@ -96,46 +107,57 @@ public class MazePanel extends JPanel {
         room[0][2].setDownDoor(true);
         room[0][2].setLeftDoor(true);
         room[0][2].setRightDoor(true);
+        room[0][2].setRoomName("Room 2");
 
         //room 4
         room[0][3].setUpDoor(false);
         room[0][3].setDownDoor(true);
         room[0][3].setLeftDoor(true);
-        room[0][3].setRightDoor(false);
+        room[0][3].setRightDoor(true);
+        room[0][3].setRoomName("Room 3");
+
         //room 5
         room[0][4].setUpDoor(false);
         room[0][4].setDownDoor(true);
         room[0][4].setLeftDoor(true);
         room[0][4].setRightDoor(false);
+        room[0][4].setRoomName("Room 4");
+
+
         //room 6
         room[1][0].setUpDoor(true);
         room[1][0].setDownDoor(true);
         room[1][0].setLeftDoor(false);
         room[1][0].setRightDoor(true);
+        room[1][0].setRoomName("Room 5");
 
         //room 7
         room[1][1].setUpDoor(true);
         room[1][1].setDownDoor(true);
         room[1][1].setLeftDoor(true);
         room[1][1].setRightDoor(true);
+        room[1][1].setRoomName("Room 6");
 
         //room 8
         room[1][2].setUpDoor(true);
         room[1][2].setDownDoor(true);
         room[1][2].setLeftDoor(true);
         room[1][2].setRightDoor(true);
+        room[1][2].setRoomName("Room 7");
 
         //room 9
         room[1][3].setUpDoor(true);
         room[1][3].setDownDoor(true);
         room[1][3].setLeftDoor(true);
         room[1][3].setRightDoor(true);
+        room[1][3].setRoomName("Room 8");
 
         //room 10
         room[1][4].setUpDoor(true);
         room[1][4].setDownDoor(true);
         room[1][4].setLeftDoor(true);
         room[1][4].setRightDoor(false);
+        room[1][4].setRoomName("Room 9");
 
 
         //room 11
@@ -143,90 +165,105 @@ public class MazePanel extends JPanel {
         room[2][0].setDownDoor(true);
         room[2][0].setLeftDoor(false);
         room[2][0].setRightDoor(true);
+        room[2][0].setRoomName("Room 10");
 
         //room 12
         room[2][1].setUpDoor(true);
         room[2][1].setDownDoor(true);
         room[2][1].setLeftDoor(true);
         room[2][1].setRightDoor(true);
+        room[2][1].setRoomName("Room 11");
 
         //room 13
-        room[3][2].setUpDoor(true);
-        room[3][2].setDownDoor(true);
-        room[3][2].setLeftDoor(true);
-        room[3][2].setRightDoor(true);
+        room[2][2].setUpDoor(true);
+        room[2][2].setDownDoor(true);
+        room[2][2].setLeftDoor(true);
+        room[2][2].setRightDoor(true);
+        room[2][2].setRoomName("Room 12");
 
         //room 14
         room[2][3].setUpDoor(true);
         room[2][3].setDownDoor(true);
         room[2][3].setLeftDoor(true);
         room[2][3].setRightDoor(true);
+        room[2][3].setRoomName("Room 13");
 
         //room 15
         room[2][4].setUpDoor(true);
         room[2][4].setDownDoor(true);
         room[2][4].setLeftDoor(true);
         room[2][4].setRightDoor(false);
+        room[2][4].setRoomName("Room 14");
 
         //room 16
         room[3][0].setUpDoor(true);
         room[3][0].setDownDoor(true);
         room[3][0].setLeftDoor(false);
         room[3][0].setRightDoor(true);
+        room[3][0].setRoomName("Room 15");
 
         //room 17
         room[3][1].setUpDoor(true);
         room[3][1].setDownDoor(true);
         room[3][1].setLeftDoor(true);
         room[3][1].setRightDoor(true);
+        room[3][1].setRoomName("Room 16");
 
         //room 18
         room[3][2].setUpDoor(true);
         room[3][2].setDownDoor(true);
         room[3][2].setLeftDoor(true);
         room[3][2].setRightDoor(true);
+        room[3][2].setRoomName("Room 17");
 
         //room 19
         room[3][3].setUpDoor(true);
         room[3][3].setDownDoor(true);
         room[3][3].setLeftDoor(true);
         room[3][3].setRightDoor(true);
+        room[3][3].setRoomName("Room 18");
 
         //room 20
         room[3][4].setUpDoor(true);
         room[3][4].setDownDoor(true);
         room[3][4].setLeftDoor(true);
         room[3][4].setRightDoor(false);
+        room[3][4].setRoomName("Room 19");
 
          //room 21
         room[4][0].setUpDoor(true);
         room[4][0].setDownDoor(true);
         room[4][0].setLeftDoor(false);
         room[4][0].setRightDoor(true);
+        room[4][0].setRoomName("Room 20");
 
         //room 22
         room[4][1].setUpDoor(true);
         room[4][1].setDownDoor(true);
         room[4][1].setLeftDoor(true);
         room[4][1].setRightDoor(true);
+        room[4][1].setRoomName("Room 21");
 
         //room 23
         room[4][2].setUpDoor(true);
         room[4][2].setDownDoor(true);
         room[4][2].setLeftDoor(true);
         room[4][2].setRightDoor(true);
+        room[4][2].setRoomName("Room 22");
 
         //room 24
         room[4][3].setUpDoor(true);
         room[4][3].setDownDoor(true);
         room[4][3].setLeftDoor(true);
         room[4][3].setRightDoor(true);
+        room[4][3].setRoomName("Room 23");
 
         //room 25
         room[4][4].setUpDoor(true);
         room[4][4].setDownDoor(true);
         room[4][4].setLeftDoor(true);
         room[4][4].setRightDoor(false);
+        room[4][4].setRoomName("Room 24");
 
     }
 
@@ -347,7 +384,11 @@ public class MazePanel extends JPanel {
    //System.out.println("CurrentRoomLocation:" + room[myCharacter.getRow()][myCharacter.getCol()]);
         System.out.println("row:" + myCharacter.getRow() + "col:" + myCharacter.getCol());
         System.out.println("Right door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getRightDoor());
-        System.out.println("Current room: " + myCharacter.getCurrentRoom());
+        System.out.println("Left door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getLeftDoor());
+        System.out.println("Up door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getUpDoor());
+        System.out.println("Down door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getDownDoor());
+       // System.out.println("Current room: " + myCharacter.getCurrentRoom().toString());
+        System.out.println("Current room: " + myCharacter.toString());
 
         repaint();
     }

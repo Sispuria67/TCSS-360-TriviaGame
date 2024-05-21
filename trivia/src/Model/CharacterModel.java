@@ -7,6 +7,8 @@ public class CharacterModel {
 
     private Room [][] currentRoom;
 
+    //private int myRoomCounter;
+
    //make the maze a 2D array?[row][col]
 
 
@@ -14,9 +16,8 @@ public class CharacterModel {
         this.row = initialRow;
         this.col = initialCol;
         this.currentRoom = new Room[row][col];
+     //   myRoomCounter = 0;
         //currentRoom = null;
-
-
     }
 
     public int getRow() {
@@ -26,7 +27,17 @@ public class CharacterModel {
     public int getCol() {
         return col;
     }
+/*
+    public int getRoomCounter() {
+        return myRoomCounter;
+    }
 
+    public void setRoomCounter(int theRoomCounter) {
+         myRoomCounter = theRoomCounter;
+    }
+
+
+ */
     //should this be in controller
     public void moveUp() {
         if (row > 0) {
@@ -64,6 +75,10 @@ public class CharacterModel {
            // System.out.println("Invalid room values");
         //}
 
+    }
+
+    public String toString() {
+        return "room Number is " + currentRoom[getRow()][getCol()].getRoomName().toString();
     }
 
 }

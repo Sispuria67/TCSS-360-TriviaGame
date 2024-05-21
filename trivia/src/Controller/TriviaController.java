@@ -34,7 +34,6 @@ public class TriviaController extends JPanel {
 
     private Room[][] myRoom ;
 
-    private int myRoomCounter;
 
 
     private JMenu myMenu2;
@@ -66,7 +65,7 @@ public class TriviaController extends JPanel {
         myMazePanel = new MazePanel();
         myCharacter = new CharacterModel(0, 0);
         myDoor = new Door();
-        myRoomCounter = 0;
+
         myRoom = myMazePanel.getRoom();
         createAndShowGUI();
         createMenuBar();
@@ -216,7 +215,7 @@ public class TriviaController extends JPanel {
                     //myMazePanel.myCharacter.moveRight();
                     myCharacter.moveRight();
                     myMazePanel.moveCharacter("right");
-                    myRoomCounter++;
+
 
                     enableUpArrow();
                     enableDownArrow();
@@ -229,7 +228,7 @@ public class TriviaController extends JPanel {
                     //myMazePanel.character.moveLeft();
                     myCharacter.moveLeft();
                     myMazePanel.moveCharacter("left");
-                    myRoomCounter++;
+
                     enableUpArrow();
                     enableDownArrow();
                     enableLeftArrow();
@@ -242,7 +241,7 @@ public class TriviaController extends JPanel {
                     //myMazePanel.myCharacter.moveDown();
                     myCharacter.moveDown();
                     myMazePanel.moveCharacter("down");
-                    myRoomCounter++;
+
                     enableUpArrow();
                     enableDownArrow();
                     enableLeftArrow();
@@ -253,7 +252,7 @@ public class TriviaController extends JPanel {
                 } else if (theEvent.getSource().equals(myArrowsPanel.getMyUpArrow()) && myRoom[myCharacter.getRow()][myCharacter.getCol()].getUpDoor()) {
                     myCharacter.moveUp();
                     myMazePanel.moveCharacter("up");
-                    myRoomCounter++;
+
                     enableUpArrow();
                     enableDownArrow();
                     enableLeftArrow();
