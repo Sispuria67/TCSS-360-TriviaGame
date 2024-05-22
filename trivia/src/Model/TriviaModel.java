@@ -1,5 +1,6 @@
 package Model;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class TriviaModel {
@@ -18,5 +19,17 @@ public class TriviaModel {
             myTriviaInstance = new TriviaModel();
         }
         return myTriviaInstance;
+    }
+
+    public static void gameLogic(){
+
+    }
+
+    public void startGame() {
+    }
+
+
+    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
     }
 }

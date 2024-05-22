@@ -335,6 +335,16 @@ public class TriviaController extends JPanel {
 
     }
 
+    /**
+     * addAllPropertiesListeners is a method that creates
+     * actions listeners for all the property changes in the model.
+     *
+     */
+    private void addAllPropertiesListeners() {
+
+    
+    }
+
     public boolean canPass() {
         //for loop that iterates entire maze
         //if myDoor.getDoorIsLocked then pop up a question
