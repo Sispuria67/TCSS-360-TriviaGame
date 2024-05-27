@@ -1,8 +1,13 @@
 package View;
 
+import Controller.TriviaController;
+import Model.TriviaModel;
+
 import javax.swing.*;
 import javax.swing.text.FlowView;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class TitleScreen {
     private JFrame frame = new JFrame();
@@ -44,6 +49,14 @@ public class TitleScreen {
     public void addButton(){
         JButton button = new JButton("Continue");
         buttonPanel.add(button);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                TriviaController TV = new TriviaController();
+                TV.createAndShowGUI();
+            }
+        });
     }
     public void namePanel(){
         JLabel titalLabel = new JLabel("Rohit Ark & Sado Iman");

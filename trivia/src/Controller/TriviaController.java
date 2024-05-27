@@ -58,6 +58,25 @@ public class TriviaController extends JPanel {
 
     private static JMenuItem myExit;
 
+    public TriviaController(){
+        myArrowsPanel = new ArrowsPanel();
+        myQuestionPanel = new QuestionPanel();
+        myMazePanel = new MazePanel();
+        myCharacter = new CharacterModel(0, 0);
+        myDoor = new Door();
+        myCurrentRoomPanel = new CurrentRoomPanel();
+        myRoom = myMazePanel.getRoom();
+        myCurrentRoomPanel.setMyTextField("You are currently in Room 0");
+
+        myText = new JLabel();
+        createAndShowGUI();
+        createMenuBar();
+        layoutComponents();
+        addCurrentArrowListeners();
+        addMenuListeners();
+        addRadioListeners();
+    }
+
     public TriviaController(final TriviaModel theModel) {
 
 
