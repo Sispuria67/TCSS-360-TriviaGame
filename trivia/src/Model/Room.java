@@ -1,5 +1,8 @@
 package Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Room {
 
     private boolean myUpDoor;
@@ -9,7 +12,13 @@ public class Room {
 
     private String myRoomName;
 
+    private int myRoomNumber;
+
+    private Map<String, Integer> doorQuestions;
+
+
     public Room(){
+        doorQuestions = new HashMap<>();
        // myUpDoor = false;
        // myDownDoor = false;
       //  myLeftDoor = false;
@@ -30,28 +39,57 @@ public boolean getUpDoor(){
     public boolean getRightDoor(){
         return myRightDoor;
     }
-    public void setUpDoor(boolean theUpDoor){
-        myUpDoor = theUpDoor;
-    }
 
     public void setRoomName(String theRoomName){
         myRoomName = theRoomName;
+    }
+    public int getRoomNumber(){
+        return myRoomNumber;
+    }
+
+    public void setRoomNumber(int theRoomNumber){
+        myRoomNumber = theRoomNumber;
     }
 
     public String getRoomName(){
         return myRoomName;
     }
+    //if a door above exists return true
+    public void setUpDoor(boolean theUpDoor){
+        myUpDoor = theUpDoor;
+    }
 
+    //if a door below exists return true
     public void setDownDoor(boolean theDownDoor){
         myDownDoor = theDownDoor;
     }
+    //if door to the left exists return true
     public void setLeftDoor(boolean theLeftDoor){
         myLeftDoor = theLeftDoor;
     }
+    //if door to the right exists return true
     public void setRightDoor(boolean theRightDoor){
         myRightDoor = theRightDoor;
     }
+    public void setQuestionForDoor(String direction, int questionId) {
+        doorQuestions.put(direction, questionId);
+    }
 
+    public Integer getQuestionForDoor(String direction) {
+        return doorQuestions.get(direction);
+    }
+
+    public String toString() {
+        return "Room{" +
+                "myUpDoor=" + myUpDoor +
+                ", myDownDoor=" + myDownDoor +
+                ", myLeftDoor=" + myLeftDoor +
+                ", myRightDoor=" + myRightDoor +
+                ", myRoomName='" + myRoomName + '\'' +
+                ", myRoomNumber=" + myRoomNumber +
+                ", doorQuestions=" + doorQuestions +
+                '}';
+    }
     /*
     public String toString(){
         return

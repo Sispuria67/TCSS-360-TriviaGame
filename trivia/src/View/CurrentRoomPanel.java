@@ -1,6 +1,7 @@
 package View;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 public class CurrentRoomPanel extends JPanel {
 
@@ -21,6 +22,11 @@ public class CurrentRoomPanel extends JPanel {
 
     public void setMyTextField(String theValue) {
         myText.setText(theValue);
+    }
+
+    public void addCurrentRoomListener(final ActionListener theListener) {
+      //  this.myText.addActionListener(theListener);
+
     }
 
 }

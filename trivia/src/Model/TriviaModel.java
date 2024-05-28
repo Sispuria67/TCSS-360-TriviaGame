@@ -21,14 +21,16 @@ public class TriviaModel {
         return myTriviaInstance;
     }
 
-    public static void gameLogic(){
 
+/*
+    public void setMyPlayerWins(final int theWins){
+        int old = myPlayerWins;
+        myPlayerWins = theWins;
+        this.myPcs.firePropertyChange("playerWins", old, myPlayerWins);
     }
 
-    public void startGame() {
-    }
 
-
+ */
     public void addPropertyChangeListener(final PropertyChangeListener theListener) {
         myPcs.addPropertyChangeListener(theListener);
     }

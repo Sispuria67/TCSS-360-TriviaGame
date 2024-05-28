@@ -1,30 +1,27 @@
 package Controller;
 
-import javax.swing.*;
+import Model.*;
+import View.ArrowsPanel;
+import View.CurrentRoomPanel;
+import View.MazePanel;
+import View.QuestionPanel;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-import Model.Door;
-import Model.Room;
-import Model.TriviaModel;
-import Model.CharacterModel;
-import View.ArrowsPanel;
-import View.CurrentRoomPanel;
-import View.QuestionPanel;
-import View.MazePanel;
-
+import static Model.QuestionFactoryF.getQuestionById;
 
 
 public class TriviaController extends JPanel {
+
 
     private JFrame frame = new JFrame();
     private JMenu myMenu;
 
     private final ArrowsPanel myArrowsPanel;
-    private final QuestionPanel myQuestionPanel;
+    private final QuestionPanel questionPanel;
 
 
     private final CharacterModel myCharacter;
@@ -58,7 +55,7 @@ public class TriviaController extends JPanel {
 
     private static JMenuItem myExit;
 
-    public TriviaController(final TriviaModel theModel) {
+    public TriviaController(final TriviaModel theModel, final QuestionPanel theQuestionPanel) {
 
 
         // super(new GridLayout(2, 1));
@@ -67,21 +64,33 @@ public class TriviaController extends JPanel {
         // factory = new QuestionFactory();
 
         myArrowsPanel = new ArrowsPanel();
-        myQuestionPanel = new QuestionPanel();
+        questionPanel = theQuestionPanel;
         myMazePanel = new MazePanel();
         myCharacter = new CharacterModel(0, 0);
         myDoor = new Door();
         myCurrentRoomPanel = new CurrentRoomPanel();
         myRoom = myMazePanel.getRoom();
         myCurrentRoomPanel.setMyTextField("You are currently in Room 0");
+        assignQuestionsToDoors();
 
         myText = new JLabel();
+        /*
+        //SQL
+        try {
+            dbManager = new DatabaseManager("path to db");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+         */
         createAndShowGUI();
         createMenuBar();
         layoutComponents();
         addCurrentArrowListeners();
         addMenuListeners();
-        addRadioListeners();
+
+        //questionPanel.updateQuestion(theQuestion);
+       // addRadioListeners();
 
 
     }
@@ -129,10 +138,10 @@ public class TriviaController extends JPanel {
         add(mazeAndArrowsPanel, BorderLayout.NORTH);
 
 
-        add(myQuestionPanel, BorderLayout.SOUTH);
+        add(questionPanel, BorderLayout.SOUTH);
 
         myCurrentRoomPanel.setPreferredSize(new Dimension(100, 100));
-        myQuestionPanel.setPreferredSize(new Dimension(100, 180));
+        questionPanel.setPreferredSize(new Dimension(100, 180));
         // JPanel myTopPanel = new JPanel(new GridLayout(1, 1, 10, 10));
 
         // this.setLayout(new BorderLayout());
@@ -279,11 +288,41 @@ public class TriviaController extends JPanel {
                     enableRightArrow();
                     checkWon();
                 }
+
+                String direction = getEnteredDirection(theEvent.getSource());
+                Integer questionId = myRoom[myCharacter.getRow()][myCharacter.getCol()].getQuestionForDoor(direction);
+                if (questionId != null) {
+                    // Fetch the question details from the database
+                    Question question = getQuestionById(questionId);
+
+                    if (question != null) {
+                        // Update the question panel with the new Question object
+                        questionPanel.updateQuestion(question);
+                    }
+                }
+
             }
         });
     }
+    // Method to fetch question text based on questionId
+    private String getQuestionText(int questionId) {
+        return QuestionFactoryF.getQuestionTextById(questionId);
+    }
+    private String getEnteredDirection(Object arrowButton) {
+        if (arrowButton.equals(myArrowsPanel.getMyRightArrow())) {
+            return "right";
+        } else if (arrowButton.equals(myArrowsPanel.getMyLeftArrow())) {
+            return "left";
+        } else if (arrowButton.equals(myArrowsPanel.getMyDownArrow())) {
+            return "down";
+        } else if (arrowButton.equals(myArrowsPanel.getMyUpArrow())) {
+            return "up";
+        } else {
+            return ""; // Return empty string for unknown direction
+        }
+    }
 
-
+/*
     //if you select first radio button and touch submit, Joption pane pops up and says right answer
     private void addRadioListeners() {
         myQuestionPanel.getMyRadioOne().addActionListener(e -> {
@@ -298,6 +337,8 @@ public class TriviaController extends JPanel {
         });
     }
 
+
+ */
 
     private void addMenuListeners() {
 
@@ -335,6 +376,28 @@ public class TriviaController extends JPanel {
 
     }
 
+    public void assignQuestionsToDoors(){
+        //room 0
+        myRoom[0][0].setQuestionForDoor("right", 1);
+        myRoom[0][0].setQuestionForDoor("down", 2);
+
+        //room 1
+        myRoom[0][1].setQuestionForDoor("right", 3);
+        myRoom[0][1].setQuestionForDoor("down", 4);
+        myRoom[0][1].setQuestionForDoor("left", 1);
+
+        //room 2
+        myRoom[0][2].setQuestionForDoor("right", 16);
+        myRoom[0][2].setQuestionForDoor("down", 38);
+        myRoom[0][2].setQuestionForDoor("left", 3);
+
+        //room 3
+        myRoom[0][3].setQuestionForDoor("right", 19);
+        myRoom[0][3].setQuestionForDoor("down", 14);
+        myRoom[0][3].setQuestionForDoor("left", 16);
+    }
+
+
     /**
      * addAllPropertiesListeners is a method that creates
      * actions listeners for all the property changes in the model.
@@ -342,7 +405,7 @@ public class TriviaController extends JPanel {
      */
     private void addAllPropertiesListeners() {
 
-    
+
     }
 
     public boolean canPass() {
@@ -403,10 +466,23 @@ public class TriviaController extends JPanel {
         }
     }
 
+
+    public static void gameLogic(){
+
+    }
+
+    public void startGame() {
+        while(myCharacter.getRow() != 4 && myCharacter.getCol() != 4){
+
+        }
+    }
+
     public static void main(String[] theArgs){
 
             SwingUtilities.invokeLater(() -> {
-                new TriviaController(TriviaModel.getMyTriviaInstance());
+                new QuestionFactoryF();
+                Question initialQuestion = getQuestionById(1);
+                new TriviaController(TriviaModel.getMyTriviaInstance(), new QuestionPanel(initialQuestion));
 
 
             });

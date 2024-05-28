@@ -85,185 +85,210 @@ private int myNewCount;
                 //System.out.println("room[0][1]: " + room[0][1]);
             }
         }
-         //room 1
+         //room 0
         room[0][0].setUpDoor(false);
         room[0][0].setDownDoor(true);
         room[0][0].setLeftDoor(false);
         room[0][0].setRightDoor(true);
         room[0][0].setRoomName("Room 0");
+        room[0][0].setRoomNumber(0);
 
 
 
-        //room 2
+        //room 1
         room[0][1].setUpDoor(false);
         room[0][1].setDownDoor(true);
         room[0][1].setLeftDoor(true);
         room[0][1].setRightDoor(true);
         room[0][1].setRoomName("Room 1");
+        room[0][1].setRoomNumber(1);
 
 
-          //room 3
+          //room 2
         room[0][2].setUpDoor(false);
         room[0][2].setDownDoor(true);
         room[0][2].setLeftDoor(true);
         room[0][2].setRightDoor(true);
         room[0][2].setRoomName("Room 2");
+        room[0][2].setRoomNumber(2);
 
-        //room 4
+        //room 3
         room[0][3].setUpDoor(false);
         room[0][3].setDownDoor(true);
         room[0][3].setLeftDoor(true);
         room[0][3].setRightDoor(true);
         room[0][3].setRoomName("Room 3");
+        room[0][3].setRoomNumber(3);
 
-        //room 5
+        //room 4
         room[0][4].setUpDoor(false);
         room[0][4].setDownDoor(true);
         room[0][4].setLeftDoor(true);
         room[0][4].setRightDoor(false);
         room[0][4].setRoomName("Room 4");
+        room[0][4].setRoomNumber(4);
 
 
-        //room 6
+        //room 5
         room[1][0].setUpDoor(true);
         room[1][0].setDownDoor(true);
         room[1][0].setLeftDoor(false);
         room[1][0].setRightDoor(true);
         room[1][0].setRoomName("Room 5");
+        room[1][0].setRoomNumber(5);
 
-        //room 7
+        //room 6
         room[1][1].setUpDoor(true);
         room[1][1].setDownDoor(true);
         room[1][1].setLeftDoor(true);
         room[1][1].setRightDoor(true);
         room[1][1].setRoomName("Room 6");
+        room[1][1].setRoomNumber(6);
 
-        //room 8
+        //room 7
         room[1][2].setUpDoor(true);
         room[1][2].setDownDoor(true);
         room[1][2].setLeftDoor(true);
         room[1][2].setRightDoor(true);
         room[1][2].setRoomName("Room 7");
+        room[1][2].setRoomNumber(7);
 
-        //room 9
+        //room 8
         room[1][3].setUpDoor(true);
         room[1][3].setDownDoor(true);
         room[1][3].setLeftDoor(true);
         room[1][3].setRightDoor(true);
         room[1][3].setRoomName("Room 8");
+        room[1][3].setRoomNumber(8);
 
-        //room 10
+        //room 9
         room[1][4].setUpDoor(true);
         room[1][4].setDownDoor(true);
         room[1][4].setLeftDoor(true);
         room[1][4].setRightDoor(false);
         room[1][4].setRoomName("Room 9");
+        room[1][4].setRoomNumber(9);
 
 
-        //room 11
+        //room 10
         room[2][0].setUpDoor(true);
         room[2][0].setDownDoor(true);
         room[2][0].setLeftDoor(false);
         room[2][0].setRightDoor(true);
         room[2][0].setRoomName("Room 10");
+        room[2][0].setRoomNumber(10);
 
-        //room 12
+        //room 11
         room[2][1].setUpDoor(true);
         room[2][1].setDownDoor(true);
         room[2][1].setLeftDoor(true);
         room[2][1].setRightDoor(true);
         room[2][1].setRoomName("Room 11");
+        room[2][1].setRoomNumber(11);
 
-        //room 13
+        //room 12
         room[2][2].setUpDoor(true);
         room[2][2].setDownDoor(true);
         room[2][2].setLeftDoor(true);
         room[2][2].setRightDoor(true);
         room[2][2].setRoomName("Room 12");
+        room[2][2].setRoomNumber(12);
 
-        //room 14
+        //room 13
         room[2][3].setUpDoor(true);
         room[2][3].setDownDoor(true);
         room[2][3].setLeftDoor(true);
         room[2][3].setRightDoor(true);
         room[2][3].setRoomName("Room 13");
+        room[2][3].setRoomNumber(13);
 
-        //room 15
+        //room 14
         room[2][4].setUpDoor(true);
         room[2][4].setDownDoor(true);
         room[2][4].setLeftDoor(true);
         room[2][4].setRightDoor(false);
         room[2][4].setRoomName("Room 14");
+        room[2][4].setRoomNumber(14);
 
-        //room 16
+        //room 15
         room[3][0].setUpDoor(true);
         room[3][0].setDownDoor(true);
         room[3][0].setLeftDoor(false);
         room[3][0].setRightDoor(true);
         room[3][0].setRoomName("Room 15");
+        room[3][0].setRoomNumber(15);
 
-        //room 17
+        //room 16
         room[3][1].setUpDoor(true);
         room[3][1].setDownDoor(true);
         room[3][1].setLeftDoor(true);
         room[3][1].setRightDoor(true);
         room[3][1].setRoomName("Room 16");
+        room[3][1].setRoomNumber(16);
 
-        //room 18
+        //room 17
         room[3][2].setUpDoor(true);
         room[3][2].setDownDoor(true);
         room[3][2].setLeftDoor(true);
         room[3][2].setRightDoor(true);
         room[3][2].setRoomName("Room 17");
+        room[3][2].setRoomNumber(17);
 
-        //room 19
+        //room 18
         room[3][3].setUpDoor(true);
         room[3][3].setDownDoor(true);
         room[3][3].setLeftDoor(true);
         room[3][3].setRightDoor(true);
         room[3][3].setRoomName("Room 18");
+        room[3][3].setRoomNumber(18);
 
-        //room 20
+        //room 19
         room[3][4].setUpDoor(true);
         room[3][4].setDownDoor(true);
         room[3][4].setLeftDoor(true);
         room[3][4].setRightDoor(false);
         room[3][4].setRoomName("Room 19");
+        room[3][4].setRoomNumber(19);
 
-         //room 21
+         //room 20
         room[4][0].setUpDoor(true);
-        room[4][0].setDownDoor(true);
+        room[4][0].setDownDoor(false);
         room[4][0].setLeftDoor(false);
         room[4][0].setRightDoor(true);
         room[4][0].setRoomName("Room 20");
+        room[4][0].setRoomNumber(20);
 
-        //room 22
+        //room 21
         room[4][1].setUpDoor(true);
-        room[4][1].setDownDoor(true);
+        room[4][1].setDownDoor(false);
         room[4][1].setLeftDoor(true);
         room[4][1].setRightDoor(true);
         room[4][1].setRoomName("Room 21");
+        room[4][1].setRoomNumber(21);
 
-        //room 23
+        //room 22
         room[4][2].setUpDoor(true);
-        room[4][2].setDownDoor(true);
+        room[4][2].setDownDoor(false);
         room[4][2].setLeftDoor(true);
         room[4][2].setRightDoor(true);
         room[4][2].setRoomName("Room 22");
+        room[4][2].setRoomNumber(22);
 
-        //room 24
+        //room 23
         room[4][3].setUpDoor(true);
-        room[4][3].setDownDoor(true);
+        room[4][3].setDownDoor(false);
         room[4][3].setLeftDoor(true);
         room[4][3].setRightDoor(true);
         room[4][3].setRoomName("Room 23");
+        room[4][3].setRoomNumber(23);
 
-        //room 25
+        //room 24
         room[4][4].setUpDoor(true);
-        room[4][4].setDownDoor(true);
+        room[4][4].setDownDoor(false);
         room[4][4].setLeftDoor(true);
         room[4][4].setRightDoor(false);
         room[4][4].setRoomName("Room 24");
+        room[4][4].setRoomNumber(24);
 
     }
 
@@ -367,7 +392,7 @@ private int myNewCount;
                 break;
             case "down":
                 myCharacter.moveDown();
-                myCharacter.setCurrentRoom(room);
+              myCharacter.setCurrentRoom(room);
                 break;
          case"left":
               myCharacter.moveLeft();

@@ -14,10 +14,6 @@ public class Door {
 
     }
 
-    public void unlock() {
-        setDoorStatus(OPEN);
-    }
-
     public Boolean getDoorIsLocked() {
         return myDoorStatus == LOCKED;
     }
@@ -30,5 +26,14 @@ public class Door {
         myDoorStatus = theDoorStatus;
     }
 
+    public void close(){
+        setDoorStatus(CLOSED);
+    }
+    public void unlock() {
+        setDoorStatus(OPEN);
+    }
+    public void lock(){
+        setDoorStatus(LOCKED);
+    }
     //instead of setDoorStatus should it be setUpDoor, setDownDoor, etc??
 }
