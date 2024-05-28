@@ -24,6 +24,7 @@ public class QuestionPanel extends JPanel {
     private JPanel optionsPanel;
 
 
+
     public QuestionPanel() {
         setLayout(new BorderLayout());
         myQuestion = new JLabel();
@@ -111,13 +112,14 @@ public class QuestionPanel extends JPanel {
 
         } else if (question instanceof Question.ShortAnswerQuestion) {
             myShortAnswer = new JTextField(10);
-            myShortAnswer.setSize(new Dimension(20, 10));
+           // myShortAnswer.setSize(new Dimension(20, 10));
             optionsPanel.add(myShortAnswer);
         }
         revalidate();
         repaint();
 
     }
+
 
     public String getSelectedOption() {
         if (buttonGroup != null) {

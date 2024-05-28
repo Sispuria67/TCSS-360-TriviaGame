@@ -16,6 +16,13 @@ import static Model.QuestionFactoryF.getQuestionById;
 
 public class TriviaController extends JPanel {
 
+    ImageIcon img = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/doorPixel.png");
+
+    Image resizedImage = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+    ImageIcon resizedIcon = new ImageIcon(resizedImage);
+
+
+
 
     private JFrame frame = new JFrame();
     private JMenu myMenu;
@@ -63,6 +70,7 @@ public class TriviaController extends JPanel {
 
         // factory = new QuestionFactory();
 
+
         myArrowsPanel = new ArrowsPanel();
         questionPanel = new QuestionPanel();
         myMazePanel = new MazePanel();
@@ -88,6 +96,8 @@ public class TriviaController extends JPanel {
         layoutComponents();
         addCurrentArrowListeners();
         addMenuListeners();
+
+
 
         //questionPanel.updateQuestion(theQuestion);
        // addRadioListeners();
@@ -126,6 +136,11 @@ public class TriviaController extends JPanel {
  */
 
     private void layoutComponents() {
+        //setting background colors
+      //  myCurrentRoomPanel.setBackground(Color.pink);
+      //  myMazePanel.setBackground(Color.PINK);
+       // myArrowsPanel.setBackground(Color.PINK);
+      //  questionPanel.setBackground(Color.cyan);
 
         JPanel mazeAndArrowsPanel = new JPanel(new BorderLayout());
         mazeAndArrowsPanel.add(myMazePanel, BorderLayout.CENTER);
@@ -174,6 +189,7 @@ public class TriviaController extends JPanel {
         frame.setResizable(false);
         frame.setSize(800, 830);
         frame.setTitle("Trivia Game");
+      //  frame.setBackground(Color.CYAN);
 
 
         SwingUtilities.invokeLater(() -> {
@@ -245,6 +261,9 @@ public class TriviaController extends JPanel {
                     enableLeftArrow();
                     enableRightArrow();
                     checkWon();
+                    correctAnswerPanel();
+
+
                     //System.out.println("room::::" + myRoom[myCharacter.getRow()][myCharacter.getCol()].getRoomName());
 
                 } else if (theEvent.getSource().equals(myArrowsPanel.getMyLeftArrow()) && myRoom[myCharacter.getRow()][myCharacter.getCol()].getLeftDoor()) {
@@ -259,6 +278,7 @@ public class TriviaController extends JPanel {
                     enableLeftArrow();
                     enableRightArrow();
                     checkWon();
+
                 }
 
                 //and check if space is valid
@@ -274,6 +294,8 @@ public class TriviaController extends JPanel {
                     enableLeftArrow();
                     enableRightArrow();
                     checkWon();
+                    incorrectAnswerPanel();
+
 
 
                 } else if (theEvent.getSource().equals(myArrowsPanel.getMyUpArrow()) && myRoom[myCharacter.getRow()][myCharacter.getCol()].getUpDoor()) {
@@ -321,6 +343,18 @@ public class TriviaController extends JPanel {
         } else {
             return ""; // Return empty string for unknown direction
         }
+    }
+
+    public void incorrectAnswerPanel(){
+
+        JOptionPane.showMessageDialog(this, "Incorrect Answer! This door is now locked.", "Door locked", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
+
+    }
+
+    public void correctAnswerPanel(){
+        JOptionPane.showMessageDialog(
+                this, "Correct Answer! You may now proceed through this door.", "Door Unlocked", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
+
     }
 
 /*
@@ -402,11 +436,34 @@ public class TriviaController extends JPanel {
         myRoom[0][4].setQuestionForDoor("down", 39);
         myRoom[0][4].setQuestionForDoor("left", 19);
 
+
+        //room 5
+        myRoom[1][0].setQuestionForDoor("right", 15);
+        myRoom[1][0].setQuestionForDoor("down", 23);
+        myRoom[1][0].setQuestionForDoor("up", 40);
+
         //room 6
         myRoom[1][1].setQuestionForDoor("right", 5);
         myRoom[1][1].setQuestionForDoor("down", 11);
         myRoom[1][1].setQuestionForDoor("left", 1);
         myRoom[1][1].setQuestionForDoor("up", 29);
+
+        //room 7
+        myRoom[1][2].setQuestionForDoor("right", 25);
+        myRoom[1][2].setQuestionForDoor("down", 15);
+        myRoom[1][2].setQuestionForDoor("left", 4);
+        myRoom[1][2].setQuestionForDoor("up", 32);
+
+        //room 8
+        myRoom[1][3].setQuestionForDoor("right", 19);
+        myRoom[1][3].setQuestionForDoor("down", 24);
+        myRoom[1][3].setQuestionForDoor("left", 35);
+        myRoom[1][3].setQuestionForDoor("up", 36);
+
+        //room 9
+        myRoom[1][4].setQuestionForDoor("down", 9);
+        myRoom[1][4].setQuestionForDoor("left", 12);
+        myRoom[1][4].setQuestionForDoor("up", 7);
     }
 
 
