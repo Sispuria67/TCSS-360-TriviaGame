@@ -55,7 +55,7 @@ public class TriviaController extends JPanel {
 
     private static JMenuItem myExit;
 
-    public TriviaController(final TriviaModel theModel, final QuestionPanel theQuestionPanel) {
+    public TriviaController(final TriviaModel theModel) {
 
 
         // super(new GridLayout(2, 1));
@@ -64,7 +64,7 @@ public class TriviaController extends JPanel {
         // factory = new QuestionFactory();
 
         myArrowsPanel = new ArrowsPanel();
-        questionPanel = theQuestionPanel;
+        questionPanel = new QuestionPanel();
         myMazePanel = new MazePanel();
         myCharacter = new CharacterModel(0, 0);
         myDoor = new Door();
@@ -299,6 +299,7 @@ public class TriviaController extends JPanel {
                         // Update the question panel with the new Question object
                         questionPanel.updateQuestion(question);
                     }
+
                 }
 
             }
@@ -379,11 +380,11 @@ public class TriviaController extends JPanel {
     public void assignQuestionsToDoors(){
         //room 0
         myRoom[0][0].setQuestionForDoor("right", 1);
-        myRoom[0][0].setQuestionForDoor("down", 2);
+        myRoom[0][0].setQuestionForDoor("down", 20);
 
         //room 1
         myRoom[0][1].setQuestionForDoor("right", 3);
-        myRoom[0][1].setQuestionForDoor("down", 4);
+        myRoom[0][1].setQuestionForDoor("down", 29);
         myRoom[0][1].setQuestionForDoor("left", 1);
 
         //room 2
@@ -395,6 +396,17 @@ public class TriviaController extends JPanel {
         myRoom[0][3].setQuestionForDoor("right", 19);
         myRoom[0][3].setQuestionForDoor("down", 14);
         myRoom[0][3].setQuestionForDoor("left", 16);
+
+        //room 4
+        myRoom[0][4].setQuestionForDoor("right", 30);
+        myRoom[0][4].setQuestionForDoor("down", 39);
+        myRoom[0][4].setQuestionForDoor("left", 19);
+
+        //room 6
+        myRoom[1][1].setQuestionForDoor("right", 5);
+        myRoom[1][1].setQuestionForDoor("down", 11);
+        myRoom[1][1].setQuestionForDoor("left", 1);
+        myRoom[1][1].setQuestionForDoor("up", 29);
     }
 
 
@@ -481,8 +493,7 @@ public class TriviaController extends JPanel {
 
             SwingUtilities.invokeLater(() -> {
                 new QuestionFactoryF();
-                Question initialQuestion = getQuestionById(1);
-                new TriviaController(TriviaModel.getMyTriviaInstance(), new QuestionPanel(initialQuestion));
+                new TriviaController(TriviaModel.getMyTriviaInstance());
 
 
             });

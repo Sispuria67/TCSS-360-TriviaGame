@@ -41,13 +41,15 @@ public class Question {
 
     }
 
-    public class TrueFalseQuestion extends Question{
-        public TrueFalseQuestion(int theQuestionId,String theQuestion, String theAnswer,  String theOption){
+    public static class TrueFalseQuestion extends Question{
+        private String[] myOptions;
+        public TrueFalseQuestion(int theQuestionId,String theQuestion,String[] theOption,  String theAnswer,  String theType){
             super(theQuestionId, theQuestion, theAnswer, "truefalse");
+            myOptions = theOption;
         }
     }
 
-    public class ShortAnswerQuestion extends Question{
+    public static class ShortAnswerQuestion extends Question{
         public ShortAnswerQuestion(int theQuestionId, String theQuestion, String theAnswer,  String theOption){
             super(theQuestionId,theQuestion, theAnswer, "shortanswer");
         }

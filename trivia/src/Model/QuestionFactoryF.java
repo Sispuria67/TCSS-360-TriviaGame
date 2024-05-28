@@ -79,24 +79,25 @@ public class QuestionFactoryF {
                        "INSERT INTO questions (doorNumber, question, option1, option2, option3, option4, answer, type) VALUES (13, 'What is the most popular ice cream flavor in America?', 'Chocolate', 'Mint Chocolate Chip', 'Strawberry', 'Vanilla', 'D', 'multiple')",
 
                        //true/false questions
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (14, 'The Pacific Ocean is the largest ocean in the world.', 'True', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (15, 'The Java programming language was created by James Gosling.', 'True', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (16, 'The square root of 25 is 5.', 'True', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (17, 'The Great Wall of China is visible from space without aid.', 'False', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (18, 'Spiders are insects.', 'False', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (19, 'Mount Everest is the tallest mountain in the world.', 'True', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (20, 'The moon orbits the Earth.', 'True', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (21, 'Humans have four hearts.', 'False', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (22, 'The galaxy we live in is the Milky Way.', 'True', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (23, 'There are 3000 meters in a kilometer', 'False', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (24, 'American Gothic was painted by Vincent van Gogh.', 'False', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (25, 'The American Civil War ended in 1865.', 'True', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (26, '\"The Shawshank Redemption\" is the highest-rated movie on IMDb.', 'True', 'truefalse')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (27, '\"Harry Potter and the Philosophers Stone\" is the first book in the Harry Potter series.', 'True', 'truefalse')",
+                       "INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (14, 'The Pacific Ocean is the largest ocean in the world.', 'True', 'False', 'True', 'truefalse')",
+        "INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (15, 'The Java programming language was created by James Gosling.', 'True', 'False', 'True', 'truefalse')",
+        "INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (16, 'The square root of 25 is 5.', 'True', 'False', 'True', 'truefalse')",
+       " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (17, 'The Great Wall of China is visible from space without aid.', 'True', 'False', 'False', 'truefalse')",
+        "INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (18, 'Spiders are insects.', 'True', 'False', 'False', 'truefalse')",
+        "INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (19, 'Mount Everest is the tallest mountain in the world.', 'True', 'False', 'True', 'truefalse')",
+                       " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (20, 'The moon orbits the Earth.', 'True', 'False', 'True', 'truefalse')",
+                               " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (21, 'Humans have four hearts.', 'True', 'False', 'False', 'truefalse')",
+                       " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (22, 'The galaxy we live in is the Milky Way.', 'True', 'False', 'True', 'truefalse')",
+                       "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (23, 'There are 3000 meters in a kilometer.', 'True', 'False', 'False', 'truefalse')",
+                       "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (24, 'American Gothic was painted by Vincent van Gogh.', 'True', 'False', 'False', 'truefalse')",
+                       "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (25, 'The American Civil War ended in 1865.', 'True', 'False', 'True', 'truefalse')",
+        "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (26, 'The Shawshank Redemption is the highest-rated movie on IMDb.', 'True', 'False', 'True', 'truefalse')",
+                       "   INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (27, 'Harry Potter and the Philosophers Stone is the first book in the Harry Potter series.', 'True', 'False', 'True', 'truefalse')",
 
 
 
-                       //shortanswer qquestions
+
+        //shortanswer qquestions
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (28, 'Who is considered the father of modern computer science?', 'Alan Turing', 'shortanswer')",
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (29, 'What color is a stop sign?', 'Red', 'shortanswer')",
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (30, 'What is the most populated country in the world?', 'India', 'shortanswer')",
@@ -143,16 +144,24 @@ public class QuestionFactoryF {
             if (rs.next()) {
                 int questionId = rs.getInt("doorNumber");
                 String questionText = rs.getString("question");
-                String option1 = rs.getString("option1");
-                String option2 = rs.getString("option2");
-                String option3 = rs.getString("option3");
-                String option4 = rs.getString("option4");
                 String answer = rs.getString("answer");
                 String type = rs.getString("type");
 
-                String[] options = {option1, option2, option3, option4};
-
-                question = new Question.MultipleChoiceQuestion(questionId, questionText, options, answer, type);
+                if (type.equals("multiple")) {
+                    String option1 = rs.getString("option1");
+                    String option2 = rs.getString("option2");
+                    String option3 = rs.getString("option3");
+                    String option4 = rs.getString("option4");
+                    String[] options = {option1, option2, option3, option4};
+                    question = new Question.MultipleChoiceQuestion(questionId, questionText, options, answer, type);
+                } else if (type.equals("truefalse")) {
+                    String option1 = rs.getString("option1");
+                    String option2 = rs.getString("option2");
+                    String[] options = {option1, option2};
+                    question = new Question.TrueFalseQuestion(questionId, questionText, options, answer, type);
+                } else if (type.equals("shortanswer")) {
+                    question = new Question.ShortAnswerQuestion(questionId, questionText, answer, type);
+                }
             }
 
         } catch (SQLException e) {
@@ -161,6 +170,7 @@ public class QuestionFactoryF {
 
         return question;
     }
+
     public static String getQuestionTextById(int questionId) {
         String questionText = null;
         try (Connection conn = ds.getConnection();

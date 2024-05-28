@@ -24,7 +24,7 @@ public class QuestionPanel extends JPanel {
     private JPanel optionsPanel;
 
 
-    public QuestionPanel(Question theQuestion) {
+    public QuestionPanel() {
         setLayout(new BorderLayout());
         myQuestion = new JLabel();
         optionsPanel = new JPanel();
@@ -35,7 +35,7 @@ public class QuestionPanel extends JPanel {
         add(optionsPanel, BorderLayout.CENTER);
         add(mySubmit, BorderLayout.SOUTH);
         layoutComponents();
-        updateQuestion(theQuestion);
+
 
     }
 
@@ -85,18 +85,21 @@ public class QuestionPanel extends JPanel {
     public void updateQuestion(Question question) {
         myQuestion.setText(question.getQuestion());
         optionsPanel.removeAll();
+
+        buttonGroup = null;
+        myShortAnswer = null;
 //if it's a multiple choice question
+
         if (question instanceof Question.MultipleChoiceQuestion) {
             Question.MultipleChoiceQuestion mcq = (Question.MultipleChoiceQuestion) question;
             buttonGroup = new ButtonGroup();
             for (String option : mcq.getMyOptions()) {
-                JRadioButton optionButton= new JRadioButton(option);
+                JRadioButton optionButton = new JRadioButton(option);
                 buttonGroup.add(optionButton);
                 optionsPanel.add(optionButton);
 
             }
-            //if it's true/false queston
-        } else if (question instanceof Question.TrueFalseQuestion) {
+        }else if (question instanceof Question.TrueFalseQuestion) {
             buttonGroup = new ButtonGroup();
             JRadioButton trueButton = new JRadioButton("True");
             JRadioButton falseButton = new JRadioButton("False");
@@ -104,9 +107,11 @@ public class QuestionPanel extends JPanel {
             buttonGroup.add(falseButton);
             optionsPanel.add(trueButton);
             optionsPanel.add(falseButton);
+            //if it's true/false queston
 
         } else if (question instanceof Question.ShortAnswerQuestion) {
-            myShortAnswer = new JTextField(20);
+            myShortAnswer = new JTextField(10);
+            myShortAnswer.setSize(new Dimension(20, 10));
             optionsPanel.add(myShortAnswer);
         }
         revalidate();
