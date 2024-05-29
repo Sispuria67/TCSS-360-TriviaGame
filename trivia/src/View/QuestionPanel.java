@@ -31,6 +31,7 @@ public class QuestionPanel extends JPanel {
         optionsPanel = new JPanel();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
         mySubmit = new JButton("Submit");
+        mySubmit.setFont(new Font("Monospaced", Font.BOLD, 14));
 
         add(myQuestion, BorderLayout.NORTH);
         add(optionsPanel, BorderLayout.CENTER);
@@ -64,6 +65,7 @@ public class QuestionPanel extends JPanel {
     //use radio buttons
     private void layoutComponents() {
         this.setBorder(BorderFactory.createTitledBorder("Trivia Question"));
+        this.setBackground(new Color(0, 137, 165));
 
 
       //  this.add(myQuestion);
@@ -85,6 +87,8 @@ public class QuestionPanel extends JPanel {
 
     public void updateQuestion(Question question) {
         myQuestion.setText(question.getQuestion());
+        myQuestion.setFont(new Font("Monospaced", Font.BOLD, 14));
+        myQuestion.setForeground(new Color(0, 220, 120));
         optionsPanel.removeAll();
 
         buttonGroup = null;
@@ -94,8 +98,10 @@ public class QuestionPanel extends JPanel {
         if (question instanceof Question.MultipleChoiceQuestion) {
             Question.MultipleChoiceQuestion mcq = (Question.MultipleChoiceQuestion) question;
             buttonGroup = new ButtonGroup();
+
             for (String option : mcq.getMyOptions()) {
                 JRadioButton optionButton = new JRadioButton(option);
+                optionsPanel.setBackground(new Color(0, 137, 165));
                 buttonGroup.add(optionButton);
                 optionsPanel.add(optionButton);
 
@@ -104,6 +110,8 @@ public class QuestionPanel extends JPanel {
             buttonGroup = new ButtonGroup();
             JRadioButton trueButton = new JRadioButton("True");
             JRadioButton falseButton = new JRadioButton("False");
+         //   trueButton.setBackground(new Color(0, 137, 165));
+          //  falseButton.setBackground(new Color(0, 137, 165));
             buttonGroup.add(trueButton);
             buttonGroup.add(falseButton);
             optionsPanel.add(trueButton);

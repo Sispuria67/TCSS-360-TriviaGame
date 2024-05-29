@@ -16,6 +16,8 @@ public class Room {
 
     private Map<String, Integer> doorQuestions;
 
+    private boolean hasPotion;
+
 
     public Room(){
         doorQuestions = new HashMap<>();
@@ -24,6 +26,14 @@ public class Room {
       //  myLeftDoor = false;
       //  myRightDoor = false;
 
+    }
+
+    public boolean hasPotion() {
+        return hasPotion;
+    }
+
+    public void setHasPotion(boolean hasPotion) {
+        this.hasPotion = hasPotion;
     }
 //these will all return false if a door in that direction does not exist
 public boolean getUpDoor(){

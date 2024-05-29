@@ -13,10 +13,41 @@ public class ArrowsPanel extends JPanel {
     private final JButton myRightArrow;
 
     public ArrowsPanel() {
+
+        ImageIcon upIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/upArrow.png");
+        ImageIcon downIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/downArrow.png");
+        ImageIcon leftIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/leftArrow.png");
+        ImageIcon rightIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/rightArrow.png");
+
+        Image image = upIcon.getImage(); // transform it
+        Image imageDown = downIcon.getImage();
+        Image imageRight = rightIcon.getImage();
+        Image imageLeft = leftIcon.getImage();
+        Image newimg = image.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image newimg2 = imageDown.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image newimg3 = imageRight.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image newimg4 = imageLeft.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        upIcon = new ImageIcon(newimg);
+        downIcon = new ImageIcon(newimg2);
+        rightIcon = new ImageIcon(newimg3);
+        leftIcon = new ImageIcon(newimg4);
+
+        myUpArrow = new JButton(upIcon);
+        myDownArrow = new JButton(downIcon);
+        myLeftArrow = new JButton(leftIcon);
+        myRightArrow = new JButton(rightIcon);
+
+        System.out.println("Left Icon: " + (leftIcon.getImage() != null));
+        System.out.println("Right Icon: " + (rightIcon.getImage() != null));
+
+
+        /*
         myUpArrow= new BasicArrowButton(BasicArrowButton.NORTH);
        myDownArrow=new BasicArrowButton(BasicArrowButton.SOUTH);
        myRightArrow=new BasicArrowButton(BasicArrowButton.EAST);
       myLeftArrow=new BasicArrowButton(BasicArrowButton.WEST);
+
+         */
        setButtonSizes();
         layoutComponents();
         //up and left are disabed to behin with
@@ -30,7 +61,9 @@ public class ArrowsPanel extends JPanel {
     }
     public void layoutComponents() {
 
-        setPreferredSize(new Dimension(300, 200));
+        this.setBackground(new Color(0, 137, 165));
+
+        setPreferredSize(new Dimension(300, 300));
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -74,11 +107,18 @@ public class ArrowsPanel extends JPanel {
     }
 
     private void setButtonSizes() {
-        //Dimension buttonSize = new Dimension(100, 100);
+        Dimension buttonSize = new Dimension(26, 26);
+        myUpArrow.setPreferredSize(buttonSize);
+        myDownArrow.setPreferredSize(buttonSize);
+        myLeftArrow.setPreferredSize(buttonSize);
+        myRightArrow.setPreferredSize(buttonSize);
+        /*
         myUpArrow.setPreferredSize(getPreferredSize());
         myDownArrow.setPreferredSize(getPreferredSize());
         myLeftArrow.setPreferredSize(getPreferredSize());
         myRightArrow.setPreferredSize(getPreferredSize());
+
+         */
     }
     public JButton getMyUpArrow() {
         return myUpArrow;

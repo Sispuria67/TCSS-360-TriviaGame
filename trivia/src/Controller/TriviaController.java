@@ -24,7 +24,7 @@ public class TriviaController extends JPanel {
 
 
 
-    private JFrame frame = new JFrame();
+    private JFrame frame = new JFrame("Trivia Game");
     private JMenu myMenu;
 
     private final ArrowsPanel myArrowsPanel;
@@ -136,6 +136,8 @@ public class TriviaController extends JPanel {
  */
 
     private void layoutComponents() {
+
+
         //setting background colors
       //  myCurrentRoomPanel.setBackground(Color.pink);
       //  myMazePanel.setBackground(Color.PINK);
@@ -147,6 +149,9 @@ public class TriviaController extends JPanel {
         mazeAndArrowsPanel.add(myArrowsPanel, BorderLayout.EAST);
         mazeAndArrowsPanel.add(myCurrentRoomPanel, BorderLayout.SOUTH);
        // mazeAndArrowsPanel.add(myQuestionPanel, BorderLayout.SOUTH);
+
+
+
 
         setLayout(new BorderLayout());
 
@@ -187,8 +192,12 @@ public class TriviaController extends JPanel {
         frame.requestFocusInWindow();
         frame.setVisible(true);
         frame.setResizable(false);
-        frame.setSize(800, 830);
+        frame.setSize(900, 830);
         frame.setTitle("Trivia Game");
+
+
+        ImageIcon icon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/doorPixel.png");
+        frame.setIconImage(icon.getImage());
       //  frame.setBackground(Color.CYAN);
 
 
@@ -218,6 +227,8 @@ public class TriviaController extends JPanel {
         myBar.add(myMenu);
         myBar.add(myMenu2);
         frame.setJMenuBar(myBar);
+
+
 
         myAbout.addActionListener(e -> JOptionPane.showMessageDialog(frame, "This is a Trivia Game \nJava Version: 21.0\nAuthor: Rohit Ark, Sado Iman\n ", "About", JOptionPane.ERROR_MESSAGE));
 

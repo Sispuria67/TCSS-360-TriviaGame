@@ -12,6 +12,10 @@ public class MazePanel extends JPanel {
     private static final long serialVersionUID = 1L;
     CharacterModel myCharacter;
     private Image doorImage;
+
+    private Image characterImage;
+    private Image potionImage;
+
     static final int cols = 5;
     static final int rows = 5;
     //starting x position
@@ -37,7 +41,9 @@ private int myNewCount;
         myCharacter.setCurrentRoom(room);
         myNewCount = 0;
 
-        //loadDoorImage();
+        loadDoorImage();
+
+        loadImages();
 
         setPreferredSize(new Dimension(cols * cellSide + originX, rows * cellSide + originY));
 
@@ -85,6 +91,12 @@ private int myNewCount;
                 //System.out.println("room[0][1]: " + room[0][1]);
             }
         }
+
+        room[3][3].setHasPotion(true);
+        room[2][1].setHasPotion(true);
+        room[0][4].setHasPotion(true);
+
+        room[4][0].setHasPotion(true);
          //room 0
         room[0][0].setUpDoor(false);
         room[0][0].setDownDoor(true);
@@ -300,6 +312,19 @@ private int myNewCount;
 
 
         super.paintComponent(g);
+
+        //draw potions
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (room[i][j].hasPotion()) {
+                    int potionX = originX + j * cellSide;
+                    int potionY = originY + i * cellSide;
+                    g.drawImage(potionImage, potionX + 10, potionY + 10, cellSide - 10, cellSide - 10, this);
+                }
+            }
+        }
+
+        g.setColor(new Color(139, 69, 19));
         for (int i = 0; i < rows + 1; i++) {
             g.drawLine(originX,originY + i * cellSide, originX+cols* cellSide, originY +i * cellSide);
         }
@@ -310,7 +335,7 @@ private int myNewCount;
 
 
         //doors
-        g.setColor(Color.orange);
+        g.setColor(new Color(139, 69, 19));
         //horizontal doors
         //i =1 means skip first row, start at second row
         for (int i = 1; i < rows ; i++) {
@@ -350,16 +375,25 @@ private int myNewCount;
         }
 
 
+
         //exit door image
         int doorX = originX + exitCol * cellSide;
         int doorY = originY + exitRow * cellSide;
-        g.drawImage(doorImage, doorX, doorY, cellSide, cellSide, this);
+        g.drawImage(doorImage, doorX + 10, doorY, cellSide, cellSide, this);
 
-        //character
+        /*
+        //character( blue circle)
         int characterX = originX + myCharacter.getCol() * cellSide;
         int characterY = originY + myCharacter.getRow() * cellSide;
         g.setColor(Color.BLUE);
         g.fillOval(characterX +20 , characterY +20 , cellSide -40 , cellSide- 40);
+
+         */
+
+        // Draw character image
+        int characterX = originX + myCharacter.getCol() * cellSide;
+        int characterY = originY + myCharacter.getRow() * cellSide;
+        g.drawImage(characterImage, characterX, characterY, cellSide, cellSide, this);
 
    //draws green square to signify exut
         /*
@@ -374,12 +408,12 @@ private int myNewCount;
 
         //exit
   //it's position in relation to the maze/square
-        int exitX = originX + exitCol * cellSide + cellSide / 3;
-        int exitY = (originY + exitRow * cellSide + cellSide /2) + 5;
+        int exitX = (originX + exitCol * cellSide + cellSide / 3) + 5  ;
+        int exitY = (originY + exitRow * cellSide + cellSide /2) + 1;
         g.setColor(Color.RED);
-        Font font = new Font("Arial", Font.BOLD, 17);
+        Font font = new Font("Arial", Font.BOLD, 11);
         g.setFont(font);
-        g.drawString("Exit", exitX, exitY);
+        g.drawString("EXIT", exitX, exitY);
 
     }
 
@@ -418,9 +452,19 @@ private int myNewCount;
         repaint();
     }
 
+
+    private void loadImages() {
+        try {
+            characterImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/mike2.png")); // Load the character image file
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void loadDoorImage() {
         try {
-            doorImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/door.png")); // Load the door image file
+            doorImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/doorPixel.png")); // Load the door image file
+            potionImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/potion3.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -435,6 +479,8 @@ private int myNewCount;
     }
 
     private void layoutComponents() {
+
+        this.setBackground(new Color(0, 137, 165));
      //   JPanel myTopCenterPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         // this.setLayout(new BorderLayout());
        // myTopCenterPanel.setBorder(BorderFactory.createTitledBorder("Map"));
