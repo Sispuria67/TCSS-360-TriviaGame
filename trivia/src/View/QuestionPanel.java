@@ -23,10 +23,13 @@ public class QuestionPanel extends JPanel {
 
     private JPanel optionsPanel;
 
+    private final JLabel gameIconLabel;
 
 
     public QuestionPanel() {
         setLayout(new BorderLayout());
+        Icon  gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/triviaQuestion.png");
+        gameIconLabel = new JLabel(gameIcon);
         myQuestion = new JLabel();
         optionsPanel = new JPanel();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
@@ -64,8 +67,16 @@ public class QuestionPanel extends JPanel {
 
     //use radio buttons
     private void layoutComponents() {
-        this.setBorder(BorderFactory.createTitledBorder("Trivia Question"));
+        //this.setBorder(BorderFactory.createTitledBorder("Trivia Question"));
         this.setBackground(new Color(0, 137, 165));
+
+       // gameIconLabel.setPreferredSize(new Dimension(30, 30));
+       // gameIconLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        this.add(gameIconLabel, BorderLayout.NORTH);
+       // this.add(myQuestion, BorderLayout.CENTER);
+
+
 
 
       //  this.add(myQuestion);
@@ -119,7 +130,8 @@ public class QuestionPanel extends JPanel {
             //if it's true/false queston
 
         } else if (question instanceof Question.ShortAnswerQuestion) {
-            myShortAnswer = new JTextField(10);
+            myShortAnswer = new JTextField(5);
+            myShortAnswer.setBackground(Color.white);
            // myShortAnswer.setSize(new Dimension(20, 10));
             optionsPanel.add(myShortAnswer);
         }

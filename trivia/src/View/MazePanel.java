@@ -31,9 +31,13 @@ public class MazePanel extends JPanel {
     private static final int exitCol = 4;
 
     private Room[][] room;
+    private final JLabel gameIconLabel;
 private int myNewCount;
 
     public MazePanel() {
+        Icon  gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/triviaGame.png");
+
+        gameIconLabel = new JLabel(gameIcon);
         //mazeGrid = new int[rows][cols];
         room = new Room[rows][cols];
         myCharacter = new CharacterModel(0, 0);
@@ -481,6 +485,7 @@ private int myNewCount;
     private void layoutComponents() {
 
         this.setBackground(new Color(0, 137, 165));
+        this.add(gameIconLabel, BorderLayout.NORTH);
      //   JPanel myTopCenterPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         // this.setLayout(new BorderLayout());
        // myTopCenterPanel.setBorder(BorderFactory.createTitledBorder("Map"));

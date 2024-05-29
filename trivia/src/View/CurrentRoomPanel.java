@@ -20,14 +20,16 @@ public class CurrentRoomPanel extends JPanel {
 
     private void layoutComponents() {
         setLayout(new BorderLayout());
+
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         // this.setBorder(BorderFactory.createTitledBorder("Current Room"));
        this.setBackground(new Color(0, 130, 120));
        // this.setBackground(new Color(0, 137, 165));
 
-        String imagePath = "/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/currentRoom.png";
+        String imagePath = "/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/currentRoom2.png";
         ImageIcon titleIcon = new ImageIcon(imagePath);
         JLabel titleLabel = new JLabel(titleIcon);
-        titleLabel.setPreferredSize(new Dimension(50, 50));
+        titleLabel.setPreferredSize(new Dimension(30, 30));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the image horizontally
 
        myText.setHorizontalAlignment(SwingConstants.CENTER);

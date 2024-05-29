@@ -12,7 +12,12 @@ public class ArrowsPanel extends JPanel {
     private final JButton myLeftArrow;
     private final JButton myRightArrow;
 
+
     public ArrowsPanel() {
+
+
+
+
 
         ImageIcon upIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/upArrow.png");
         ImageIcon downIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/downArrow.png");

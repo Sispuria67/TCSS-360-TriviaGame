@@ -161,7 +161,7 @@ public class TriviaController extends JPanel {
         add(questionPanel, BorderLayout.SOUTH);
 
         myCurrentRoomPanel.setPreferredSize(new Dimension(100, 100));
-        questionPanel.setPreferredSize(new Dimension(100, 180));
+        questionPanel.setPreferredSize(new Dimension(100, 185));
         // JPanel myTopPanel = new JPanel(new GridLayout(1, 1, 10, 10));
 
         // this.setLayout(new BorderLayout());
