@@ -21,7 +21,7 @@ public class CurrentRoomPanel extends JPanel {
     private void layoutComponents() {
         setLayout(new BorderLayout());
 
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         // this.setBorder(BorderFactory.createTitledBorder("Current Room"));
        this.setBackground(new Color(0, 130, 120));
        // this.setBackground(new Color(0, 137, 165));

@@ -23,25 +23,57 @@ public class QuestionPanel extends JPanel {
 
     private JPanel optionsPanel;
 
+    private JPanel newPanel;
+
     private final JLabel gameIconLabel;
 
 
     public QuestionPanel() {
         setLayout(new BorderLayout());
-        Icon  gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/triviaQuestion.png");
+
+        // Title panel
+        Icon gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/triviaQuestion.png");
         gameIconLabel = new JLabel(gameIcon);
+
+      newPanel = new JPanel();
+
+
+
+
+
+        gameIconLabel.setPreferredSize(new Dimension(30, 30));
+        gameIconLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
         myQuestion = new JLabel();
+       // JPanel questionTextPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        //questionTextPanel.add(myQuestion);
+
+
+
+
         optionsPanel = new JPanel();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+
+
         mySubmit = new JButton("Submit");
         mySubmit.setFont(new Font("Monospaced", Font.BOLD, 14));
 
-        add(myQuestion, BorderLayout.NORTH);
-        add(optionsPanel, BorderLayout.CENTER);
-        add(mySubmit, BorderLayout.SOUTH);
+
+        // add panels to the main panel
+        this.add(gameIconLabel, BorderLayout.NORTH);
+        this.add(newPanel, BorderLayout.CENTER);
+
+
+        newPanel.setLayout(new BorderLayout());
+        newPanel.add(myQuestion, BorderLayout.NORTH);
+
+
+        newPanel.add(optionsPanel, BorderLayout.CENTER);
+        newPanel.add(mySubmit, BorderLayout.SOUTH);
+
+
+
         layoutComponents();
-
-
     }
 
 
@@ -69,12 +101,15 @@ public class QuestionPanel extends JPanel {
     private void layoutComponents() {
         //this.setBorder(BorderFactory.createTitledBorder("Trivia Question"));
         this.setBackground(new Color(0, 137, 165));
+        newPanel.setBackground(new Color(0, 137, 165));
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
 
        // gameIconLabel.setPreferredSize(new Dimension(30, 30));
        // gameIconLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        this.add(gameIconLabel, BorderLayout.NORTH);
-       // this.add(myQuestion, BorderLayout.CENTER);
+      //  this.add(gameIconLabel, BorderLayout.NORTH);
+      //  this.add(myQuestion, BorderLayout.CENTER);
 
 
 
@@ -98,8 +133,9 @@ public class QuestionPanel extends JPanel {
 
     public void updateQuestion(Question question) {
         myQuestion.setText(question.getQuestion());
-        myQuestion.setFont(new Font("Monospaced", Font.BOLD, 14));
+        myQuestion.setFont(new Font("Monospaced", Font.BOLD, 16));
         myQuestion.setForeground(new Color(0, 220, 120));
+        optionsPanel.setBackground(new Color(0, 137, 165));
         optionsPanel.removeAll();
 
         buttonGroup = null;
@@ -112,7 +148,7 @@ public class QuestionPanel extends JPanel {
 
             for (String option : mcq.getMyOptions()) {
                 JRadioButton optionButton = new JRadioButton(option);
-                optionsPanel.setBackground(new Color(0, 137, 165));
+
                 buttonGroup.add(optionButton);
                 optionsPanel.add(optionButton);
 

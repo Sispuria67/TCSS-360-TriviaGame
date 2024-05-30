@@ -160,8 +160,8 @@ public class TriviaController extends JPanel {
 
         add(questionPanel, BorderLayout.SOUTH);
 
-        myCurrentRoomPanel.setPreferredSize(new Dimension(100, 100));
-        questionPanel.setPreferredSize(new Dimension(100, 185));
+        myCurrentRoomPanel.setPreferredSize(new Dimension(100, 80));
+        questionPanel.setPreferredSize(new Dimension(100, 205));
         // JPanel myTopPanel = new JPanel(new GridLayout(1, 1, 10, 10));
 
         // this.setLayout(new BorderLayout());
@@ -423,59 +423,137 @@ public class TriviaController extends JPanel {
     }
 
     public void assignQuestionsToDoors(){
-        //room 0
+        // room 0
         myRoom[0][0].setQuestionForDoor("right", 1);
         myRoom[0][0].setQuestionForDoor("down", 20);
 
-        //room 1
+        // room 1
         myRoom[0][1].setQuestionForDoor("right", 3);
         myRoom[0][1].setQuestionForDoor("down", 29);
         myRoom[0][1].setQuestionForDoor("left", 1);
 
-        //room 2
+        // room 2
         myRoom[0][2].setQuestionForDoor("right", 16);
         myRoom[0][2].setQuestionForDoor("down", 38);
         myRoom[0][2].setQuestionForDoor("left", 3);
 
-        //room 3
+        // room 3
         myRoom[0][3].setQuestionForDoor("right", 19);
         myRoom[0][3].setQuestionForDoor("down", 14);
         myRoom[0][3].setQuestionForDoor("left", 16);
 
-        //room 4
-        myRoom[0][4].setQuestionForDoor("right", 30);
-        myRoom[0][4].setQuestionForDoor("down", 39);
+        // room 4
+        myRoom[0][4].setQuestionForDoor("down", 18);
         myRoom[0][4].setQuestionForDoor("left", 19);
 
+        // room 5
+        myRoom[1][0].setQuestionForDoor("right", 6);
+        myRoom[1][0].setQuestionForDoor("down", 22);
+        myRoom[1][0].setQuestionForDoor("up", 20);
 
-        //room 5
-        myRoom[1][0].setQuestionForDoor("right", 15);
-        myRoom[1][0].setQuestionForDoor("down", 23);
-        myRoom[1][0].setQuestionForDoor("up", 40);
-
-        //room 6
-        myRoom[1][1].setQuestionForDoor("right", 5);
-        myRoom[1][1].setQuestionForDoor("down", 11);
-        myRoom[1][1].setQuestionForDoor("left", 1);
+        // room 6
+        myRoom[1][1].setQuestionForDoor("right", 23);
+        myRoom[1][1].setQuestionForDoor("down", 4);
+        myRoom[1][1].setQuestionForDoor("left", 6);
         myRoom[1][1].setQuestionForDoor("up", 29);
 
-        //room 7
+        // room 7
         myRoom[1][2].setQuestionForDoor("right", 25);
-        myRoom[1][2].setQuestionForDoor("down", 15);
-        myRoom[1][2].setQuestionForDoor("left", 4);
-        myRoom[1][2].setQuestionForDoor("up", 32);
+        myRoom[1][2].setQuestionForDoor("down", 11);
+        myRoom[1][2].setQuestionForDoor("left", 23);
+        myRoom[1][2].setQuestionForDoor("up", 38);
 
-        //room 8
-        myRoom[1][3].setQuestionForDoor("right", 19);
+        // room 8
+        myRoom[1][3].setQuestionForDoor("right", 9);
         myRoom[1][3].setQuestionForDoor("down", 24);
-        myRoom[1][3].setQuestionForDoor("left", 35);
-        myRoom[1][3].setQuestionForDoor("up", 36);
+        myRoom[1][3].setQuestionForDoor("left", 25);
+        myRoom[1][3].setQuestionForDoor("up", 14);
 
-        //room 9
-        myRoom[1][4].setQuestionForDoor("down", 9);
-        myRoom[1][4].setQuestionForDoor("left", 12);
-        myRoom[1][4].setQuestionForDoor("up", 7);
+        // room 9
+        myRoom[1][4].setQuestionForDoor("down", 31);
+        myRoom[1][4].setQuestionForDoor("left", 9);
+        myRoom[1][4].setQuestionForDoor("up", 18);
+
+        // room 10
+        myRoom[2][0].setQuestionForDoor("right", 26);
+        myRoom[2][0].setQuestionForDoor("down", 28);
+        myRoom[2][0].setQuestionForDoor("up", 22);
+
+        // room 11
+        myRoom[2][1].setQuestionForDoor("right", 21);
+        myRoom[2][1].setQuestionForDoor("down", 2);
+        myRoom[2][1].setQuestionForDoor("left", 26);
+        myRoom[2][1].setQuestionForDoor("up", 4);
+
+        // room 12
+        myRoom[2][2].setQuestionForDoor("right", 13);
+        myRoom[2][2].setQuestionForDoor("down", 10);
+        myRoom[2][2].setQuestionForDoor("left", 21);
+        myRoom[2][2].setQuestionForDoor("up", 11);
+
+        // room 13
+        myRoom[2][3].setQuestionForDoor("right", 17);
+        myRoom[2][3].setQuestionForDoor("down", 12);
+        myRoom[2][3].setQuestionForDoor("left", 13);
+        myRoom[2][3].setQuestionForDoor("up", 24);
+
+        // room 14
+        myRoom[2][4].setQuestionForDoor("down", 7);
+        myRoom[2][4].setQuestionForDoor("left", 17);
+        myRoom[2][4].setQuestionForDoor("up", 31);
+
+        // room 15
+        myRoom[3][0].setQuestionForDoor("right", 5);
+        myRoom[3][0].setQuestionForDoor("down", 15);
+        myRoom[3][0].setQuestionForDoor("up", 28);
+
+        // room 16
+        myRoom[3][1].setQuestionForDoor("right", 32);
+        myRoom[3][1].setQuestionForDoor("down", 8);
+        myRoom[3][1].setQuestionForDoor("left", 5);
+        myRoom[3][1].setQuestionForDoor("up", 2);
+
+        // room 17
+        myRoom[3][2].setQuestionForDoor("right", 30);
+        myRoom[3][2].setQuestionForDoor("down", 27);
+        myRoom[3][2].setQuestionForDoor("left", 32);
+        myRoom[3][2].setQuestionForDoor("up", 10);
+
+        // room 18
+        myRoom[3][3].setQuestionForDoor("right", 33);
+        myRoom[3][3].setQuestionForDoor("down", 34);
+        myRoom[3][3].setQuestionForDoor("left", 30);
+        myRoom[3][3].setQuestionForDoor("up", 12);
+
+        // room 19
+        myRoom[3][4].setQuestionForDoor("down", 36);
+        myRoom[3][4].setQuestionForDoor("left", 33);
+        myRoom[3][4].setQuestionForDoor("up", 7);
+
+        // room 20
+        myRoom[4][0].setQuestionForDoor("right", 35);
+        myRoom[4][0].setQuestionForDoor("up", 15);
+
+        // room 21
+        myRoom[4][1].setQuestionForDoor("right", 37);
+        myRoom[4][1].setQuestionForDoor("left", 35);
+        myRoom[4][1].setQuestionForDoor("up", 8);
+
+        // room 22
+        myRoom[4][2].setQuestionForDoor("right", 39);
+        myRoom[4][2].setQuestionForDoor("left", 37);
+        myRoom[4][2].setQuestionForDoor("up", 27);
+
+        // room 23
+        myRoom[4][3].setQuestionForDoor("right", 40);
+        myRoom[4][3].setQuestionForDoor("left", 39);
+        myRoom[4][3].setQuestionForDoor("up", 34);
+
+        // room 24
+        myRoom[4][4].setQuestionForDoor("left", 40);
+        myRoom[4][4].setQuestionForDoor("up", 36);
     }
+
 
 
     /**
