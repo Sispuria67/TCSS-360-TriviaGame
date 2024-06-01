@@ -8,7 +8,9 @@ public class Question {
 
     private String myType;
 
-
+    public String[] getMyOptions() {
+        return new String[0];
+    }
 
 
     public Question(int theQuestionId, String theQuestion, String theAnswer, String theType){
@@ -18,6 +20,39 @@ public class Question {
         myType = theType;
     }
 
+    public String getQuestionText() {
+        return myQuestion;
+    }
+
+    // Method to check the answer
+    public boolean checkAnswer(String selectedAnswer) {
+        if (myType.equals("shortanswer")) {
+            return myAnswer.equalsIgnoreCase(selectedAnswer); // Case-insensitive comparison for short answer
+        } else if (myType.equals("multiple")) {
+            return myAnswer.equalsIgnoreCase(selectedAnswer); // Case-insensitive comparison for multiple-choice questions
+        } else if (myType.equals("truefalse")) {
+            return myAnswer.equalsIgnoreCase(selectedAnswer); // Case-insensitive comparison for true/false questions
+        }
+        return false; // Return false for unsupported question types
+    }
+
+    // Method to get the selected answer
+    public String getSelectedAnswer(String[] options, int selectedIndex) {
+        if (myType.equals("shortanswer")) {
+            return null; // Return null for short answer questions
+        } else if (myType.equals("multiple")) {
+            if (selectedIndex >= 0 && selectedIndex < options.length) {
+                return options[selectedIndex]; // Return the selected option for multiple-choice questions
+            }
+        } else if (myType.equals("truefalse")) {
+            if (selectedIndex == 0) {
+                return "True"; // Return "True" for true/false questions if the first option is selected
+            } else if (selectedIndex == 1) {
+                return "False"; // Return "False" for true/false questions if the second option is selected
+            }
+        }
+        return null; // Return null for unsupported question types or invalid selected index
+    }
     public String getQuestion(){
         return myQuestion;
     }
@@ -40,6 +75,8 @@ public class Question {
         }
 
     }
+
+
 
     public static class TrueFalseQuestion extends Question{
         private String[] myOptions;

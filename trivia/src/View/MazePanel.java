@@ -26,26 +26,33 @@ public class MazePanel extends JPanel {
     //length of each grid square side
     static final int cellSide = 90;
 
+    private int myNewCount;
+
     //exit square
     private static final int exitRow = 4;
     private static final int exitCol = 4;
 
-    private Room[][] room;
+    private Room[][] myRoom;
     private final JLabel gameIconLabel;
-private int myNewCount;
 
-    public MazePanel() {
+    private final TriviaModel myModel;
+
+
+    public MazePanel(TriviaModel theModel) {
+        myModel = theModel;
         Icon  gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/triviaGame.png");
 
         gameIconLabel = new JLabel(gameIcon);
         //mazeGrid = new int[rows][cols];
-        room = new Room[rows][cols];
+        myRoom = new Room[rows][cols];
         myCharacter = new CharacterModel(0, 0);
         initializeDoors();
-        myCharacter.setCurrentRoom(room);
         myNewCount = 0;
+        myCharacter.setCurrentRoom(myRoom);
+
 
         loadDoorImage();
+        loadPotionImage();
 
         loadImages();
 
@@ -55,10 +62,11 @@ private int myNewCount;
 
 
     }
-
     public Room[][] getRoom(){
-        return room;
+        return myRoom;
     }
+
+
 /*
     private void initializeDoors() {
         doors = new Door[rows][cols];
@@ -80,13 +88,13 @@ private int myNewCount;
     }
 
  */
-
+/*
     private void initializeDoors() {
         room = new Room[rows][cols];
 
         for(int i =0; i <rows; i++){
             for(int j =0; j <cols; j++){
-                room[i][j] = new Room();
+                room[i][j] = new Room(myModel);
                 myNewCount++;
                // myCharacter.setRoomCounter(myNewCount);
 
@@ -309,6 +317,8 @@ private int myNewCount;
     }
 
 
+ */
+
     protected void paintComponent(Graphics g) {
         //the maze will be a 2d array where each index is either a wall, door, or walkable space
         //should we add some free spaces on maze where player doesnt need to answer question to pass
@@ -320,7 +330,7 @@ private int myNewCount;
         //draw potions
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (room[i][j].hasPotion()) {
+                if (myRoom[i][j].hasPotion()) {
                     int potionX = originX + j * cellSide;
                     int potionY = originY + i * cellSide;
                     g.drawImage(potionImage, potionX + 10, potionY + 10, cellSide - 10, cellSide - 10, this);
@@ -425,26 +435,33 @@ private int myNewCount;
     public void moveCharacter(String direction) {
    switch(direction){
            case "up":
-                myCharacter.moveUp();
-               myCharacter.setCurrentRoom(room);
+               myCharacter.moveUp();
+               myCharacter.setCurrentRoom(myRoom);
                 break;
             case "down":
                 myCharacter.moveDown();
-              myCharacter.setCurrentRoom(room);
+              myCharacter.setCurrentRoom(myRoom);
                 break;
          case"left":
               myCharacter.moveLeft();
-             myCharacter.setCurrentRoom(room);
+             myCharacter.setCurrentRoom(myRoom);
                 break;
             case "right":
                 myCharacter.moveRight();
-                myCharacter.setCurrentRoom(room);
+                myCharacter.setCurrentRoom(myRoom);
                 break;
      }
-       //myCharacter.setCurrentRoom(room[myCharacter.getRow()][myCharacter.getCol()]);
+     repaint();
+    }
+
+
+
+
+        //myCharacter.setCurrentRoom(room[myCharacter.getRow()][myCharacter.getCol()]);
 
 
    //System.out.println("CurrentRoomLocation:" + room[myCharacter.getRow()][myCharacter.getCol()]);
+        /*
         System.out.println("row:" + myCharacter.getRow() + "col:" + myCharacter.getCol());
         System.out.println("Right door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getRightDoor());
         System.out.println("Left door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getLeftDoor());
@@ -453,10 +470,111 @@ private int myNewCount;
        // System.out.println("Current room: " + myCharacter.getCurrentRoom().toString());
         System.out.println("Current room: " + myCharacter.toString());
 
-        repaint();
+
+         */
+
+
+
+
+    private void initializeDoors() {
+        myRoom = new Room[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                myRoom[i][j] = new Room(TriviaModel.getMyTriviaInstance());
+                myNewCount++;
+            }
+        }
+
+        myRoom[3][3].setHasPotion(true);
+        myRoom[2][1].setHasPotion(true);
+        myRoom[0][4].setHasPotion(true);
+        myRoom[4][0].setHasPotion(true);
+
+        // Set up room 0
+        setRoomAndDoors(myRoom[0][0], "Room 0", 0, false, true, false, true);
+
+        // Set up room 1
+        setRoomAndDoors(myRoom[0][1], "Room 1", 1, false, true, true, true);
+
+        // Set up room 2
+        setRoomAndDoors(myRoom[0][2], "Room 2", 2, false, true, true, true);
+
+        // Set up room 3
+        setRoomAndDoors(myRoom[0][3], "Room 3", 3, false, true, true, true);
+
+        // Set up room 4
+        setRoomAndDoors(myRoom[0][4], "Room 4", 4, false, true, true, false);
+
+        // Set up room 5
+        setRoomAndDoors(myRoom[1][0], "Room 5", 5, true, true, false, true);
+
+        // Set up room 6
+        setRoomAndDoors(myRoom[1][1], "Room 6", 6, true, true, true, true);
+
+        // Set up room 7
+        setRoomAndDoors(myRoom[1][2], "Room 7", 7, true, true, true, true);
+
+        // Set up room 8
+        setRoomAndDoors(myRoom[1][3], "Room 8", 8, true, true, true, true);
+
+        // Set up room 9
+        setRoomAndDoors(myRoom[1][4], "Room 9", 9, true, true, true, false);
+
+        // Set up room 10
+        setRoomAndDoors(myRoom[2][0], "Room 10", 10, true, true, false, true);
+
+        // Set up room 11
+        setRoomAndDoors(myRoom[2][1], "Room 11", 11, true, true, true, true);
+
+        // Set up room 12
+        setRoomAndDoors(myRoom[2][2], "Room 12", 12, true, true, true, true);
+
+        // Set up room 13
+        setRoomAndDoors(myRoom[2][3], "Room 13", 13, true, true, true, true);
+
+        // Set up room 14
+        setRoomAndDoors(myRoom[2][4], "Room 14", 14, true, true, true, false);
+
+        // Set up room 15
+        setRoomAndDoors(myRoom[3][0], "Room 15", 15, true, true, false, true);
+
+        // Set up room 16
+        setRoomAndDoors(myRoom[3][1], "Room 16", 16, true, true, true, true);
+
+        // Set up room 17
+        setRoomAndDoors(myRoom[3][2], "Room 17", 17, true, true, true, true);
+
+        // Set up room 18
+        setRoomAndDoors(myRoom[3][3], "Room 18", 18, true, true, true, true);
+
+        // Set up room 19
+        setRoomAndDoors(myRoom[3][4], "Room 19", 19, true, true, true, false);
+
+        // Set up room 20
+        setRoomAndDoors(myRoom[4][0], "Room 20", 20, true, false, false, true);
+
+        // Set up room 21
+        setRoomAndDoors(myRoom[4][1], "Room 21", 21, true, false, true, true);
+
+        // Set up room 22
+        setRoomAndDoors(myRoom[4][2], "Room 22", 22, true, false, true, true);
+
+        // Set up room 23
+        setRoomAndDoors(myRoom[4][3], "Room 23", 23, true, false, true, true);
+
+        // Set up room 24
+        setRoomAndDoors(myRoom[4][4], "Room 24", 24, true, false, true, false);
     }
 
+    private void setRoomAndDoors(Room room, String roomName, int roomNumber, boolean up, boolean down, boolean left, boolean right) {
+        room.setRoomName(roomName);
+        room.setRoomNumber(roomNumber);
 
+        if (up) room.getUpDoor().unlock(); else room.getUpDoor().lock();
+        if (down) room.getDownDoor().unlock(); else room.getDownDoor().lock();
+        if (left) room.getLeftDoor().unlock(); else room.getLeftDoor().lock();
+        if (right) room.getRightDoor().unlock(); else room.getRightDoor().lock();
+    }
     private void loadImages() {
         try {
             characterImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/mike2.png")); // Load the character image file
@@ -468,12 +586,20 @@ private int myNewCount;
     private void loadDoorImage() {
         try {
             doorImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/doorPixel.png")); // Load the door image file
-            potionImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/potion3.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
+    private void loadPotionImage() {
+        try {
+
+            potionImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/potionNew.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public int getCols(){
         return cols;
     }

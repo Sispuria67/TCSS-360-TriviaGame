@@ -19,7 +19,7 @@ public class QuestionFactoryF {
     }
 
     public static void createDataBase() {
-       // SQLiteDataSource ds1 = QuestionFactoryF.ds;
+       SQLiteDataSource ds1 = QuestionFactoryF.ds;
 
 
         var url = "jdbc:sqlite:practSQL.db";
@@ -101,7 +101,7 @@ public class QuestionFactoryF {
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (28, 'Who is considered the father of modern computer science?', 'Alan Turing', 'shortanswer')",
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (29, 'What color is a stop sign?', 'Red', 'shortanswer')",
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (30, 'What is the most populated country in the world?', 'India', 'shortanswer')",
-                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (31, 'Which planet is known as the Red Planet?', 'Mars', 'shortanswer')",
+                       "INSERT INTO questions (doorNumber, question, answer, type) VALUES (31, 'Who was the first president of the United States of America?', 'George Washington', 'shortanswer')",
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (32, 'What is the tallest mammal on Earth?', 'Giraffe', 'shortanswer')",
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (33, 'What is the capital of France?', 'Paris', 'shortanswer')",
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (34, 'Who wrote \"To be, or not to be\"?', 'William Shakespeare', 'shortanswer')",
@@ -206,6 +206,11 @@ public class QuestionFactoryF {
         return answerResult;
     }
 
+    public static boolean checkAnswer(int questionId, String playerAnswer) {
+        String correctAnswer = getAnswerForQuestion(questionId);
+        return correctAnswer.equalsIgnoreCase(playerAnswer); // Case-insensitive comparison
+    }
+
     public void setAnswerResult(String answerResult) {
         this.answerResult = answerResult;
     }
@@ -219,9 +224,11 @@ public class QuestionFactoryF {
     }
 
 
-
+/*
     public static void main(String[] args) {
         createDataBase();
     }
 
+
+ */
 }

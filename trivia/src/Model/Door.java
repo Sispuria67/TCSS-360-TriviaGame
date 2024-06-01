@@ -1,6 +1,11 @@
 package Model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 public class Door {
+
+    private final PropertyChangeSupport myPcs;
 
     private int myDoorStatus;
 
@@ -10,11 +15,11 @@ public class Door {
 
 
     public Door(){
+        myPcs = new PropertyChangeSupport(this);
         myDoorStatus = CLOSED;
-
     }
 
-    public Boolean getDoorIsLocked() {
+    public Boolean isLocked() {
         return myDoorStatus == LOCKED;
     }
 
@@ -23,7 +28,9 @@ public class Door {
     }
 
     public void setDoorStatus(int theDoorStatus) {
+        int oldStatus = myDoorStatus;
         myDoorStatus = theDoorStatus;
+        myPcs.firePropertyChange("doorStatus", oldStatus, myDoorStatus);
     }
 
     public void close(){
@@ -34,6 +41,14 @@ public class Door {
     }
     public void lock(){
         setDoorStatus(LOCKED);
+    }
+
+    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
+    }
+
+    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
+        myPcs.removePropertyChangeListener(theListener);
     }
     //instead of setDoorStatus should it be setUpDoor, setDownDoor, etc??
 }

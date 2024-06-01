@@ -81,5 +81,6 @@ public class CharacterModel {
         return "room number is " + currentRoom[getRow()][getCol()].getRoomName().toString();
     }
 
+
 }
 

@@ -1,5 +1,7 @@
 package View;
 
+import Model.TriviaModel;
+
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
@@ -12,8 +14,11 @@ public class ArrowsPanel extends JPanel {
     private final JButton myLeftArrow;
     private final JButton myRightArrow;
 
+    private final TriviaModel myModel;
 
-    public ArrowsPanel() {
+
+    public ArrowsPanel(final TriviaModel theModel) {
+        myModel = theModel;
 
 
 
@@ -42,8 +47,8 @@ public class ArrowsPanel extends JPanel {
         myLeftArrow = new JButton(leftIcon);
         myRightArrow = new JButton(rightIcon);
 
-        System.out.println("Left Icon: " + (leftIcon.getImage() != null));
-        System.out.println("Right Icon: " + (rightIcon.getImage() != null));
+       // System.out.println("Left Icon: " + (leftIcon.getImage() != null));
+       // System.out.println("Right Icon: " + (rightIcon.getImage() != null));
 
 
         /*

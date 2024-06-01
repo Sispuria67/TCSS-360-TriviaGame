@@ -5,10 +5,10 @@ import java.util.Map;
 
 public class Room {
 
-    private boolean myUpDoor;
-    private boolean myDownDoor;
-    private boolean myLeftDoor;
-    private boolean myRightDoor;
+    private Door myUpDoor;
+    private Door myDownDoor;
+    private Door myLeftDoor;
+    private Door myRightDoor;
 
     private String myRoomName;
 
@@ -18,35 +18,84 @@ public class Room {
 
     private boolean hasPotion;
 
+    private final TriviaModel myModel;
 
-    public Room(){
+
+
+    public Room(TriviaModel theModel){
+        myModel = theModel;
         doorQuestions = new HashMap<>();
-       // myUpDoor = false;
-       // myDownDoor = false;
-      //  myLeftDoor = false;
-      //  myRightDoor = false;
+        myUpDoor = new Door();
+        myDownDoor = new Door();
+        myLeftDoor = new Door();
+        myRightDoor = new Door();
 
     }
 
+    private Door getDoor(String direction) {
+        switch (direction) {
+            case "up":
+                return myUpDoor;
+            case "down":
+                return myDownDoor;
+            case "left":
+                return myLeftDoor;
+            case "right":
+                return myRightDoor;
+            default:
+                return null;
+        }
+    }
+
+
+
+    public void lockDoor(String direction) {
+        Door door = getDoor(direction);
+        if (door != null) {
+            door.lock();
+        }
+    }
+
+    // Unlock the door in the specified direction
+    public void unlockDoor(String direction) {
+        Door door = getDoor(direction);
+        if (door != null) {
+            door.unlock();
+        }
+    }
+    /*
+    public Room[][] getRoom(){
+        return room;
+    }
+
+     */
     public boolean hasPotion() {
         return hasPotion;
+    }
+
+    public void setQuestionForDoor(String direction, int questionId) {
+        doorQuestions.put(direction, questionId);
+    }
+
+    public Integer getQuestionForDoor(String direction) {
+        return doorQuestions.get(direction);
     }
 
     public void setHasPotion(boolean hasPotion) {
         this.hasPotion = hasPotion;
     }
 //these will all return false if a door in that direction does not exist
-public boolean getUpDoor(){
+public Door getUpDoor(){
         return myUpDoor;
 }
 
-    public boolean getDownDoor(){
+    public Door getDownDoor(){
         return myDownDoor;
     }
-    public boolean getLeftDoor(){
+    public Door getLeftDoor(){
         return myLeftDoor;
     }
-    public boolean getRightDoor(){
+    public Door getRightDoor(){
         return myRightDoor;
     }
 
@@ -65,29 +114,23 @@ public boolean getUpDoor(){
         return myRoomName;
     }
     //if a door above exists return true
-    public void setUpDoor(boolean theUpDoor){
+    public void setUpDoor(Door theUpDoor){
         myUpDoor = theUpDoor;
     }
 
     //if a door below exists return true
-    public void setDownDoor(boolean theDownDoor){
+    public void setDownDoor(Door theDownDoor){
         myDownDoor = theDownDoor;
     }
     //if door to the left exists return true
-    public void setLeftDoor(boolean theLeftDoor){
+    public void setLeftDoor(Door theLeftDoor){
         myLeftDoor = theLeftDoor;
     }
     //if door to the right exists return true
-    public void setRightDoor(boolean theRightDoor){
+    public void setRightDoor(Door theRightDoor){
         myRightDoor = theRightDoor;
     }
-    public void setQuestionForDoor(String direction, int questionId) {
-        doorQuestions.put(direction, questionId);
-    }
 
-    public Integer getQuestionForDoor(String direction) {
-        return doorQuestions.get(direction);
-    }
 
     public String toString() {
         return "Room{" +
@@ -100,6 +143,8 @@ public boolean getUpDoor(){
                 ", doorQuestions=" + doorQuestions +
                 '}';
     }
+
+
     /*
     public String toString(){
         return

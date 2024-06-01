@@ -4,19 +4,24 @@ import Model.Question;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collections;
 
 
 
 public class QuestionPanel extends JPanel {
-/*
-    private final JRadioButton myRadioOne;
-    private final JRadioButton myRadioTwo;
-    private final JRadioButton myRadioThree;
-    private final JRadioButton myRadioFour;
- */
-    private ButtonGroup buttonGroup;
+
+    private ArrayList<ActionListener> submitButtonListeners = new ArrayList<>();
+    private ButtonGroup buttonGroupMultiple;
+
+    private ButtonGroup buttonGroupTrueFalse;
+
+
     private final JButton mySubmit;
+
+    private int selectedIndex;
+
     private final JLabel myQuestion;
 
     private JTextField myShortAnswer;
@@ -26,9 +31,12 @@ public class QuestionPanel extends JPanel {
     private JPanel newPanel;
 
     private final JLabel gameIconLabel;
+    private Question currentQuestion;
+
 
 
     public QuestionPanel() {
+
         setLayout(new BorderLayout());
 
         // Title panel
@@ -39,16 +47,10 @@ public class QuestionPanel extends JPanel {
 
 
 
-
-
         gameIconLabel.setPreferredSize(new Dimension(30, 30));
         gameIconLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         myQuestion = new JLabel();
-       // JPanel questionTextPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        //questionTextPanel.add(myQuestion);
-
-
 
 
         optionsPanel = new JPanel();
@@ -77,90 +79,70 @@ public class QuestionPanel extends JPanel {
     }
 
 
-    /*
-    public JRadioButton getMyRadioOne(){
-        return myRadioOne;
-    }
-    public JRadioButton getMyRadioTwo(){
-        return myRadioTwo;
-    }
-    public JRadioButton getMyRadioThree(){
-        return myRadioThree;
-    }
-    public JRadioButton getMyRadioFour(){
-        return myRadioFour;
-    }
 
-
-     */
     public JButton getMySubmit() {
         return mySubmit;
     }
 
     //use radio buttons
     private void layoutComponents() {
-        //this.setBorder(BorderFactory.createTitledBorder("Trivia Question"));
         this.setBackground(new Color(0, 137, 165));
         newPanel.setBackground(new Color(0, 137, 165));
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
+    }
 
-       // gameIconLabel.setPreferredSize(new Dimension(30, 30));
-       // gameIconLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    public void setSelectedIndex(int selectedIndex) {
+        this.selectedIndex = selectedIndex;
+    }
 
-      //  this.add(gameIconLabel, BorderLayout.NORTH);
-      //  this.add(myQuestion, BorderLayout.CENTER);
-
-
-
-
-      //  this.add(myQuestion);
-
-       // setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        // this.add(myRadioOne);
-        // this.add(myRadioTwo);
-        // this.add(myRadioThree);
-        //this.add(myRadioFour);
-
-
-        //  this.add(mySubmit);
-
-
-        //JOptionPane.showMessageDialog(this, "The Question is: ");
+    // Method to get the selected index
+    public int getSelectedIndex() {
+        return selectedIndex;
     }
 
 
+
+
+
+    public void clearSubmitButtonListeners() {
+        for (ActionListener listener : submitButtonListeners) {
+            mySubmit.removeActionListener(listener);
+        }
+        submitButtonListeners.clear();
+    }
     public void updateQuestion(Question question) {
+        this.currentQuestion = question;
         myQuestion.setText(question.getQuestion());
         myQuestion.setFont(new Font("Monospaced", Font.BOLD, 16));
         myQuestion.setForeground(new Color(0, 220, 120));
         optionsPanel.setBackground(new Color(0, 137, 165));
         optionsPanel.removeAll();
 
-        buttonGroup = null;
+        buttonGroupMultiple = null;
+        buttonGroupTrueFalse = null;
         myShortAnswer = null;
-//if it's a multiple choice question
+
 
         if (question instanceof Question.MultipleChoiceQuestion) {
             Question.MultipleChoiceQuestion mcq = (Question.MultipleChoiceQuestion) question;
-            buttonGroup = new ButtonGroup();
+            buttonGroupMultiple = new ButtonGroup();
 
             for (String option : mcq.getMyOptions()) {
                 JRadioButton optionButton = new JRadioButton(option);
 
-                buttonGroup.add(optionButton);
+                buttonGroupMultiple.add(optionButton);
                 optionsPanel.add(optionButton);
 
             }
         }else if (question instanceof Question.TrueFalseQuestion) {
-            buttonGroup = new ButtonGroup();
+            buttonGroupTrueFalse = new ButtonGroup();
             JRadioButton trueButton = new JRadioButton("True");
             JRadioButton falseButton = new JRadioButton("False");
          //   trueButton.setBackground(new Color(0, 137, 165));
           //  falseButton.setBackground(new Color(0, 137, 165));
-            buttonGroup.add(trueButton);
-            buttonGroup.add(falseButton);
+            buttonGroupTrueFalse.add(trueButton);
+            buttonGroupTrueFalse.add(falseButton);
             optionsPanel.add(trueButton);
             optionsPanel.add(falseButton);
             //if it's true/false queston
@@ -178,8 +160,8 @@ public class QuestionPanel extends JPanel {
 
 
     public String getSelectedOption() {
-        if (buttonGroup != null) {
-            for (AbstractButton button : Collections.list(buttonGroup.getElements())) {
+        if (buttonGroupMultiple != null) {
+            for (AbstractButton button : Collections.list(buttonGroupMultiple.getElements())) {
                 if (button.isSelected()) {
                     return button.getText();
                 }
@@ -188,6 +170,42 @@ public class QuestionPanel extends JPanel {
         return null;
     }
 
+    public String getSelectedAnswer() {
+        if (buttonGroupMultiple != null) { // If it's a multiple choice question
+            int index = 0;
+            for (AbstractButton button : Collections.list(buttonGroupMultiple.getElements())) {
+                if (button.isSelected()) {
+                    // Convert index to option letter (A, B, C, D)
+                    char optionLetter = (char) ('A' + index);
+                    return String.valueOf(optionLetter);
+                }
+                index++;
+            }
+        } else if (myShortAnswer != null) { // If it's a short answer question
+            return myShortAnswer.getText(); // Return the text entered in the short answer field
+
+        } else if (buttonGroupTrueFalse != null) { // If it's a true/false question
+            // Check which true/false option is selected
+            for (AbstractButton button : Collections.list(buttonGroupTrueFalse.getElements())) {
+                if (button.isSelected()) {
+                    return button.getText(); // Return "True" or "False"
+                }
+            }
+
+
+        }
+        return null; // Return null if no option is selected or no text is entered
+    }
+
+
+
+
+
+
+
+    public Question getCurrentQuestion() {
+        return currentQuestion;
+    }
 
     public String getAnswerFieldText() {
         if (myShortAnswer != null) {
@@ -196,4 +214,7 @@ public class QuestionPanel extends JPanel {
         return null;
     }
 
+    public void addSubmitButtonListener(ActionListener theListener) {
+        mySubmit.addActionListener(theListener);
+    }
 }

@@ -1,15 +1,19 @@
 package View;
 
+import Model.TriviaModel;
+
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class CurrentRoomPanel extends JPanel {
 
+    private final TriviaModel myModel;
+
     JLabel myText;
 
-    public CurrentRoomPanel() {
+    public CurrentRoomPanel(TriviaModel theModel) {
+        myModel = theModel;
         myText = new JLabel();
 
        // this.add(myText);
