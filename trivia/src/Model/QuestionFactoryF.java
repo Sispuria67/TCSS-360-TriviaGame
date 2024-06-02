@@ -86,7 +86,7 @@ public class QuestionFactoryF {
         "INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (18, 'Spiders are insects.', 'True', 'False', 'False', 'truefalse')",
         "INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (19, 'Mount Everest is the tallest mountain in the world.', 'True', 'False', 'True', 'truefalse')",
                        " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (20, 'The moon orbits the Earth.', 'True', 'False', 'True', 'truefalse')",
-                               " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (21, 'Humans have four hearts.', 'True', 'False', 'False', 'truefalse')",
+                               " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (21, 'The Olympic Games are held every ten years.', 'True', 'False', 'False', 'truefalse')",
                        " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (22, 'The galaxy we live in is the Milky Way.', 'True', 'False', 'True', 'truefalse')",
                        "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (23, 'There are 3000 meters in a kilometer.', 'True', 'False', 'False', 'truefalse')",
                        "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (24, 'American Gothic was painted by Vincent van Gogh.', 'True', 'False', 'False', 'truefalse')",

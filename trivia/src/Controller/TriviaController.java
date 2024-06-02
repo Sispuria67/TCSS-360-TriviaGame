@@ -21,13 +21,27 @@ public class TriviaController extends JPanel {
 
     ImageIcon questionMark = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/questionMark.png");
 
+    ImageIcon celebrationIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/celebration.png");
+
+    ImageIcon exitIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/exit.png");
+    ImageIcon lockDoorIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/lockedDoor.png");
+
 
     Image resizedImage = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
     ImageIcon resizedIcon = new ImageIcon(resizedImage);
 
+    Image resizedLock = lockDoorIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+    ImageIcon lockedDoor = new ImageIcon(resizedLock);
+
 
     Image resizedQuestion = questionMark.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
     ImageIcon questionIcon = new ImageIcon(resizedQuestion);
+
+    Image resizedCelebration = celebrationIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+    ImageIcon celebration = new ImageIcon(resizedCelebration);
+
+    Image resizedExit = exitIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+    ImageIcon exitImg= new ImageIcon(resizedExit);
 
     private JFrame frame = new JFrame("Trivia Game");
     private JMenu myMenu;
@@ -495,19 +509,25 @@ public class TriviaController extends JPanel {
                 Question question = getQuestionById(questionId);
                 questionPanel.updateQuestion(question);
 
-                // Add a temporary listener for the submit button
+                // a temporary listener for the sumbit button
                 questionPanel.addSubmitButtonListener(submitEvent -> {
-                    String selectedAnswer = questionPanel.getSelectedAnswer();
-                    if (selectedAnswer != null && !selectedAnswer.isEmpty()) {
-                        if (canPass(selectedAnswer, question)) {
+                 String selectedAnswer = questionPanel.getSelectedAnswer();
+                    if(selectedAnswer!= null && !selectedAnswer.isEmpty()) {
+                if (canPass(selectedAnswer, question)) {
                             setDoorOpenSound();
                             moveCharacter(direction);
-                            questionPanel.clearSubmitButtonListeners(); //clear the listener after use
-                        } else {
-                            incorrectAnswerPanel();
+                            questionPanel.clearSubmitButtonListeners(); //clear listener
+                        } else if(!question.getAnswer().equalsIgnoreCase(selectedAnswer)) {
+                    lockDoor(direction);
+                    setWrongAnswerSound();
+                    incorrectAnswerPanel();
+                            //incorrectAnswerPanel();
                             questionPanel.clearSubmitButtonListeners(); //clear the listener after use
                             //lock the door and if player tries to go on on this door, joption pops up tp say the door is closed
-                        }
+                        }else {
+                    questionPanel.clearSubmitButtonListeners(); //clear the listener after use
+
+                }
                     } else {
                         //duplicated, also in submit button
                       //  JOptionPane.showMessageDialog(this, "Please select or enter an answer.");
@@ -576,7 +596,7 @@ private void addCurrentArrowListeners() {
 
         if (allDoorsLocked) {
             setLoseSound();
-            JOptionPane.showMessageDialog(frame, "Game Over! You are stuck with no way out.", "Game Over", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
+            JOptionPane.showMessageDialog(frame, "Game Over! You are stuck with no way out.", "Game Over", JOptionPane.INFORMATION_MESSAGE, lockedDoor);
             //frame.dispose();
         }
     }
@@ -601,7 +621,7 @@ private void addCurrentArrowListeners() {
     }
 
     public void incorrectAnswerPanel(){
-
+        setWrongAnswerSound();
         JOptionPane.showMessageDialog(this, "Incorrect Answer! This door is now locked.", "Door locked", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
 
     }
@@ -638,7 +658,7 @@ private void addCurrentArrowListeners() {
         myExit.addActionListener(e -> {
 
             if (e.getSource().equals(myExit)) {
-                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit?", "Exit Confirmation", JOptionPane.YES_NO_OPTION);
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit?", "Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, exitImg);
                 if (result == JOptionPane.YES_OPTION) {
 
                     frame.dispose();
@@ -739,18 +759,20 @@ String direction = getEnteredDirection(theEvent.getSource());
     }
 
     public void roomFourPotion(){
-        JOptionPane.showMessageDialog(this, "Hints\nLeft Door: \n Down door: ", "Room 4 Hints", JOptionPane.INFORMATION_MESSAGE, questionIcon);
+        JOptionPane.showMessageDialog(this, "\nLeft Door: The name of the tallest mountain in the world starts with letter \"E\"\nDown door: Insects have 6 legs, spiders have 8", "Room 4 Hints", JOptionPane.INFORMATION_MESSAGE, questionIcon);
     }
     public void roomElevenPotion(){
-        JOptionPane.showMessageDialog(this, "Hints\n Left Door: \nRight Door: \n Up door: \n Down door: \n", "Room 11 Hints", JOptionPane.INFORMATION_MESSAGE, questionIcon);
+        JOptionPane.showMessageDialog(this, "\nLeft Door: The highest-rated movie on IMDb stars Morgan Freeman & Tim Robbins.\nRight Door: The upcoming olympics games is this summer (2024), then again in 2028.\nUp door: This metal's symbol comes from its Latin name, Aurum.\nDown door: The color of charcoal.", "Room 11 Hints", JOptionPane.INFORMATION_MESSAGE, questionIcon);
+
     }
 
     public void roomTwentyPotion(){
-        JOptionPane.showMessageDialog(this, "Hints\n Up Door: \nRight Door:", "Room 20 Hints", JOptionPane.INFORMATION_MESSAGE, questionIcon);
+        JOptionPane.showMessageDialog(this, "\nUp Door: The initials of the person who created Java is JG.\nRight Door: Rhymes with River.", "Room 20 Hints", JOptionPane.INFORMATION_MESSAGE, questionIcon);
     }
 
     public void roomEighteenPotion(){
-        JOptionPane.showMessageDialog(this, "Hints: \n Left Door: \nRight Door: \n. Up door: \n Down door: \n", "Room 18 Hints", JOptionPane.INFORMATION_MESSAGE, questionIcon);
+        JOptionPane.showMessageDialog(this, "\nLeft Door: This country starts with the letter \"I\".\nRight Door:This city is commonly nicknamed \"the city of love\"\nUp door: This team is from Cleveland.\nDown door: This author also wrote Romeo and Juliet.", "Room 18 Hints", JOptionPane.INFORMATION_MESSAGE, questionIcon);
+
     }
 /*
     private boolean canPass(String direction) {
@@ -785,11 +807,32 @@ String direction = getEnteredDirection(theEvent.getSource());
 
  */
 
+    private void lockDoor(String direction) {
+        Room currentRoom = myRoom[myCharacter.getRow()][myCharacter.getCol()];
+        switch (direction) {
+            case "right":
+                currentRoom.getRightDoor().lock();
+                break;
+            case "left":
+                currentRoom.getLeftDoor().lock();
+                break;
+            case "up":
+                currentRoom.getUpDoor().lock();
+                break;
+            case "down":
+                currentRoom.getDownDoor().lock();
+                break;
+        }
+    }
+
+
     private boolean canPass(String selectedAnswer, Question question) {
         if (question.getAnswer().equalsIgnoreCase(selectedAnswer)) {
             correctAnswerPanel();
             return true;
         } else {
+           // JOptionPane.showMessageDialog(this, "You cannot go this way, door is locked, find another door.", "Door Locked", JOptionPane.INFORMATION_MESSAGE, questionIcon);
+
             return false;
         }
     }
@@ -848,7 +891,7 @@ String direction = getEnteredDirection(theEvent.getSource());
 
     public void checkWon(){
         if(myCharacter.getRow() == 4 && myCharacter.getCol() == 4 ){
-            JOptionPane.showMessageDialog(frame, "You won the game!!", "Game Won", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
+            JOptionPane.showMessageDialog(frame, "You won the game!!", "Game Won", JOptionPane.INFORMATION_MESSAGE, celebration);
             disableAllArrows();
             questionPanel.getMySubmit().setEnabled(false);
             setWinSound();
@@ -921,6 +964,8 @@ String direction = getEnteredDirection(theEvent.getSource());
             e.printStackTrace();
         }
     }
+
+
 
     public static void main(String[] theArgs){
 
