@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 
 import Model.Door;
@@ -57,6 +58,13 @@ public class TriviaController extends JPanel {
     private static JMenuItem myStart;
 
     private static JMenuItem myExit;
+    private static final String DOOR_FILE = "door.ser";
+    private static final String ROOM_FILE = "room.ser";
+    private static final String QUESTION_FILE = "question.ser";
+
+    private static Door door = new Door();
+    private static Room room = new Room();
+    private static QuestionFactory questionFactory = new QuestionFactory();
 
     public TriviaController(){
         myArrowsPanel = new ArrowsPanel();
@@ -78,6 +86,7 @@ public class TriviaController extends JPanel {
     }
 
     public TriviaController(final TriviaModel theModel) {
+
 
 
         // super(new GridLayout(2, 1));
@@ -218,6 +227,18 @@ public class TriviaController extends JPanel {
         myRules.addActionListener(e -> JOptionPane.showMessageDialog(frame,
                 "NA.",
                 "Rules", JOptionPane.ERROR_MESSAGE));
+        myReset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadObjects();
+            }
+        });
+        myStart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveObjects();
+            }
+        });
     }
 
     /*
@@ -231,8 +252,59 @@ public class TriviaController extends JPanel {
         return temp2;
     }
 
-
      */
+    private static void loadObjects() {
+        // Load Door object
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DOOR_FILE))) {
+            door = (Door) ois.readObject();
+            System.out.println("Door Status: " + door.getDoorStatus());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Load Room object
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ROOM_FILE))) {
+            room = (Room) ois.readObject();
+            System.out.println("Room Name: " + room.getRoomName());
+            System.out.println("Up Door: " + room.getUpDoor());
+            System.out.println("Down Door: " + room.getDownDoor());
+            System.out.println("Left Door: " + room.getLeftDoor());
+            System.out.println("Right Door: " + room.getRightDoor());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(QUESTION_FILE))) {
+            questionFactory = (QuestionFactory) ois.readObject();
+            System.out.println("QuestionFactory loaded successfully");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void saveObjects() {
+        // Serialize Door object
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DOOR_FILE))) {
+            oos.writeObject(door);
+            System.out.println("Door object has been serialized");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Serialize Room object
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ROOM_FILE))) {
+            oos.writeObject(room);
+            System.out.println("Room object has been serialized");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Serialize QuestionFactory object
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(QUESTION_FILE))) {
+            oos.writeObject(questionFactory);
+            System.out.println("QuestionFactory object has been serialized");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void addCurrentArrowListeners() {
         myArrowsPanel.addArrowListener(new ActionListener() {
             @Override

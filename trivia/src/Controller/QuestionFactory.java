@@ -3,11 +3,13 @@ package Controller;
 import org.sqlite.SQLiteDataSource;
 
 import java.io.File;
+import java.io.Serializable;
 import java.sql.*;
 
-public class QuestionFactory {
+public class QuestionFactory implements Serializable {
 
 
+    private static final long serialVersionUID = -6540508260469792206L;
     public static SQLiteDataSource ds;
     private static String answerResult;
     private static String option1Result;
