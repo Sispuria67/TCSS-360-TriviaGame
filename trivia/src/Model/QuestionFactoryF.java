@@ -19,13 +19,16 @@ public class QuestionFactoryF {
     }
 
     public static void createDataBase() {
-       SQLiteDataSource ds1 = QuestionFactoryF.ds;
+       SQLiteDataSource ds1 =  new SQLiteDataSource();
 
 
         var url = "jdbc:sqlite:practSQL.db";
 
-        File myObj = new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia");
-        myObj.delete();
+        File dbFile = new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/practSQL.db");
+
+        if(dbFile.exists()){
+            dbFile.delete();
+        }
 
 
         try {
