@@ -1,7 +1,9 @@
 package Model;
+import java.io.*;
 
-public class Room {
+public class Room implements Serializable{
 
+    private static final long serialVersionUID = 6399201422927996955L;
     private boolean myUpDoor;
     private boolean myDownDoor;
     private boolean myLeftDoor;

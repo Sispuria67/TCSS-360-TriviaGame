@@ -20,12 +20,14 @@ public class QuestionFactory {
     }
     public static void createDataBase(){
 
-//        SQLiteDataSource ds = null;
-        SQLiteDataSource ds1 = QuestionFactory.ds;
+        File dbFile = new File("test2.db");
+        if (dbFile.exists()) {
+            dbFile.delete();
+        }
+
+        SQLiteDataSource ds1 = new SQLiteDataSource();
         var url = "jdbc:sqlite:test2.db";
 
-        File myObj = new File("/Users/sadoiman/Documents/GitHub/TriviaGame/trivia");
-        myObj.delete();
         try {
             ds1 = new SQLiteDataSource();
             ds1.setUrl(url);

@@ -1,6 +1,12 @@
 package Model;
 
-public class Door {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Door implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private int myDoorStatus;
 
@@ -8,10 +14,8 @@ public class Door {
     public static final int CLOSED = 1;
     public static final int LOCKED = 2;
 
-
-    public Door(){
+    public Door() {
         myDoorStatus = CLOSED;
-
     }
 
     public void unlock() {
@@ -22,7 +26,7 @@ public class Door {
         return myDoorStatus == LOCKED;
     }
 
-    public int getDoorStatus(){
+    public int getDoorStatus() {
         return myDoorStatus;
     }
 
