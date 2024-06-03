@@ -11,14 +11,14 @@ public class QuestionFactory implements Serializable {
 
     private static final long serialVersionUID = -6540508260469792206L;
     public static SQLiteDataSource ds;
-    private static String answerResult;
-    private static String option1Result;
-    private static String questionResult;
+    private static String myAnswerResult;
+    private static String myOption1Result;
+    private static String myQuestionResult;
     public QuestionFactory(){
         createDataBase();
-        this.answerResult = QuestionFactory.answerResult;
-        this.option1Result = QuestionFactory.option1Result;
-        this.questionResult = QuestionFactory.questionResult;
+        this.myAnswerResult = QuestionFactory.myAnswerResult;
+        this.myOption1Result = QuestionFactory.myOption1Result;
+        this.myQuestionResult = QuestionFactory.myQuestionResult;
     }
     public static void createDataBase(){
 
@@ -107,10 +107,10 @@ public class QuestionFactory implements Serializable {
             //walk through each 'row' of results, grab data by column/field name
             // and print it
             while ( rs.next() ) {
-                questionResult = rs.getString( "QUESTION" );
-                option1Result = rs.getString( "option1" );
+                myQuestionResult = rs.getString( "QUESTION" );
+                myOption1Result = rs.getString( "option1" );
                 String option2 = rs.getString( "option2" );
-                answerResult = rs.getString( "ANSWER" );
+                myAnswerResult = rs.getString( "ANSWER" );
 
 //                System.out.println( "Result: Question = " + question +
 //                        ", option1 = " + option1 +
@@ -122,16 +122,16 @@ public class QuestionFactory implements Serializable {
         }
     }
     public String getAnswerResult(){
-        return answerResult;
+        return myAnswerResult;
     }
     public void setAnswerResult(String answerResult){
-        this.answerResult = answerResult;
+        this.myAnswerResult = answerResult;
     }
     public String getOption1ResultResult(){
-        return option1Result;
+        return myOption1Result;
     }
     public String getQuestionResultResult(){
-        return questionResult;
+        return myQuestionResult;
     }
 
 

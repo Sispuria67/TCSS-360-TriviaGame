@@ -62,9 +62,9 @@ public class TriviaController extends JPanel {
     private static final String ROOM_FILE = "room.ser";
     private static final String QUESTION_FILE = "question.ser";
 
-    private static Door door = new Door();
-    private static Room room = new Room();
-    private static QuestionFactory questionFactory = new QuestionFactory();
+    private static Door myDoor2 = new Door();
+    private static Room myRoom2 = new Room();
+    private static QuestionFactory myQuestionFactory2 = new QuestionFactory();
 
     public TriviaController(){
         myArrowsPanel = new ArrowsPanel();
@@ -256,25 +256,25 @@ public class TriviaController extends JPanel {
     private static void loadObjects() {
         // Load Door object
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DOOR_FILE))) {
-            door = (Door) ois.readObject();
-            System.out.println("Door Status: " + door.getDoorStatus());
+            myDoor2 = (Door) ois.readObject();
+            System.out.println("Door Status: " + myDoor2.getDoorStatus());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         // Load Room object
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ROOM_FILE))) {
-            room = (Room) ois.readObject();
-            System.out.println("Room Name: " + room.getRoomName());
-            System.out.println("Up Door: " + room.getUpDoor());
-            System.out.println("Down Door: " + room.getDownDoor());
-            System.out.println("Left Door: " + room.getLeftDoor());
-            System.out.println("Right Door: " + room.getRightDoor());
+            myRoom2 = (Room) ois.readObject();
+            System.out.println("Room Name: " + myRoom2.getRoomName());
+            System.out.println("Up Door: " + myRoom2.getUpDoor());
+            System.out.println("Down Door: " + myRoom2.getDownDoor());
+            System.out.println("Left Door: " + myRoom2.getLeftDoor());
+            System.out.println("Right Door: " + myRoom2.getRightDoor());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(QUESTION_FILE))) {
-            questionFactory = (QuestionFactory) ois.readObject();
+            myQuestionFactory2 = (QuestionFactory) ois.readObject();
             System.out.println("QuestionFactory loaded successfully");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -283,7 +283,7 @@ public class TriviaController extends JPanel {
     private static void saveObjects() {
         // Serialize Door object
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DOOR_FILE))) {
-            oos.writeObject(door);
+            oos.writeObject(myDoor2);
             System.out.println("Door object has been serialized");
         } catch (IOException e) {
             e.printStackTrace();
@@ -291,7 +291,7 @@ public class TriviaController extends JPanel {
 
         // Serialize Room object
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ROOM_FILE))) {
-            oos.writeObject(room);
+            oos.writeObject(myRoom2);
             System.out.println("Room object has been serialized");
         } catch (IOException e) {
             e.printStackTrace();
@@ -299,7 +299,7 @@ public class TriviaController extends JPanel {
 
         // Serialize QuestionFactory object
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(QUESTION_FILE))) {
-            oos.writeObject(questionFactory);
+            oos.writeObject(myQuestionFactory2);
             System.out.println("QuestionFactory object has been serialized");
         } catch (IOException e) {
             e.printStackTrace();
