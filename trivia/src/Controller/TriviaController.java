@@ -9,6 +9,7 @@ import View.QuestionPanel;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -61,6 +62,8 @@ public class TriviaController extends JPanel {
 
     private Room[][] myRoom ;
 
+    private final JButton myPlayAgainButton;
+
     private CurrentRoomPanel myCurrentRoomPanel;
 
     private Clip clip;
@@ -103,6 +106,10 @@ public class TriviaController extends JPanel {
         myCurrentRoomPanel = new CurrentRoomPanel(theModel);
         myNewCount = 0;
 
+        myPlayAgainButton = new JButton("Play Again");
+
+        myPlayAgainButton.setEnabled(false);
+
       //initializeDoors();
         myCurrentRoomPanel.setMyTextField("You are currently in Room 0");
        assignQuestionsToDoors();
@@ -122,6 +129,7 @@ public class TriviaController extends JPanel {
         layoutComponents();
         addSubmitButtonListener();
         addCurrentArrowListeners();
+        addPlayAgainButtonListener();
         addMenuListeners();
 
 
@@ -172,9 +180,13 @@ public class TriviaController extends JPanel {
        // myArrowsPanel.setBackground(Color.PINK);
       //  questionPanel.setBackground(Color.cyan);
 
+        myPlayAgainButton.setPreferredSize(new Dimension(100, 50));
+        myPlayAgainButton.setFont(new Font("Monospaced", Font.BOLD, 16));
+
         JPanel mazeAndArrowsPanel = new JPanel(new BorderLayout());
         mazeAndArrowsPanel.add(myMazePanel, BorderLayout.CENTER);
         mazeAndArrowsPanel.add(myArrowsPanel, BorderLayout.EAST);
+        mazeAndArrowsPanel.add(myPlayAgainButton, BorderLayout.NORTH);
         mazeAndArrowsPanel.add(myCurrentRoomPanel, BorderLayout.SOUTH);
        // mazeAndArrowsPanel.add(myQuestionPanel, BorderLayout.SOUTH);
 
@@ -513,19 +525,22 @@ public class TriviaController extends JPanel {
                 questionPanel.addSubmitButtonListener(submitEvent -> {
                  String selectedAnswer = questionPanel.getSelectedAnswer();
                     if(selectedAnswer!= null && !selectedAnswer.isEmpty()) {
-                if (canPass(selectedAnswer, question)) {
+                       // !myRoom[myCharacter.getRow()][myCharacter.getCol()].getUpDoor().isLocked()
+                        //the door in that direction is not locked
+                if (canPass(selectedAnswer, question) && !myRoom[myCharacter.getRow()][myCharacter.getCol()].getRightDoor().isLocked()){
                             setDoorOpenSound();
                             moveCharacter(direction);
                             questionPanel.clearSubmitButtonListeners(); //clear listener
-                        } else if(!question.getAnswer().equalsIgnoreCase(selectedAnswer)) {
+                     //   } else if(!question.getAnswer().equalsIgnoreCase(selectedAnswer)) {
+                } else {
                     lockDoor(direction);
                     setWrongAnswerSound();
                     incorrectAnswerPanel();
                             //incorrectAnswerPanel();
                             questionPanel.clearSubmitButtonListeners(); //clear the listener after use
                             //lock the door and if player tries to go on on this door, joption pops up tp say the door is closed
-                        }else {
-                    questionPanel.clearSubmitButtonListeners(); //clear the listener after use
+                       // }else {
+                   // questionPanel.clearSubmitButtonListeners(); //clear the listener after use
 
                 }
                     } else {
@@ -536,7 +551,7 @@ public class TriviaController extends JPanel {
                 });
             } else {
                 moveCharacter(direction); // no question for the door, so move character
-                checkGameOver();
+                //checkGameOver();
             }
         });
     }
@@ -597,6 +612,9 @@ private void addCurrentArrowListeners() {
         if (allDoorsLocked) {
             setLoseSound();
             JOptionPane.showMessageDialog(frame, "Game Over! You are stuck with no way out.", "Game Over", JOptionPane.INFORMATION_MESSAGE, lockedDoor);
+            disableAllArrows();
+            //when game is over enable play again button again, set enabled true.
+            //myPlayAgainButton.setEnabled(true);
             //frame.dispose();
         }
     }
@@ -710,6 +728,37 @@ String direction = getEnteredDirection(theEvent.getSource());
     }
 
      */
+
+    public void addPlayAgainButtonListener(){
+        myPlayAgainButton.addActionListener(e -> {
+            if (e.getSource().equals(myPlayAgainButton)) {
+                //move character back to sqaure one
+                //reset all questions and answers and doors
+                //unlock all doors
+                myCharacter.setRow(0);
+                myCharacter.setCol(0);
+                //repaint character
+
+
+                /*
+                myModel.setMyDice1(0);
+                myModel.setMyDice2(0);
+                myModel.setMyDiceTotal(0);
+                myModel.setMyPoint(0);
+                myCurrentRoll.reset();
+                myModel.setGameOver(false);
+                myCurrentRoll.getRoll().setEnabled(true);
+                myBetPanel.setEnabled(true);
+
+                 */
+                myPlayAgainButton.setEnabled(false);
+
+                //enable arrows for room 0 only
+               // enableAllArrows();
+
+            }
+        });
+    }
 
     public void addSubmitButtonListener() {
         questionPanel.addSubmitButtonListener(e -> {

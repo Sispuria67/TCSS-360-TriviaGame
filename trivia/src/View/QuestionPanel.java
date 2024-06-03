@@ -5,6 +5,7 @@ import Model.Question;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -59,6 +60,7 @@ public class QuestionPanel extends JPanel {
 
         mySubmit = new JButton("Submit");
         mySubmit.setFont(new Font("Monospaced", Font.BOLD, 14));
+        mySubmit.setMnemonic(KeyEvent.VK_ENTER);
 
 
         // add panels to the main panel

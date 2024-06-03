@@ -27,6 +27,15 @@ public class CharacterModel {
     public int getCol() {
         return col;
     }
+
+    public void setRow(int theRow) {
+       row = theRow;
+    }
+
+    public void setCol(int theCol) {
+        col = theCol;
+    }
+
 /*
     public int getRoomCounter() {
         return myRoomCounter;
@@ -76,11 +85,13 @@ public class CharacterModel {
         //}
 
     }
-
+/*
     public String toString() {
         return "room number is " + currentRoom[getRow()][getCol()].getRoomName().toString();
     }
 
 
+
+ */
 }
 

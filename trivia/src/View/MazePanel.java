@@ -7,8 +7,9 @@ import javax.imageio.ImageIO;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class MazePanel extends JPanel {
+public class MazePanel extends JPanel implements Serializable {
     private static final long serialVersionUID = 1L;
     CharacterModel myCharacter;
     private Image doorImage;

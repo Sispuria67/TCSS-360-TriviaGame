@@ -2,8 +2,9 @@ package Model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 
-public class Door {
+public class Door implements Serializable {
 
     private final PropertyChangeSupport myPcs;
 
