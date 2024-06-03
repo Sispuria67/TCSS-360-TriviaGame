@@ -27,7 +27,7 @@ public class TitleScreen {
         myNamePanel = new JPanel();
         myTitalPanel = new JPanel();
 
-        myFrame.setSize(700,600);
+        myFrame.setSize(700,400);
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setTitle("Trivia Maze");
 
