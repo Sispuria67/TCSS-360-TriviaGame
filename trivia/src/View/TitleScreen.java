@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TitleScreen {
-    private JFrame muFrame = new JFrame();
+    private JFrame myFrame = new JFrame();
     private JPanel myButtonPanel = new JPanel();
     private JPanel myTitalPanel = new JPanel();
     private JPanel myNamePanel = new JPanel();
@@ -22,49 +22,52 @@ public class TitleScreen {
 
     }
     public void createFrame(){
-        muFrame = new JFrame();
+        myFrame = new JFrame();
         myButtonPanel = new JPanel();
         myNamePanel = new JPanel();
         myTitalPanel = new JPanel();
 
-        muFrame.setSize(400,200);
-        muFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        muFrame.setTitle("Trivia Maze");
+        myFrame.setSize(700,600);
+        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.setTitle("Trivia Maze");
 
         myButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
         myNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
         myTitalPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
-        muFrame.add(myButtonPanel, BorderLayout.SOUTH);
-        muFrame.add(myNamePanel, BorderLayout.CENTER);
-        muFrame.add(myTitalPanel, BorderLayout.NORTH);
+        myFrame.add(myButtonPanel, BorderLayout.SOUTH);
+        myFrame.add(myNamePanel, BorderLayout.CENTER);
+        myFrame.add(myTitalPanel, BorderLayout.NORTH);
 
-
-        //frame.pack();
         addButton();
         namePanel();
         addTital();
-        muFrame.setVisible(true);
+        myFrame.setVisible(true);
 
     }
+    //Adding continue button with listener
     public void addButton(){
         JButton button = new JButton("Continue");
         myButtonPanel.add(button);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                muFrame.setVisible(false);
+                myFrame.setVisible(false);
                 TriviaController TV = new TriviaController();
                 TV.createAndShowGUI();
             }
         });
     }
+    //Adding name panel
     public void namePanel(){
         JLabel titalLabel = new JLabel("Rohit Ark & Sado Iman");
         myNamePanel.add(titalLabel);
+        titalLabel.setFont(myTitalPanel.getFont().deriveFont(Font.BOLD, 50F));
     }
+    //Adding tital
     public void addTital(){
         JLabel titalLabel = new JLabel("Trivia Game");
         myTitalPanel.add(titalLabel);
+        titalLabel.setFont(myTitalPanel.getFont().deriveFont(Font.BOLD, 70F));
     }
 
 
