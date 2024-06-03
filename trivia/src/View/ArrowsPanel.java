@@ -11,6 +11,7 @@ public class ArrowsPanel extends JPanel {
 
     private final JButton myUpArrow;
     private final JButton myDownArrow;
+    private ActionListener currentListener;
     private final JButton myLeftArrow;
     private final JButton myRightArrow;
 
@@ -64,7 +65,17 @@ public class ArrowsPanel extends JPanel {
         myUpArrow.setEnabled(false);
         myLeftArrow.setEnabled(false);
 
+
+
     }
+
+    public void removeArrowListeners() {
+            // Remove listener from all buttons
+            myUpArrow.removeActionListener(currentListener);
+            myDownArrow.removeActionListener(currentListener);
+            myLeftArrow.removeActionListener(currentListener);
+            myRightArrow.removeActionListener(currentListener);
+        }
 
     public Dimension getPreferredSize() {
         return new Dimension(100, 100);
@@ -110,6 +121,7 @@ public class ArrowsPanel extends JPanel {
     }
 
     public void addArrowListener(final ActionListener theListener) {
+       currentListener = theListener;
         this.myUpArrow.addActionListener(theListener);
         this.myDownArrow.addActionListener(theListener);
         this.myLeftArrow.addActionListener(theListener);

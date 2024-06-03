@@ -9,6 +9,8 @@ public class TriviaModel {
 
     private final PropertyChangeSupport myPcs;
 
+    private String lastEnteredDirection;
+
     private static TriviaModel myTriviaInstance;
 
     private int myBank;
@@ -18,6 +20,8 @@ public class TriviaModel {
     private String gameState;
 
     private static TriviaModel instance;
+
+
     private Room[][] rooms;
     private CharacterModel character;
     //private Map<Integer, Question> questions;
@@ -36,6 +40,16 @@ public class TriviaModel {
         String oldState = gameState;
         gameState = theState;
         this.myPcs.firePropertyChange("gameState", oldState, gameState);
+    }
+
+    public String getLastEnteredDirection() {
+        return lastEnteredDirection;
+    }
+
+    public void setLastEnteredDirection(String direction) {
+        String oldDirection = this.lastEnteredDirection;
+        this.lastEnteredDirection = direction;
+        myPcs.firePropertyChange("lastEnteredDirection", oldDirection, this.lastEnteredDirection);
     }
 
     public void setGameOver(final boolean theGameWon) {
