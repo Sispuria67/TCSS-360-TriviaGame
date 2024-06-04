@@ -28,16 +28,16 @@ public class TriviaController extends JPanel {
     private final QuestionPanel myQuestionPanel;
 
 
-    private final CharacterModel myCharacter;
+    private static CharacterModel myCharacter;
 
-    private final MazePanel myMazePanel;
+    private static MazePanel myMazePanel;
     JLabel myText;
 
     private final Door myDoor;
 
     private Room[][] myRoom ;
 
-    private CurrentRoomPanel myCurrentRoomPanel;
+    private static CurrentRoomPanel myCurrentRoomPanel;
 
 
 
@@ -62,9 +62,18 @@ public class TriviaController extends JPanel {
     private static final String ROOM_FILE = "room.ser";
     private static final String QUESTION_FILE = "question.ser";
 
+    private static final String MAZE_FILE = "maze.ser";
+
+    private static final String CHARACTER_FILE = "char.ser";
+
     private static Door myDoor2 = new Door();
-    private static Room myRoom2 = new Room();
+    private static Room[][] myRoom2;
     private static QuestionFactory myQuestionFactory2 = new QuestionFactory();
+
+
+    private static MazePanel myMazePanel2 = new MazePanel();
+
+    private static CharacterModel myCharacter2 = new CharacterModel(0, 0);
 
     public TriviaController(){
         myArrowsPanel = new ArrowsPanel();
@@ -74,6 +83,7 @@ public class TriviaController extends JPanel {
         myDoor = new Door();
         myCurrentRoomPanel = new CurrentRoomPanel();
         myRoom = myMazePanel.getRoom();
+        myRoom2 = myMazePanel.getRoom();
         myCurrentRoomPanel.setMyTextField("You are currently in Room 0");
 
         myText = new JLabel();
@@ -113,6 +123,8 @@ public class TriviaController extends JPanel {
 
 
     }
+
+
 /*
     private void initializeDoors() {
         myRoom = new Room[myMazePanel.getRows()][myMazePanel.getCols()];
@@ -254,32 +266,51 @@ public class TriviaController extends JPanel {
 
      */
     private static void loadObjects() {
-        // Load Door object
+        //load Door object
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DOOR_FILE))) {
             myDoor2 = (Door) ois.readObject();
-            System.out.println("Door Status: " + myDoor2.getDoorStatus());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        // Load Room object
+        int lastRow = 0;
+        int lastCol = 0;
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(CHARACTER_FILE))) {
+            lastRow = ois.readInt();
+            lastCol = ois.readInt();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        myCharacter.setRow(lastRow);
+        myCharacter.setCol(lastCol);
+
+        // load Room object
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ROOM_FILE))) {
-            myRoom2 = (Room) ois.readObject();
-            System.out.println("Room Name: " + myRoom2.getRoomName());
-            System.out.println("Up Door: " + myRoom2.getUpDoor());
-            System.out.println("Down Door: " + myRoom2.getDownDoor());
-            System.out.println("Left Door: " + myRoom2.getLeftDoor());
-            System.out.println("Right Door: " + myRoom2.getRightDoor());
+            myRoom2 = (Room[][]) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(QUESTION_FILE))) {
-            myQuestionFactory2 = (QuestionFactory) ois.readObject();
-            System.out.println("QuestionFactory loaded successfully");
+
+        // load Maze object
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(MAZE_FILE))) {
+            myMazePanel = (MazePanel) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+
+        myMazePanel.setRoom(myRoom2);
+        myCharacter.setCurrentRoom(myRoom2);
+
+
+        myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom2[lastRow][lastCol].getRoomName());
+
+        myMazePanel.repaint();
+        System.out.println(  "repaineted:");
     }
+
     private static void saveObjects() {
         // Serialize Door object
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DOOR_FILE))) {
@@ -288,7 +319,13 @@ public class TriviaController extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CHARACTER_FILE))) {
+            oos.writeInt(myCharacter.getRow());
+            oos.writeInt(myCharacter.getCol());
+            System.out.println("Character position saved");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // Serialize Room object
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ROOM_FILE))) {
             oos.writeObject(myRoom2);
@@ -297,10 +334,10 @@ public class TriviaController extends JPanel {
             e.printStackTrace();
         }
 
-        // Serialize QuestionFactory object
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(QUESTION_FILE))) {
-            oos.writeObject(myQuestionFactory2);
-            System.out.println("QuestionFactory object has been serialized");
+        // Serialize MAze object
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAZE_FILE))) {
+            oos.writeObject(myMazePanel);
+            System.out.println("MazePanel object has been serialized");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -487,7 +524,7 @@ public class TriviaController extends JPanel {
     public static void main(String[] theArgs){
 
             SwingUtilities.invokeLater(() -> {
-                new TriviaController(TriviaModel.getMyTriviaInstance());
+                new TriviaController();
 
 
             });

@@ -1,7 +1,11 @@
 package Model;
 
 
-public class CharacterModel {
+import java.io.Serializable;
+
+public class CharacterModel implements Serializable {
+
+    private static final long serialVersionUID = 134L;
     private int row;
    private  int col;
 
@@ -81,5 +85,12 @@ public class CharacterModel {
         return "room number is " + currentRoom[getRow()][getCol()].getRoomName().toString();
     }
 
+    public void setRow(int lastRow) {
+        this.row = lastRow;
+    }
+
+    public void setCol(int lastCol) {
+        this.col = lastCol;
+    }
 }
 

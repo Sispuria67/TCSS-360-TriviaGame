@@ -7,9 +7,10 @@ import javax.imageio.ImageIO;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class MazePanel extends JPanel {
-    private static final long serialVersionUID = 1L;
+public class MazePanel extends JPanel implements Serializable {
+    private static final long serialVersionUID = 389L;
     CharacterModel myCharacter;
     private Image doorImage;
     static final int cols = 5;
@@ -393,6 +394,10 @@ private int myNewCount;
         repaint();
     }
 
+    public void repaints(){
+        repaint();
+    }
+
     private void loadDoorImage() {
         try {
             doorImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/door.png")); // Load the door image file
@@ -418,6 +423,7 @@ private int myNewCount;
     }
 
 
-
-
+    public void setRoom(Room[][] myRoom2) {
+        room = myRoom2;
+    }
 }
