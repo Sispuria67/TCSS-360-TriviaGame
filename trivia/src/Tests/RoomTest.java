@@ -1,3 +1,7 @@
+/*
+TCSS 360
+Spirng 2024
+ */
 package Tests;
 
 import static org.junit.Assert.*;
@@ -5,6 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import Model.Room;
 
+/**
+ * Test cases for room class
+ */
 public class RoomTest {
 
     private Room room;

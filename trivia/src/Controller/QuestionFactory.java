@@ -1,3 +1,7 @@
+/*
+TCSS 360
+Spirng 2024
+ */
 package Controller;
 
 import org.sqlite.SQLiteDataSource;
@@ -6,6 +10,9 @@ import java.io.File;
 import java.io.Serializable;
 import java.sql.*;
 
+/**
+ * This Class creates the quiestion and answer database.
+ */
 public class QuestionFactory implements Serializable {
 
 

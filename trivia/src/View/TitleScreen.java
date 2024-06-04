@@ -9,6 +9,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Created a title screen with names and button to go to main game.
+ */
+
 public class TitleScreen {
     private JFrame myFrame = new JFrame();
     private JPanel myButtonPanel = new JPanel();
@@ -21,6 +25,7 @@ public class TitleScreen {
         createFrame();
 
     }
+    //Creates frame
     public void createFrame(){
         myFrame = new JFrame();
         myButtonPanel = new JPanel();

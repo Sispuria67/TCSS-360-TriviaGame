@@ -1,3 +1,7 @@
+/*
+TCSS 360
+Spirng 2024
+ */
 package Tests;
 
 import static org.junit.Assert.*;
@@ -6,6 +10,9 @@ import org.junit.Test;
 import Model.CharacterModel;
 import Model.Room;
 
+/**
+ * Tests for the character model class
+ */
 public class CharacterModelTest {
 
     private CharacterModel character;

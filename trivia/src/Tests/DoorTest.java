@@ -1,8 +1,16 @@
+/*
+TCSS 360
+Spirng 2024
+ */
+package Tests;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import Model.Door;
 
+/**
+ * Test cases for door class.
+ */
 public class DoorTest {
 
     private Door door;
