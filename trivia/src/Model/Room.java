@@ -32,7 +32,7 @@ public class Room {
 
     }
 
-    private Door getDoor(String direction) {
+    public Door getDoor(String direction) {
         switch (direction) {
             case "up":
                 return myUpDoor;

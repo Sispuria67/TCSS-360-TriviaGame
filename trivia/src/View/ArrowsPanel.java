@@ -6,8 +6,11 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ArrowsPanel extends JPanel {
+
+    private ArrayList<ActionListener> ArrowButtonListeners = new ArrayList<>();
 
     private final JButton myUpArrow;
     private final JButton myDownArrow;
@@ -170,6 +173,16 @@ public class ArrowsPanel extends JPanel {
     }
     public void setEnabledLeft(final boolean theValue) {
         myLeftArrow.setEnabled(theValue);
+    }
+
+    public void clearArrowPanelListeners() {
+        for (ActionListener listener : ArrowButtonListeners) {
+            myUpArrow.removeActionListener(listener);
+            myDownArrow.removeActionListener(listener);
+            myRightArrow.removeActionListener(listener);
+            myLeftArrow.removeActionListener(listener);
+        }
+        ArrowButtonListeners.clear();
     }
 
 }

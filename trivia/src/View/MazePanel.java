@@ -338,13 +338,16 @@ public class MazePanel extends JPanel implements Serializable {
                 }
             }
         }
+//for maze
+        Graphics2D g2d = (Graphics2D) g;
 
-        g.setColor(new Color(139, 69, 19));
+        g2d.setStroke(new BasicStroke(2));
+        g2d.setColor(new Color(139, 69, 19));
         for (int i = 0; i < rows + 1; i++) {
-            g.drawLine(originX,originY + i * cellSide, originX+cols* cellSide, originY +i * cellSide);
+            g2d.drawLine(originX,originY + i * cellSide, originX+cols* cellSide, originY +i * cellSide);
         }
         for(int i = 0;i <cols +  1; i++){
-            g.drawLine(originX + i*cellSide, originY, originX + i * cellSide, originY + rows * cellSide);
+            g2d.drawLine(originX + i*cellSide, originY, originX + i * cellSide, originY + rows * cellSide);
 
         }
 

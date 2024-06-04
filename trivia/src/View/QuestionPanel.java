@@ -131,7 +131,7 @@ public class QuestionPanel extends JPanel {
             buttonGroupMultiple = new ButtonGroup();
 
             for (String option : mcq.getMyOptions()) {
-                JRadioButton optionButton = new JRadioButton(option);
+               JRadioButton optionButton = new JRadioButton(option);
 
                 buttonGroupMultiple.add(optionButton);
                 optionsPanel.add(optionButton);
