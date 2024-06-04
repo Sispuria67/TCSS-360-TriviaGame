@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 public class MazePanel extends JPanel implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 389L;
     CharacterModel myCharacter;
     private Image doorImage;
 
@@ -587,6 +587,10 @@ public class MazePanel extends JPanel implements Serializable {
             e.printStackTrace();
         }
     }
+    public void repaints(){
+        repaint();
+    }
+
     private void loadDoorImage() {
         try {
             doorImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/doorPixel.png")); // Load the door image file
@@ -624,6 +628,7 @@ public class MazePanel extends JPanel implements Serializable {
     }
 
 
-
-
+    public void setRoom(Room[][] myRoom2) {
+        room = myRoom2;
+    }
 }

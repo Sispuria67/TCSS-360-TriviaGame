@@ -56,9 +56,9 @@ public class TriviaController extends JPanel {
     private final TriviaModel myTriviaModel;
 
 
-    private final CharacterModel myCharacter;
+    private static CharacterModel myCharacter;
 
-    private final MazePanel myMazePanel;
+    private static MazePanel myMazePanel;
     JLabel myText;
 
     private final Door myDoor;
@@ -90,8 +90,47 @@ public class TriviaController extends JPanel {
     private static JMenuItem myStart;
 
     private static JMenuItem myExit;
+    private static final String DOOR_FILE = "door.ser";
+    private static final String ROOM_FILE = "room.ser";
+    private static final String QUESTION_FILE = "question.ser";
+
+    private static final String MAZE_FILE = "maze.ser";
+
+    private static final String CHARACTER_FILE = "char.ser";
+
+    private static Door myDoor2 = new Door();
+    private static Room[][] myRoom2;
+    private static QuestionFactory myQuestionFactory2 = new QuestionFactory();
+
+
+    private static MazePanel myMazePanel2 = new MazePanel();
+
+    private static CharacterModel myCharacter2 = new CharacterModel(0, 0);
+
+    public TriviaController(){
+        myArrowsPanel = new ArrowsPanel();
+        myQuestionPanel = new QuestionPanel();
+        myMazePanel = new MazePanel();
+        myCharacter = new CharacterModel(0, 0);
+        myDoor = new Door();
+        myCurrentRoomPanel = new CurrentRoomPanel();
+        myRoom = myMazePanel.getRoom();
+        myRoom2 = myMazePanel.getRoom();
+        myCurrentRoomPanel.setMyTextField("You are currently in Room 0");
+
+        myText = new JLabel();
+        createAndShowGUI();
+        createMenuBar();
+        layoutComponents();
+        addCurrentArrowListeners();
+        addMenuListeners();
+        addRadioListeners();
+    }
 
     public TriviaController(final TriviaModel theModel) {
+
+
+
         // super(new GridLayout(2, 1));
         // super(new BorderLayout());
 
@@ -352,6 +391,20 @@ public class TriviaController extends JPanel {
         frame.setJMenuBar(myBar);
 
 
+    
+        myReset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadObjects();
+            }
+        });
+        myStart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveObjects();
+            }
+        });
+    }
 
         myAbout.addActionListener(e -> JOptionPane.showMessageDialog(frame, "This is a Trivia Game \nJava Version: 21.0\nAuthor: Rohit Ark, Sado Iman\n ", "About", JOptionPane.ERROR_MESSAGE, icon));
 
@@ -381,6 +434,84 @@ public class TriviaController extends JPanel {
 
 
 //original works
+     */
+    private static void loadObjects() {
+        //load Door object
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DOOR_FILE))) {
+            myDoor2 = (Door) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        int lastRow = 0;
+        int lastCol = 0;
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(CHARACTER_FILE))) {
+            lastRow = ois.readInt();
+            lastCol = ois.readInt();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        myCharacter.setRow(lastRow);
+        myCharacter.setCol(lastCol);
+
+        // load Room object
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ROOM_FILE))) {
+            myRoom2 = (Room[][]) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // load Maze object
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(MAZE_FILE))) {
+            myMazePanel = (MazePanel) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        myMazePanel.setRoom(myRoom2);
+        myCharacter.setCurrentRoom(myRoom2);
+
+
+        myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom2[lastRow][lastCol].getRoomName());
+
+        myMazePanel.repaint();
+        System.out.println(  "repaineted:");
+    }
+
+    private static void saveObjects() {
+        // Serialize Door object
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DOOR_FILE))) {
+            oos.writeObject(myDoor2);
+            System.out.println("Door object has been serialized");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CHARACTER_FILE))) {
+            oos.writeInt(myCharacter.getRow());
+            oos.writeInt(myCharacter.getCol());
+            System.out.println("Character position saved");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Serialize Room object
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ROOM_FILE))) {
+            oos.writeObject(myRoom2);
+            System.out.println("Room object has been serialized");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Serialize MAze object
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAZE_FILE))) {
+            oos.writeObject(myMazePanel);
+            System.out.println("MazePanel object has been serialized");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void addCurrentArrowListeners() {
         myArrowsPanel.clearArrowPanelListeners();
 

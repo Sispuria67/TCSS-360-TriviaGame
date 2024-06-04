@@ -2,11 +2,14 @@ package Model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Door implements Serializable {
 
     private final PropertyChangeSupport myPcs;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private int myDoorStatus;
 
@@ -15,8 +18,10 @@ public class Door implements Serializable {
     public static final int LOCKED = 2;
 
 
-    public Door(){
-        myPcs = new PropertyChangeSupport(this);
+   
+
+    public Door() {
+         myPcs = new PropertyChangeSupport(this);
         myDoorStatus = CLOSED;
     }
 
@@ -24,7 +29,7 @@ public class Door implements Serializable {
         return myDoorStatus == LOCKED;
     }
 
-    public int getDoorStatus(){
+    public int getDoorStatus() {
         return myDoorStatus;
     }
 
