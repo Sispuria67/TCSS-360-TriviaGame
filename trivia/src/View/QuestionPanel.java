@@ -41,7 +41,7 @@ public class QuestionPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Title panel
-        Icon gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/triviaQuestion.png");
+        Icon gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/triviaQuestion.png");
         gameIconLabel = new JLabel(gameIcon);
 
       newPanel = new JPanel();

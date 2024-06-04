@@ -30,7 +30,7 @@ public class CurrentRoomPanel extends JPanel {
        this.setBackground(new Color(0, 130, 120));
        // this.setBackground(new Color(0, 137, 165));
 
-        String imagePath = "/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/currentRoom2.png";
+        String imagePath = "/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/currentRoom2.png";
         ImageIcon titleIcon = new ImageIcon(imagePath);
         JLabel titleLabel = new JLabel(titleIcon);
         titleLabel.setPreferredSize(new Dimension(30, 30));

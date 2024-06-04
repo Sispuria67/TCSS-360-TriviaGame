@@ -41,7 +41,7 @@ public class MazePanel extends JPanel implements Serializable {
 
     public MazePanel(TriviaModel theModel) {
         myModel = theModel;
-        Icon  gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/triviaGame.png");
+        Icon  gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/triviaGame.png");
 
         gameIconLabel = new JLabel(gameIcon);
         //mazeGrid = new int[rows][cols];
@@ -581,7 +581,7 @@ public class MazePanel extends JPanel implements Serializable {
     }
     private void loadImages() {
         try {
-            characterImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/mike2.png")); // Load the character image file
+            characterImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/mike2.png")); // Load the character image file
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -589,7 +589,7 @@ public class MazePanel extends JPanel implements Serializable {
     }
     private void loadDoorImage() {
         try {
-            doorImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/doorPixel.png")); // Load the door image file
+            doorImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/doorPixel.png")); // Load the door image file
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -599,7 +599,7 @@ public class MazePanel extends JPanel implements Serializable {
     private void loadPotionImage() {
         try {
 
-            potionImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/potionNew.png"));
+            potionImage = ImageIO.read(new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/potionNew.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

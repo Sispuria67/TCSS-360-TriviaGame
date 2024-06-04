@@ -9,9 +9,6 @@ import View.QuestionPanel;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,14 +19,14 @@ public class TriviaController extends JPanel {
 
     private String lastEnteredDirection = "";
 
-    ImageIcon img = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/doorPixel.png");
+    ImageIcon img = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/doorPixel.png");
 
-    ImageIcon questionMark = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/questionMark.png");
+    ImageIcon questionMark = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/questionMark.png");
 
-    ImageIcon celebrationIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/celebration.png");
+    ImageIcon celebrationIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/celebration.png");
 
-    ImageIcon exitIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/exit.png");
-    ImageIcon lockDoorIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/lockedDoor.png");
+    ImageIcon exitIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/exit.png");
+    ImageIcon lockDoorIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/lockedDoor.png");
 
 
     Image resizedImage = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
@@ -177,25 +174,6 @@ public class TriviaController extends JPanel {
         questionPanel.setPreferredSize(new Dimension(100, 205));
         // JPanel myTopPanel = new JPanel(new GridLayout(1, 1, 10, 10));
 
-        // this.setLayout(new BorderLayout());
-        //  this.add(myMazePanel, BorderLayout.NORTH);
-        //this.add(myMazePanel);
-        // this.add(myArrowsPanel, BorderLayout.CENTER);
-        // this.add(myQuestionPanel, BorderLayout.SOUTH);
-
-        //  JPanel myTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        // myTopPanel.add(myMazePanel);
-        //  myTopPanel.add(myArrowsPanel);
-
-
-        // this.add(myArrowsPanel);
-
-        //  myTopPanel.add(myQuestionPanel);
-        // myTopPanel.add(myMazePanel, BorderLayout.CENTER);
-        //  myTopPanel.add(myArrowsPanel, BorderLayout.CENTER);
-        //this.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-        // add( myTopPanel, BorderLayout.SOUTH);
-
     }
 
     public void createAndShowGUI() {
@@ -209,7 +187,7 @@ public class TriviaController extends JPanel {
         frame.setTitle("Trivia Game");
 
 
-       icon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/doorPixel.png");
+       icon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/doorPixel.png");
         frame.setIconImage(icon.getImage());
       //  frame.setBackground(Color.CYAN);
 
@@ -378,7 +356,7 @@ public class TriviaController extends JPanel {
         myAbout.addActionListener(e -> JOptionPane.showMessageDialog(frame, "This is a Trivia Game \nJava Version: 21.0\nAuthor: Rohit Ark, Sado Iman\n ", "About", JOptionPane.ERROR_MESSAGE, icon));
 
         myRules.addActionListener(e -> JOptionPane.showMessageDialog(frame, "This a Trivia Game, the rules are as follows:\n 1. To win the game you must get to the end of the maze, marked by the exit door. \n 2. To get into the rooms you must correctly answer the trivia question at each door. " +
-                        " \n 3.If you get the answer the door will be locked and must find another door to pass through. \n 4. If all the doors are locked, you lose. \n 5. There are hints in certain rooms that can help you answer the questions for those rooms.",
+                        " \n 3. If you get the answer the door will be locked and must find another door to pass through. \n 4. If all the doors are locked, you lose. \n 5. There are hints in certain rooms that can help you answer the questions for those rooms.",
                 "Rules", JOptionPane.ERROR_MESSAGE, icon));
     }
 
@@ -400,96 +378,6 @@ public class TriviaController extends JPanel {
         disableLeftArrow();
         disableRightArrow();
     }
-
-/*
-    private void addCurrentArrowListeners() {
-        myArrowsPanel.addArrowListener(new ActionListener() {
-
-
-            @Override
-            public void actionPerformed(ActionEvent theEvent) {
-                String direction = getEnteredDirection(theEvent.getSource());
-                if (theEvent.getSource().equals(myArrowsPanel.getMyRightArrow())) {
-                   // myCharacter.moveRight();
-                  //  myMazePanel.moveCharacter("right");
-                    moveCharacter(direction);
-
-
-               updateCurrentRoomPanel();
-                enableAllArrows();
-
-                    checkWon();
-                    correctAnswerPanel();
-
-
-
-                } else if (theEvent.getSource().equals(myArrowsPanel.getMyLeftArrow())) {
-                    //myCharacter.moveLeft();
-                   // myMazePanel.moveCharacter("left");
-                   // myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom[myCharacter.getRow()][myCharacter.getCol()].getRoomName());
-                    moveCharacter(direction);
-                   enableAllArrows();
-                    checkWon();
-
-                }
-
-                //and check if space is valid
-                else if (theEvent.getSource().equals(myArrowsPanel.getMyDownArrow()) ) {
-
-                    myCharacter.moveDown();
-                    myMazePanel.moveCharacter("down");
-                  //  myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom[myCharacter.getRow()][myCharacter.getCol()].getRoomName());
-
-                   enableUpArrow();
-                    moveCharacter(direction);
-                    checkWon();
-                    incorrectAnswerPanel();
-
-
-
-                } else if (theEvent.getSource().equals(myArrowsPanel.getMyUpArrow()) ) {
-                    myCharacter.moveUp();
-                    myMazePanel.moveCharacter("up");
-                   // myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom[myCharacter.getRow()][myCharacter.getCol()].getRoomName());
-
-                   enableAllArrows();
-                    moveCharacter(direction);
-                    checkWon();
-                }
-
-
-
-            }
-
-        });
-    }
-
-*/
-
-
-
-/*
-    private void addCurrentArrowListeners() {
-
-        myArrowsPanel.addArrowListener(e -> {
-
-            String direction = getEnteredDirection(e.getSource());
-
-            int questionId = myRoom[myCharacter.getRow()][myCharacter.getCol()].getQuestionForDoor(direction);
-            Question question = getQuestionById(questionId);
-            questionPanel.updateQuestion(question);
-
-                 canPass(direction, question);
-                moveCharacter(direction);
-        });
-    }
-
-
-
-
-
- */
-
 
 
 //original works
@@ -563,88 +451,8 @@ public class TriviaController extends JPanel {
 
     }
 
-    private void setDoorAnswered() {
 
 
-    }
-
-
-
-/*
-    private void addCurrentArrowListeners() {
-        //existing listeners are removed before adding a new one
-
-        myArrowsPanel.removeArrowListeners();
-        // Add a single arrow listener
-        myArrowsPanel.addArrowListener(e -> {
-            //it takes the original direction nor the last enetered direction
-            lastEnteredDirection = getEnteredDirection(e.getSource());
-
-            // If the door is locked, show the locked door message and return early
-            if (isDoorLocked(lastEnteredDirection)) {
-                showLockedDoorMessage();
-                return;
-            }
-
-            // Get the question ID for the door in the current room and direction
-            int questionId = myRoom[myCharacter.getRow()][myCharacter.getCol()].getQuestionForDoor(lastEnteredDirection);
-
-            // If there is a question for this door
-            if (questionId != -1) {
-                Question question = getQuestionById(questionId);
-                questionPanel.updateQuestion(question);
-
-                // Remove any existing submit button listeners to prevent multiple invocations
-                questionPanel.clearSubmitButtonListeners();
-
-                // Add a temporary listener for the submit button
-                questionPanel.addSubmitButtonListener(submitEvent -> {
-                    String selectedAnswer = questionPanel.getSelectedAnswer();
-                    System.out.println("Answerss:" + selectedAnswer);
-
-                    if (selectedAnswer != null && !selectedAnswer.isEmpty()) {
-                        // Check if the answer is correct and the door is not locked
-                        if (canPass(selectedAnswer, question) && !isDoorLocked(lastEnteredDirection)) {
-                            System.out.println("canpass");
-                            setDoorOpenSound();
-                            moveCharacter(lastEnteredDirection);
-                        } else {
-                            // Lock the door and show the incorrect answer panel if the answer is wrong
-                            lockDoor(lastEnteredDirection);
-                            setWrongAnswerSound();
-                            incorrectAnswerPanel();
-                        }
-                        // Clear the submit button listener after use
-                        questionPanel.clearSubmitButtonListeners();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Please select or enter an answer.");
-                    }
-
-                    // Check if the game is over
-                    checkGameOver();
-                });
-            } else {
-                // If there is no question for the door, move the character
-                moveCharacter(lastEnteredDirection);
-            }
-        });
-    }
-
-
-
-
- */
-
-
-    /*
-private void addCurrentArrowListeners() {
-    myArrowsPanel.addArrowListener(e -> {
-        String direction = getEnteredDirection(e.getSource());
-        moveCharacter(direction);
-    });
-}
-
- */
  private boolean isDoorLocked(String direction) {
      int row = myCharacter.getRow();
      int col = myCharacter.getCol();
@@ -663,43 +471,6 @@ private void addCurrentArrowListeners() {
  }
 
 
-/*
-Oroginal works
-
-    private void moveCharacter(String direction) {
-        System.out.println("Entered move character method");
-
-        switch (direction) {
-            case "right":
-                System.out.println("Direction is: " + direction);
-                myCharacter.moveRight();
-                myMazePanel.moveCharacter("right");
-                break;
-            case "left":
-                myCharacter.moveLeft();
-                myMazePanel.moveCharacter("left");
-                break;
-            case "down":
-                myCharacter.moveDown();
-                myMazePanel.moveCharacter("down");
-                break;
-            case "up":
-                myCharacter.moveUp();
-                myMazePanel.moveCharacter("up");
-                break;
-        }
-        System.out.println("Current location: " + myRoom[myCharacter.getRow()][myCharacter.getCol()].getRoomName() );
-        updateCurrentRoomPanel();
-        enableAllArrows();
-        checkWon();
-        checkGameOver();
-        showHint();
-        //System.out.println("Check won: " );
-
-    }
-
- */
-
     private void moveCharacter(String direction) {
         System.out.println("Entered move character method");
         System.out.println("Move character method directon: " + direction);
@@ -710,10 +481,13 @@ Oroginal works
 
         switch (direction) {
             case "right":
-                if (myRoom[row][col].getRightDoor() != null && !myRoom[row][col].getRightDoor().isLocked()) {
+                if (myRoom[row][col].getRightDoor() != null ) {
+
+                  if(!myRoom[row][col].getRightDoor().isLocked())
                     myRoom[row][col].getRightDoor().setDoorStatus(Door.LOCKED);
                     System.out.println("Right door locked? " + myRoom[row][col].getRightDoor().isLocked() );
                     myCharacter.moveRight();
+                   // myRoom[row][col].getRightDoor().setDoorStatus(Door.LOCKED);
                     myMazePanel.moveCharacter("right");
                     canMove = true;
 
@@ -727,13 +501,14 @@ Oroginal works
                 break;
             case "left":
 
-                if (myRoom[row][col].getLeftDoor() != null && !myRoom[row][col].getLeftDoor().isLocked()) {
+                if (myRoom[row][col].getLeftDoor() != null){
+                  if(!myRoom[row][col].getLeftDoor().isLocked())
                     myRoom[row][col].getLeftDoor().setDoorStatus(Door.LOCKED);
                     System.out.println("Left door locked? " + myRoom[row][col].getLeftDoor().isLocked() );
                     myCharacter.moveLeft();
                     myMazePanel.moveCharacter("left");
                     canMove = true;
-
+                   // myRoom[row][col].getLeftDoor().setDoorStatus(Door.LOCKED);
                    // myArrowsPanel.setEnabledLeft(false);
                    // showQuestionAlreadyAnsweredMessage();
                 } else {
@@ -743,12 +518,14 @@ Oroginal works
                 break;
             case "down":
 
-                if (myRoom[row][col].getDownDoor() != null && !myRoom[row][col].getDownDoor().isLocked()) {
+                if (myRoom[row][col].getDownDoor() != null)
+                    if(!myRoom[row][col].getDownDoor().isLocked()) {
                     myRoom[row][col].getDownDoor().setDoorStatus(Door.LOCKED);
                     System.out.println("Down door locked? " + myRoom[row][col].getDownDoor().isLocked() );
                     myCharacter.moveDown();
                     myMazePanel.moveCharacter("down");
                     canMove = true;
+                      //  myRoom[row][col].getDownDoor().setDoorStatus(Door.LOCKED);
 
                    // myArrowsPanel.setEnabledDown(false);
                     //showQuestionAlreadyAnsweredMessage();
@@ -760,12 +537,14 @@ Oroginal works
                 break;
             case "up":
 
-                if (myRoom[row][col].getUpDoor() != null && !myRoom[row][col].getUpDoor().isLocked()) {
+                if (myRoom[row][col].getUpDoor() != null)
+                    if(!myRoom[row][col].getUpDoor().isLocked()) {
                     myRoom[row][col].getUpDoor().setDoorStatus(Door.LOCKED);
                     System.out.println("Up door locked? " + myRoom[row][col].getUpDoor().isLocked() );
                     myCharacter.moveUp();
                     myMazePanel.moveCharacter("up");
                     canMove = true;
+                       // myRoom[row][col].getUpDoor().setDoorStatus(Door.LOCKED);
 
                     //myArrowsPanel.setEnabledUp(false);
                     //showQuestionAlreadyAnsweredMessage();
@@ -901,36 +680,6 @@ Oroginal works
 
 
     }
-/*
-    public boolean canPass() {
-        //for loop that iterates entire maze
-        //if myDoor.getDoorIsLocked then pop up a question
-        if (myCharacter.getRow() == 0 && myCharacter.getRow() == 0){
-            return false;
-    }else{
-        return true;
-
-    }
-
-}
-
-
- */
-    /*
-String direction = getEnteredDirection(theEvent.getSource());
-    Integer questionId = myRoom[myCharacter.getRow()][myCharacter.getCol()].getQuestionForDoor(direction);
-                if (questionId != null) {
-        // Fetch the question details from the database
-        Question question = getQuestionById(questionId);
-
-        if (question != null) {
-            // Update the question panel with the new Question object
-            questionPanel.updateQuestion(question);
-        }
-
-    }
-
-     */
 
     public void addPlayAgainButtonListener(){
         myPlayAgainButton.addActionListener(e -> {
@@ -1027,38 +776,6 @@ String direction = getEnteredDirection(theEvent.getSource());
         JOptionPane.showMessageDialog(this, "\nLeft Door: This country starts with the letter \"I\".\nRight Door:This city is commonly nicknamed \"the city of love\"\nUp door: This team is from Cleveland.\nDown door: This author also wrote Romeo and Juliet.", "Room 18 Hints", JOptionPane.INFORMATION_MESSAGE, questionIcon);
 
     }
-/*
-    private boolean canPass(String direction) {
-        int questionId = myRoom[myCharacter.getRow()][myCharacter.getCol()].getQuestionForDoor(direction);
-        if (questionId != -1) {
-            Question question = getQuestionById(questionId);
-            //display question
-            questionPanel.updateQuestion(question);
-          //  int response = JOptionPane.showConfirmDialog(this, question.getQuestionText(), "Answer the question", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-           // if (response == JOptionPane.YES_OPTION) {
-                //String selectedAnswer = questionPanel.getSelectedOption();
-            String selectedAnswer = questionPanel.getSelectedAnswer();
-           System.out.println("Correct Answer in canpass: " + question.getAnswer() );
-            System.out.println("Selected Answer in canpass: " + selectedAnswer);
-                if (question.getAnswer().equalsIgnoreCase(selectedAnswer)) {
-                    System.out.println("Correct Answer: " + question.getAnswer() );
-                    System.out.println("Answer equals: "  + question.getAnswer().equalsIgnoreCase(selectedAnswer));
-                    JOptionPane.showMessageDialog(this, "Correct Answer! You may now proceed through this door.", "Door Unlocked", JOptionPane.INFORMATION_MESSAGE);
-                    myRoom[myCharacter.getRow()][myCharacter.getCol()].unlockDoor(direction);
-                    return true;
-                } else {
-                    JOptionPane.showMessageDialog(this, "Incorrect Answer! This door is now locked.", "Door locked", JOptionPane.INFORMATION_MESSAGE);
-                    myRoom[myCharacter.getRow()][myCharacter.getCol()].lockDoor(direction);
-                    checkGameOver();
-                    return false;
-                }
-           // }
-        }
-        return true;
-    }
-
-
- */
 
     private void lockDoor(String direction) {
         Room currentRoom = myRoom[myCharacter.getRow()][myCharacter.getCol()];
