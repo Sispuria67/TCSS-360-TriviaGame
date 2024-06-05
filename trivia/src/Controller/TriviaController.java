@@ -552,7 +552,9 @@ public class TriviaController extends JPanel {
     private void addCurrentArrowListeners() {
         myArrowsPanel.clearArrowPanelListeners();
 
+
         myArrowsPanel.addArrowListener(e -> {
+            checkGameOver();
 
             String direction = getEnteredDirection(e.getSource());
             System.out.println("String directon: " + direction);
@@ -578,6 +580,7 @@ public class TriviaController extends JPanel {
 
  */
             if (questionId != -1) {
+                //checkGameOver(); //doesnt execute
                 Question question = getQuestionById(questionId);
                 questionPanel.updateQuestion(question);
 
@@ -587,6 +590,7 @@ public class TriviaController extends JPanel {
                     // myRoom[myCharacter.getRow()][myCharacter.getCol()].getQuestionForDoor(direction);
                     lockDoor(direction);
                     showQuestionAlreadyAnsweredMessage();
+                    checkGameOver();
                 }
 
                 // a temporary listener for the sumbit button
@@ -609,11 +613,13 @@ public class TriviaController extends JPanel {
 
                             System.out.println("question id: " + questionId);
 
+                            checkGameOver();
 
                       }else {
                             lockDoor(direction);
                         // setWrongAnswerSound();
                         incorrectAnswerPanel();
+                            checkGameOver();
                         // myArrowsPanel.clearArrowPanelListeners();
                         //incorrectAnswerPanel();
                         questionPanel.clearSubmitButtonListeners(); //clear the listener after use
@@ -623,42 +629,27 @@ public class TriviaController extends JPanel {
 
                     }
                 }
+
                      else {
                         //shows up multiple times
                       //  JOptionPane.showMessageDialog(this, "Please select or enter an answer.", "Error", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
                     }
 
-                   // checkGameOver(); //original
+
+                   // checkGameOver(); //original, works but executes multiple times, connected to submit button
                 });
-
-
+               //checkGameOver(); //only works in some cases
             } else {
 
-                moveCharacter(direction); // no question for the door,so move character
+                //moveCharacter(direction); // no question for the door,so move character
                 //checkGameOver();
             }
-            checkGameOver();
-
         });
+        //checkGameOver(); //does not work
 
         //lockDoorsBasedOnAnsweredQuestions();
-       // checkGameOver(); //doesnt execute
-
     }
 
-    private void lockDoorsBasedOnAnsweredQuestions() {
-        for (int i = 0; i < myRoom.length; i++) {
-            for (int j = 0; j < myRoom[i].length; j++) {
-                for (String direction : directions2) {
-                    int questionId = myRoom[i][j].getQuestionForDoor(direction);
-                    if (questionId != -1 && isQuestionAnswered(questionId)) {
-                        Door door = myRoom[i][j].getDoor(direction);
-                        door.setDoorStatus(Door.LOCKED);
-                    }
-                }
-            }
-        }
-    }
 
     private void addAnsweredQuestionId(int questionId) {
         answeredQuestionIds.add(questionId);

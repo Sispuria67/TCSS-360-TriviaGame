@@ -24,7 +24,7 @@ public class QuestionFactoryF {
 
         var url = "jdbc:sqlite:practSQL.db";
 
-        File dbFile = new File("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/practSQL.db");
+        File dbFile = new File("practSQL.db");
 
         if(dbFile.exists()){
             dbFile.delete();
