@@ -5,6 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serial;
 import java.io.Serializable;
 
+
 public class Door implements Serializable {
 
     private final PropertyChangeSupport myPcs;
@@ -49,12 +50,6 @@ public class Door implements Serializable {
         setDoorStatus(LOCKED);
     }
 
-    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
-        myPcs.addPropertyChangeListener(theListener);
-    }
 
-    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
-        myPcs.removePropertyChangeListener(theListener);
-    }
     //instead of setDoorStatus should it be setUpDoor, setDownDoor, etc??
 }

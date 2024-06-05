@@ -3,12 +3,16 @@ package Controller;
 import Model.*;
 import View.*;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
+
 
 import static Model.QuestionFactoryF.getQuestionById;
 
@@ -16,6 +20,12 @@ import static Model.QuestionFactoryF.getQuestionById;
 public class TriviaController extends JPanel {
 
     private String lastEnteredDirection = "";
+
+    ArrayList<String> directions2 = new ArrayList<>();
+
+
+
+    private ArrayList<Integer> answeredQuestionIds = new ArrayList<>();
 
     ImageIcon img = new ImageIcon("trivia/src/Images/doorPixel.png");
 
@@ -49,6 +59,10 @@ public class TriviaController extends JPanel {
    // private final TitleScreen myTitleScreen;
 
     private int myNewCount;
+
+
+    private byte[] gameIconData;
+    private byte[] doorIconData;
 
     private final ArrowsPanel myArrowsPanel;
     private final QuestionPanel questionPanel;
@@ -153,6 +167,10 @@ public class TriviaController extends JPanel {
         myPlayAgainButton = new JButton("Play Again");
 
 
+        directions2.add("up");
+        directions2.add("down");
+        directions2.add("left");
+        directions2.add("right");
 
         myPlayAgainButton.setEnabled(false);
 
@@ -177,6 +195,16 @@ public class TriviaController extends JPanel {
         addCurrentArrowListeners();
         addPlayAgainButtonListener();
         addMenuListeners();
+
+        try {
+            BufferedImage gameIcon = ImageIO.read(new File("trivia/src/Images/triviaGame.png"));
+            BufferedImage doorIcon = ImageIO.read(new File("trivia/src/Images/doorPixel.png"));
+
+           // gameIconData = serializeImage(gameIcon);
+            //doorIconData = serializeImage(doorIcon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
 
@@ -446,6 +474,12 @@ public class TriviaController extends JPanel {
             e.printStackTrace();
         }
 
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(QUESTION_FILE))) {
+            myQuestionFactory2 = (QuestionFactoryF) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         int lastRow = 0;
         int lastCol = 0;
 
@@ -521,68 +555,118 @@ public class TriviaController extends JPanel {
         myArrowsPanel.addArrowListener(e -> {
 
             String direction = getEnteredDirection(e.getSource());
-            System.out.print("String directon: " + direction);
+            System.out.println("String directon: " + direction);
             int questionId = myRoom[myCharacter.getRow()][myCharacter.getCol()].getQuestionForDoor(direction);
+
             //checkGameOver();
 
             if (isDoorLocked(direction) ){
                 showLockedDoorMessage();
                 return;
             }
+
+
+/*
+            if (questionId != -1) {
+                if (isQuestionAnswered(questionId)) {
+                    Door door = myRoom[myCharacter.getRow()][myCharacter.getCol()].getDoor(direction);
+                    door.setDoorStatus(Door.LOCKED);
+
+                }
+            }
+
+
+ */
             if (questionId != -1) {
                 Question question = getQuestionById(questionId);
                 questionPanel.updateQuestion(question);
 
+                if(isQuestionAnswered(questionId)) {
+                    System.out.println("accessd quesiton andwered");
+                    //if the question ID is already in the list, get the direction of the door that id is in and lock it
+                    // myRoom[myCharacter.getRow()][myCharacter.getCol()].getQuestionForDoor(direction);
+                    lockDoor(direction);
+                    showQuestionAlreadyAnsweredMessage();
+                }
+
                 // a temporary listener for the sumbit button
                 questionPanel.addSubmitButtonListener(submitEvent -> {
-                 String selectedAnswer = questionPanel.getSelectedAnswer();
+                    String selectedAnswer = questionPanel.getSelectedAnswer();
 
 
-                    if(selectedAnswer!= null && !selectedAnswer.isEmpty()) {
-                       // !myRoom[myCharacter.getRow()][myCharacter.getCol()].getUpDoor().isLocked()
+                    if (selectedAnswer != null && !selectedAnswer.isEmpty()) {
+                        // !myRoom[myCharacter.getRow()][myCharacter.getCol()].getUpDoor().isLocked()
                         //the door in that direction is not locked, this is only checking right door
 
-                if (canPass(selectedAnswer, question) && !myRoom[myCharacter.getRow()][myCharacter.getCol()].getDoor(direction).isLocked()){
+                        if (canPass(selectedAnswer, question) && !myRoom[myCharacter.getRow()][myCharacter.getCol()].getDoor(direction).isLocked() && !isQuestionAnswered(questionId)) {
 
                             setDoorOpenSound();
                             moveCharacter(direction);
-                            questionPanel.clearSubmitButtonListeners(); //clear listener
-                   // myArrowsPanel.clearArrowPanelListeners();
-                     //   } else if(!question.getAnswer().equalsIgnoreCase(selectedAnswer)) {
-                } else {
-                    lockDoor(direction);
-                   // setWrongAnswerSound();
-                    incorrectAnswerPanel();
-                   // myArrowsPanel.clearArrowPanelListeners();
-                            //incorrectAnswerPanel();
-                            questionPanel.clearSubmitButtonListeners(); //clear the listener after use
-                            //lock the door and if player tries to go on on this door, joption pops up tp say the door is closed
-                       // }else {
-                   // questionPanel.clearSubmitButtonListeners(); //clear the listener after use
+                            //updateDoorLockStatus(myCharacter.getRow(), myCharacter.getCol());
+                            questionPanel.clearSubmitButtonListeners();
+                            addAnsweredQuestionId(questionId);
+                            System.out.println("question answered: " + isQuestionAnswered(questionId));
 
+                            System.out.println("question id: " + questionId);
+
+
+                      }else {
+                            lockDoor(direction);
+                        // setWrongAnswerSound();
+                        incorrectAnswerPanel();
+                        // myArrowsPanel.clearArrowPanelListeners();
+                        //incorrectAnswerPanel();
+                        questionPanel.clearSubmitButtonListeners(); //clear the listener after use
+                        //lock the door and if player tries to go on on this door, joption pops up tp say the door is closed
+                        // }else {
+                        // questionPanel.clearSubmitButtonListeners(); //clear the listener after use
+
+                    }
                 }
-                    } else {
-                       // questionPanel.clearSubmitButtonListeners();
-                       // myArrowsPanel.clearArrowPanelListeners();
-
-                     //   checkGameOver();
-                        //duplicated, also in submit button
-                        //JOptionPane.showMessageDialog(this, "Please select or enter an answer.", "Error", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
+                     else {
+                        //shows up multiple times
+                      //  JOptionPane.showMessageDialog(this, "Please select or enter an answer.", "Error", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
                     }
 
-                    checkGameOver();
+                   // checkGameOver(); //original
                 });
 
 
             } else {
 
-                moveCharacter(direction); // no question for the door, so move character
+                moveCharacter(direction); // no question for the door,so move character
                 //checkGameOver();
             }
+            checkGameOver();
 
         });
+
+        //lockDoorsBasedOnAnsweredQuestions();
        // checkGameOver(); //doesnt execute
 
+    }
+
+    private void lockDoorsBasedOnAnsweredQuestions() {
+        for (int i = 0; i < myRoom.length; i++) {
+            for (int j = 0; j < myRoom[i].length; j++) {
+                for (String direction : directions2) {
+                    int questionId = myRoom[i][j].getQuestionForDoor(direction);
+                    if (questionId != -1 && isQuestionAnswered(questionId)) {
+                        Door door = myRoom[i][j].getDoor(direction);
+                        door.setDoorStatus(Door.LOCKED);
+                    }
+                }
+            }
+        }
+    }
+
+    private void addAnsweredQuestionId(int questionId) {
+        answeredQuestionIds.add(questionId);
+    }
+
+
+    private boolean isQuestionAnswered(int questionId) {
+        return answeredQuestionIds.contains(questionId);
     }
 
 
@@ -694,13 +778,14 @@ public class TriviaController extends JPanel {
             updateCurrentRoomPanel();
             enableAllArrows();
             checkWon();
+            //updateDoorLockStatus(myCharacter.getRow(), myCharacter.getCol());
            // checkGameOver();
             showHint();
         }
     }
 
     private void showQuestionAlreadyAnsweredMessage() {
-        JOptionPane.showMessageDialog(frame, "You have already answered the question for this door.", "Question Answered", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame, "You have already answered the question for this door.", "Question Answered", JOptionPane.INFORMATION_MESSAGE, lockedDoor);
     }
 
 
@@ -991,7 +1076,7 @@ public class TriviaController extends JPanel {
         }
     }
 
-    
+
 
 
     private void setWrongAnswerSound() {
