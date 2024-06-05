@@ -54,6 +54,8 @@ public class TriviaController extends JPanel {
     private final QuestionPanel questionPanel;
 
     private final TriviaModel myTriviaModel;
+    private JOptionPane myFailed = new JOptionPane();
+    private JButton myFailButton= new JButton("Play Again");
 
 
     private static CharacterModel myCharacter;
@@ -727,15 +729,33 @@ public class TriviaController extends JPanel {
 
         if (allDoorsLocked) {
             setLoseSound();
-            JOptionPane.showMessageDialog(frame, "Game Over! You are stuck with no way out.", "Game Over", JOptionPane.INFORMATION_MESSAGE, lockedDoor);
+            //JOptionPane.showMessageDialog(frame, "Game Over! You are stuck with no way out.", "Game Over", JOptionPane.INFORMATION_MESSAGE, lockedDoor);
+            newGameOption();
             disableAllArrows();
             //when game is over enable play again button again, set enabled true.
             myPlayAgainButton.setEnabled(true);
 
-            //addPlayAgainButtonListener();
+            addPlayAgainButtonListener();
             return;
             //frame.dispose();
         }
+    }
+    private void newGameOption(){
+        myFailButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createAndShowGUI();
+                resetGame();
+                myPlayAgainButton.setEnabled(false);
+            }
+        });
+
+        myFailed.setMessage("Game Over2! You are stuck with no way out.");
+        myFailed.setMessageType(JOptionPane.PLAIN_MESSAGE);
+        myFailed.setOptionType(JOptionPane.DEFAULT_OPTION);
+        myFailed.add(myFailButton);
+        JDialog dialog = myFailed.createDialog("Action Listener Example");
+        dialog.setVisible(true);
     }
 
     // Method to fetch question text based on questionId
@@ -858,6 +878,17 @@ public class TriviaController extends JPanel {
             }
         });
     }
+    public void addFailedButton(){
+        myFailButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createAndShowGUI();
+                resetGame();
+                myPlayAgainButton.setEnabled(false);
+            }
+        });
+    }
+
     private void resetGame(){
         myTriviaModel.reset(); // Reset the game model
         myMazePanel.reset();   // Reset the maze panel (assuming MazePanel has a reset method)
