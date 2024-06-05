@@ -23,6 +23,8 @@ public class TriviaController extends JPanel {
 
     ArrayList<String> directions2 = new ArrayList<>();
 
+    private FloatControl volumeControl;
+
 
 
     private ArrayList<Integer> answeredQuestionIds = new ArrayList<>();
@@ -573,10 +575,8 @@ public class TriviaController extends JPanel {
                 if (isQuestionAnswered(questionId)) {
                     Door door = myRoom[myCharacter.getRow()][myCharacter.getCol()].getDoor(direction);
                     door.setDoorStatus(Door.LOCKED);
-
                 }
             }
-
 
  */
             if (questionId != -1) {
@@ -700,7 +700,7 @@ public class TriviaController extends JPanel {
                     myMazePanel.moveCharacter("right");
                     canMove = true;
 
-                  //  myArrowsPanel.setEnabledRight(false);  // disable right arrow
+                  //  myArrowsPanel.setEnabledRight(false);  //disables right arrow
                    // showQuestionAlreadyAnsweredMessage();
                 } else if(myRoom[row][col].getRightDoor().isLocked()){
                     showQuestionAlreadyAnsweredMessage();
@@ -1077,12 +1077,42 @@ public class TriviaController extends JPanel {
             File file = new File(fileName);
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
+
             clip.open(inputStream);
+            setVolume(70);
             clip.setFramePosition(0);
             clip.start();
+
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setVolume(int volume) {
+        if (clip == null) return;
+
+        // Try to get MASTER_GAIN control
+        FloatControl gainControl = null;
+        if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        }
+
+        // If MASTER_GAIN is not supported, try VOLUME control
+        if (gainControl == null && clip.isControlSupported(FloatControl.Type.VOLUME)) {
+            gainControl = (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
+        }
+
+        // If neither control is supported, output an error message
+        if (gainControl == null) {
+            System.err.println("Volume control not supported.");
+            return;
+        }
+
+        // Set the volume using the available control
+        float min = gainControl.getMinimum();
+        float max = gainControl.getMaximum();
+        float value = min + (max - min) * (volume / 100.0f);
+        gainControl.setValue(value);
     }
     private void setWinSound() {
         try {

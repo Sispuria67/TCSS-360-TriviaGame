@@ -193,8 +193,6 @@ public class QuestionPanel extends JPanel {
                     return button.getText(); // Return "True" or "False"
                 }
             }
-
-
         }
         return null; // Return null if no option is selected or no text is entered
     }

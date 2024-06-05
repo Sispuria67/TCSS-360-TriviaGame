@@ -3,10 +3,13 @@ package View;
 import Controller.TriviaController;
 import Model.TriviaModel;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created a title screen with names and button to go to the main game.
@@ -16,6 +19,8 @@ public class TitleScreen {
     private JFrame myFrame;
     private JPanel myMainPanel;
     private JLabel doorIconLabel;
+
+    private Clip clip;
 
     Icon gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/triviaGame.png");
     ImageIcon img = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/doorPixelCenter.png");
@@ -44,6 +49,7 @@ public class TitleScreen {
 
         addMainPanelContent();
         myFrame.setVisible(true);
+        setTitleScreenSound();
     }
 
     public void addMainPanelContent() {
@@ -70,20 +76,30 @@ public class TitleScreen {
         doorIconLabel = new JLabel(doorImg);
         doorPanel.add(doorIconLabel);
 
+
+
         //button Panel
       JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(0, 137, 165));
         JButton playButton = new JButton("Play");
         playButton.setFont(new Font("Monospaced", Font.BOLD, 25));
+
+        //load Panel
+        JButton loadButton = new JButton("Load");
+        loadButton.setFont(new Font("Monospaced", Font.BOLD, 25));
+
+
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 myFrame.setVisible(false);
                 TriviaController TV = new TriviaController(TriviaModel.getMyTriviaInstance());
                 TV.createAndShowGUI();
+                stopTitleScreenSound();
             }
         });
         buttonPanel.add(playButton);
+        buttonPanel.add(loadButton);
 
         myMainPanel.add(Box.createVerticalGlue());
         myMainPanel.add(gameIconPanel);
@@ -95,5 +111,25 @@ public class TitleScreen {
         myMainPanel.add(Box.createVerticalGlue());
     }
 
+    private void setTitleScreenSound() {
+        try {
+
+            String fileName = "Sounds/titleSound.wav";
+            File file = new File(fileName);
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
+            clip.open(inputStream);
+            clip.setFramePosition(0);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopTitleScreenSound() {
+        if (clip != null && clip.isRunning()) {
+            clip.stop();
+        }
+    }
 
 }
