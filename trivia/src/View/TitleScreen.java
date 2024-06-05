@@ -18,7 +18,7 @@ public class TitleScreen {
     private JLabel doorIconLabel;
 
     Icon gameIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/triviaGame.png");
-    ImageIcon img = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/doorPixel.png");
+    ImageIcon img = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/doorPixelCenter.png");
 
     Image resizedDoor = img.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
     ImageIcon doorImg= new ImageIcon(resizedDoor);
