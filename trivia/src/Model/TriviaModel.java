@@ -66,6 +66,15 @@ public class TriviaModel {
         }
         return myTriviaInstance;
     }
+    public void reset(){
+        myBank = 0;
+        myGameWon = false;
+        gameState = "";
+        lastEnteredDirection = "";
+        character.setRow(0);
+        character.setCol(0);
+    }
+
 
 
 //arrows (up, down, left, right)

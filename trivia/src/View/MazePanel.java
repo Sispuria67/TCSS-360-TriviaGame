@@ -615,6 +615,19 @@ public class MazePanel extends JPanel implements Serializable {
     public int getRows(){
         return rows;
     }
+    public void reset(){
+        // Reset the character position
+        myCharacter = new CharacterModel(0, 0);
+
+        // Reinitialize the rooms and their states
+        initializeDoors();
+
+        // Update the character's current room
+        myCharacter.setCurrentRoom(myRoom);
+
+        // Repaint the panel to reflect the reset state
+        repaint();
+    }
 
     private void layoutComponents() {
 

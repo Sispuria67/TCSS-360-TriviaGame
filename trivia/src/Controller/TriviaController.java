@@ -730,7 +730,10 @@ public class TriviaController extends JPanel {
             JOptionPane.showMessageDialog(frame, "Game Over! You are stuck with no way out.", "Game Over", JOptionPane.INFORMATION_MESSAGE, lockedDoor);
             disableAllArrows();
             //when game is over enable play again button again, set enabled true.
-            //myPlayAgainButton.setEnabled(true);
+            myPlayAgainButton.setEnabled(true);
+
+            //addPlayAgainButtonListener();
+            return;
             //frame.dispose();
         }
     }
@@ -816,35 +819,53 @@ public class TriviaController extends JPanel {
     }
 
     public void addPlayAgainButtonListener(){
-        myPlayAgainButton.addActionListener(e -> {
-            if (e.getSource().equals(myPlayAgainButton)) {
-                //move character back to sqaure one
-                //reset all questions and answers and doors
-                //unlock all doors
-                myCharacter.setRow(0);
-                myCharacter.setCol(0);
-
-                //repaint character
-
-
-                /*
-                myModel.setMyDice1(0);
-                myModel.setMyDice2(0);
-                myModel.setMyDiceTotal(0);
-                myModel.setMyPoint(0);
-                myCurrentRoll.reset();
-                myModel.setGameOver(false);
-                myCurrentRoll.getRoll().setEnabled(true);
-                myBetPanel.setEnabled(true);
-
-                 */
+//        myPlayAgainButton.addActionListener(e -> {
+//            if (e.getSource().equals(myPlayAgainButton)) {
+//                //move character back to sqaure one
+//                //reset all questions and answers and doors
+//                //unlock all doors
+//                myCharacter.setRow(0);
+//                myCharacter.setCol(0);
+//
+//                //repaint character
+//
+//
+//                /*
+//                myModel.setMyDice1(0);
+//                myModel.setMyDice2(0);
+//                myModel.setMyDiceTotal(0);
+//                myModel.setMyPoint(0);
+//                myCurrentRoll.reset();
+//                myModel.setGameOver(false);
+//                myCurrentRoll.getRoll().setEnabled(true);
+//                myBetPanel.setEnabled(true);
+//
+//                 */
+//
+//                myPlayAgainButton.setEnabled(false);
+//
+//                //enable arrows for room 0 only
+//               // enableAllArrows();
+//
+//            }
+//        });
+        myPlayAgainButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createAndShowGUI();
+                resetGame();
                 myPlayAgainButton.setEnabled(false);
-
-                //enable arrows for room 0 only
-               // enableAllArrows();
-
             }
         });
+    }
+    private void resetGame(){
+        myTriviaModel.reset(); // Reset the game model
+        myMazePanel.reset();   // Reset the maze panel (assuming MazePanel has a reset method)
+        myCharacter.reset();   // Reset the character
+
+        // Revalidate and repaint the panel to reflect changes
+        revalidate();
+        repaint();
     }
 
 
@@ -991,7 +1012,7 @@ public class TriviaController extends JPanel {
         }
     }
 
-    
+
 
 
     private void setWrongAnswerSound() {
