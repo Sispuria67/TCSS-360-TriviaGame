@@ -28,19 +28,19 @@ public class ArrowsPanel extends JPanel {
 
 
 
-        ImageIcon upIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/upArrow.png");
-        ImageIcon downIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/downArrow.png");
-        ImageIcon leftIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/leftArrow.png");
-        ImageIcon rightIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/rightArrow.png");
+        ImageIcon upIcon = new ImageIcon("trivia/src/Images/upArrow.png");
+        ImageIcon downIcon = new ImageIcon("trivia/src/Images/downArrow.png");
+        ImageIcon leftIcon = new ImageIcon("trivia/src/Images/leftArrow.png");
+        ImageIcon rightIcon = new ImageIcon("trivia/src/Images/rightArrow.png");
 
         Image image = upIcon.getImage(); // transform it
         Image imageDown = downIcon.getImage();
         Image imageRight = rightIcon.getImage();
         Image imageLeft = leftIcon.getImage();
-        Image newimg = image.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        Image newimg2 = imageDown.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        Image newimg3 = imageRight.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        Image newimg4 = imageLeft.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image newimg = image.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg2 = imageDown.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg3 = imageRight.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg4 = imageLeft.getScaledInstance(42, 42,  java.awt.Image.SCALE_SMOOTH);
         upIcon = new ImageIcon(newimg);
         downIcon = new ImageIcon(newimg2);
         rightIcon = new ImageIcon(newimg3);

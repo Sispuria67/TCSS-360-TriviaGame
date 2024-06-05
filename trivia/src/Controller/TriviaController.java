@@ -17,14 +17,14 @@ public class TriviaController extends JPanel {
 
     private String lastEnteredDirection = "";
 
-    ImageIcon img = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/doorPixel.png");
+    ImageIcon img = new ImageIcon("trivia/src/Images/doorPixel.png");
 
-    ImageIcon questionMark = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/questionMark.png");
+    ImageIcon questionMark = new ImageIcon("trivia/src/Images/questionMark.png");
 
-    ImageIcon celebrationIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/celebration.png");
+    ImageIcon celebrationIcon = new ImageIcon("trivia/src/Images/celebration.png");
 
-    ImageIcon exitIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/exit.png");
-    ImageIcon lockDoorIcon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/lockedDoor.png");
+    ImageIcon exitIcon = new ImageIcon("trivia/src/Images/exit.png");
+    ImageIcon lockDoorIcon = new ImageIcon("trivia/src/Images/lockedDoor.png");
 
 
     Image resizedImage = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
@@ -229,7 +229,7 @@ public class TriviaController extends JPanel {
         frame.setTitle("Trivia Game");
 
 
-       icon = new ImageIcon("/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/trivia/src/Images/doorPixel.png");
+       icon = new ImageIcon("trivia/src/Images/doorPixel.png");
         frame.setIconImage(icon.getImage());
       //  frame.setBackground(Color.CYAN);
 
@@ -847,25 +847,6 @@ public class TriviaController extends JPanel {
         });
     }
 
-    public void addSubmitButtonListener() {
-        questionPanel.addSubmitButtonListener(e -> {
-           // String selectedOption = questionPanel.getSelectedOption();
-            String selectedOption = questionPanel.getSelectedAnswer();
-            String answerFieldText = questionPanel.getAnswerFieldText();
-            if (selectedOption != null) {
-             // canPass(selectedOption);
-             //   // For multiple choice and true/false questions
-                System.out.println("Selected Option in sumbitButton: " + selectedOption);
-            } else if (answerFieldText != null && !answerFieldText.isEmpty()) {
-                // For short answer questions
-                System.out.println("Answer: " + answerFieldText);
-                //canPass(answerFieldText);
-            } else {
-                JOptionPane.showMessageDialog(this, "Please select or enter an answer.", "Error", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
-            }
-        });
-
-    }
 
     private void showHint() {
         int row = myCharacter.getRow();
@@ -1010,17 +991,13 @@ public class TriviaController extends JPanel {
         }
     }
 
-
-    public static void gameLogic(){
-
-    }
+    
 
 
     private void setWrongAnswerSound() {
         try {
-            //set path file to this when submiting final project
-            //String fileName = "sounds/applause10.wav";
-            String fileName = "/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/Sounds/wrongBuzzer.wav";
+
+            String fileName = "Sounds/wrongBuzzer.wav";
             File file = new File(fileName);
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
@@ -1033,9 +1010,7 @@ public class TriviaController extends JPanel {
     }
     private void setWinSound() {
         try {
-            //set path file to this when submiting final project
-            //String fileName = "sounds/applause10.wav";
-            String fileName = "/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/Sounds/gameWon.wav";
+            String fileName = "Sounds/gameWon.wav";
             File file = new File(fileName);
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
@@ -1049,8 +1024,8 @@ public class TriviaController extends JPanel {
 
     private void setLoseSound() {
         try {
-            //String fileName = "sounds/applause10.wav";
-            String fileName = "/Users/sadoiman/Documents/GitHub/TCSS-360-TriviaGame/Sounds/gameLost.wav";
+
+            String fileName = "Sounds/gameLost.wav";
             File file = new File(fileName);
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
@@ -1064,7 +1039,7 @@ public class TriviaController extends JPanel {
 
     private void setDoorOpenSound() {
         try {
-            //String fileName = "sounds/applause10.wav";
+
             String fileName = "Sounds/doorOpen.wav";
             File file = new File(fileName);
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
