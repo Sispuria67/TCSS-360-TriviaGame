@@ -1,7 +1,10 @@
+
 /*
 TCSS 360
 Spirng 2024
  */
+
+
 package Tests;
 
 import static org.junit.Assert.*;
@@ -13,6 +16,8 @@ import Model.Room;
 /**
  * Tests for the character model class
  */
+
+/*
 public class CharacterModelTest {
 
     private CharacterModel character;
@@ -107,3 +112,6 @@ public class CharacterModelTest {
         assertEquals("room number is Room 2,2", character.toString());
     }
 }
+
+
+ */

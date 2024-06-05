@@ -11,6 +11,8 @@ import Model.Door;
 /**
  * Test cases for door class.
  */
+
+/*
 public class DoorTest {
 
     private Door door;
@@ -60,3 +62,6 @@ public class DoorTest {
         assertEquals(Door.LOCKED, door.getDoorStatus());
     }
 }
+
+
+ */

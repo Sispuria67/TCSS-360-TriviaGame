@@ -89,17 +89,10 @@ public class CharacterModel implements Serializable {
         //}
 
     }
-/*
+
     public String toString() {
         return "room number is " + currentRoom[getRow()][getCol()].getRoomName().toString();
     }
 
-    public void setRow(int lastRow) {
-        this.row = lastRow;
-    }
-
-    public void setCol(int lastCol) {
-        this.col = lastCol;
-    }
 }
 

@@ -91,7 +91,7 @@ public class QuestionFactoryF {
                        " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (20, 'The moon orbits the Earth.', 'True', 'False', 'True', 'truefalse')",
                                " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (21, 'The Olympic Games are held every ten years.', 'True', 'False', 'False', 'truefalse')",
                        " INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (22, 'The galaxy we live in is the Milky Way.', 'True', 'False', 'True', 'truefalse')",
-                       "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (23, 'HTML stands for Hyper Text Markup Language..', 'True', 'False', 'True', 'truefalse')",
+                       "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (23, 'HTML stands for Hyper Text Markup Language.', 'True', 'False', 'True', 'truefalse')",
                        "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (24, 'American Gothic was painted by Vincent van Gogh.', 'True', 'False', 'False', 'truefalse')",
                        "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (25, 'The American Civil War ended in 1865.', 'True', 'False', 'True', 'truefalse')",
         "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (26, 'The Shawshank Redemption is the highest-rated movie on IMDb.', 'True', 'False', 'True', 'truefalse')",

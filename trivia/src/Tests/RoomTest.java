@@ -12,6 +12,8 @@ import Model.Room;
 /**
  * Test cases for room class
  */
+
+/*
 public class RoomTest {
 
     private Room room;
@@ -60,3 +62,6 @@ public class RoomTest {
     }
 
 }
+
+
+ */

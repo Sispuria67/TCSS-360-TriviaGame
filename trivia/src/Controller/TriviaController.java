@@ -1,16 +1,14 @@
 package Controller;
 
 import Model.*;
-import View.ArrowsPanel;
-import View.CurrentRoomPanel;
-import View.MazePanel;
-import View.QuestionPanel;
+import View.*;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
 
 import static Model.QuestionFactoryF.getQuestionById;
 
@@ -48,6 +46,8 @@ public class TriviaController extends JPanel {
     private JFrame frame = new JFrame("Trivia Game");
     private JMenu myMenu;
 
+   // private final TitleScreen myTitleScreen;
+
     private int myNewCount;
 
     private final ArrowsPanel myArrowsPanel;
@@ -67,7 +67,7 @@ public class TriviaController extends JPanel {
 
     private final JButton myPlayAgainButton;
 
-    private CurrentRoomPanel myCurrentRoomPanel;
+    private static CurrentRoomPanel myCurrentRoomPanel;
 
     private Clip clip;
 
@@ -100,13 +100,13 @@ public class TriviaController extends JPanel {
 
     private static Door myDoor2 = new Door();
     private static Room[][] myRoom2;
-    private static QuestionFactory myQuestionFactory2 = new QuestionFactory();
+    private static QuestionFactoryF myQuestionFactory2 = new QuestionFactoryF();
 
 
-    private static MazePanel myMazePanel2 = new MazePanel();
+    private static MazePanel myMazePanel2 = new MazePanel(TriviaModel.getMyTriviaInstance());
 
     private static CharacterModel myCharacter2 = new CharacterModel(0, 0);
-
+/*
     public TriviaController(){
         myArrowsPanel = new ArrowsPanel();
         myQuestionPanel = new QuestionPanel();
@@ -127,7 +127,10 @@ public class TriviaController extends JPanel {
         addRadioListeners();
     }
 
+
+ */
     public TriviaController(final TriviaModel theModel) {
+      //  myTitleScreen = new TitleScreen();
 
 
 
@@ -390,7 +393,11 @@ public class TriviaController extends JPanel {
         myBar.add(myMenu2);
         frame.setJMenuBar(myBar);
 
+        myAbout.addActionListener(e -> JOptionPane.showMessageDialog(frame, "This is a Trivia Game \nJava Version: 21.0\nAuthor: Rohit Ark, Sado Iman\n ", "About", JOptionPane.ERROR_MESSAGE, icon));
 
+        myRules.addActionListener(e -> JOptionPane.showMessageDialog(frame, "This a Trivia Game, the rules are as follows:\n 1. To win the game you must get to the end of the maze, marked by the exit door. \n 2. To get into the rooms you must correctly answer the trivia question at each door. " +
+                        " \n 3. If you get the answer the door will be locked and must find another door to pass through. \n 4. If all the doors are locked, you lose. \n 5. There are hints in certain rooms that can help you answer the questions for those rooms.",
+                "Rules", JOptionPane.ERROR_MESSAGE, icon));
     
         myReset.addActionListener(new ActionListener() {
             @Override
@@ -406,12 +413,8 @@ public class TriviaController extends JPanel {
         });
     }
 
-        myAbout.addActionListener(e -> JOptionPane.showMessageDialog(frame, "This is a Trivia Game \nJava Version: 21.0\nAuthor: Rohit Ark, Sado Iman\n ", "About", JOptionPane.ERROR_MESSAGE, icon));
 
-        myRules.addActionListener(e -> JOptionPane.showMessageDialog(frame, "This a Trivia Game, the rules are as follows:\n 1. To win the game you must get to the end of the maze, marked by the exit door. \n 2. To get into the rooms you must correctly answer the trivia question at each door. " +
-                        " \n 3. If you get the answer the door will be locked and must find another door to pass through. \n 4. If all the doors are locked, you lose. \n 5. There are hints in certain rooms that can help you answer the questions for those rooms.",
-                "Rules", JOptionPane.ERROR_MESSAGE, icon));
-    }
+
 
 
     private void updateCurrentRoomPanel() {
@@ -433,8 +436,8 @@ public class TriviaController extends JPanel {
     }
 
 
-//original works
-     */
+
+
     private static void loadObjects() {
         //load Door object
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DOOR_FILE))) {
@@ -1079,8 +1082,10 @@ public class TriviaController extends JPanel {
     public static void main(String[] theArgs){
 
             SwingUtilities.invokeLater(() -> {
+                new TitleScreen();
+
                 new QuestionFactoryF();
-                new TriviaController(TriviaModel.getMyTriviaInstance());
+              //  new TriviaController(TriviaModel.getMyTriviaInstance());
 
 
             });

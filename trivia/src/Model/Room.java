@@ -1,13 +1,15 @@
 package Model;
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Room implements Serializable{
 
     private static final long serialVersionUID = 6399201422927996955L;
-    private boolean myUpDoor;
-    private boolean myDownDoor;
-    private boolean myLeftDoor;
-    private boolean myRightDoor;
+    private Door myUpDoor;
+    private Door myDownDoor;
+    private Door myLeftDoor;
+    private Door myRightDoor;
 
     private String myRoomName;
 

@@ -629,6 +629,6 @@ public class MazePanel extends JPanel implements Serializable {
 
 
     public void setRoom(Room[][] myRoom2) {
-        room = myRoom2;
+        myRoom = myRoom2;
     }
 }
