@@ -5,16 +5,18 @@ import java.awt.*;
 import Model.*;
 import javax.imageio.ImageIO;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 public class MazePanel extends JPanel implements Serializable {
     private static final long serialVersionUID = 389L;
     CharacterModel myCharacter;
+
+    private transient BufferedImage characterImage;
     private Image doorImage;
 
-    private Image characterImage;
+    //original
+   // private Image characterImage;
     private Image potionImage;
 
     static final int cols = 5;
@@ -62,6 +64,17 @@ public class MazePanel extends JPanel implements Serializable {
         layoutComponents();
 
 
+    }
+
+    public static void serializeBufferedImage(BufferedImage image, String filename) throws IOException {
+        File outputFile = new File(filename);
+        ImageIO.write(image, "png", outputFile);
+    }
+
+    // Deserialize BufferedImage from a file
+    public static BufferedImage deserializeBufferedImage(String filename) throws IOException {
+        File inputFile = new File(filename);
+        return ImageIO.read(inputFile);
     }
     public Room[][] getRoom(){
         return myRoom;
@@ -627,7 +640,30 @@ public class MazePanel extends JPanel implements Serializable {
 
     }
 
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        if (characterImage != null) {
+            ImageIO.write(characterImage, "png", out);
+        }
+    }
 
+    public BufferedImage getBufferedImage() {
+        return characterImage;
+    }
+
+    public void setBufferedImage(BufferedImage bufferedImage) {
+        characterImage = bufferedImage;
+        repaint();
+    }
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        // Read the character image
+        try {
+            characterImage = ImageIO.read(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void setRoom(Room[][] myRoom2) {
         myRoom = myRoom2;
     }

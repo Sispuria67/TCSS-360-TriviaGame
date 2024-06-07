@@ -23,6 +23,8 @@ public class TriviaController extends JPanel {
 
     ArrayList<String> directions2 = new ArrayList<>();
 
+    private static final String IMAGE_FILE = "trivia/src/Images/mike2.png";
+
     private FloatControl volumeControl;
 
 
@@ -38,6 +40,10 @@ public class TriviaController extends JPanel {
     ImageIcon exitIcon = new ImageIcon("trivia/src/Images/exit.png");
     ImageIcon lockDoorIcon = new ImageIcon("trivia/src/Images/lockedDoor.png");
 
+
+    ImageIcon saveGameIcon = new ImageIcon("trivia/src/Images/saveGame.png");
+    Image resizeSaveImage = saveGameIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+    ImageIcon resizeSaveIcon = new ImageIcon(resizeSaveImage);
 
     Image resizedImage = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
     ImageIcon resizedIcon = new ImageIcon(resizedImage);
@@ -103,7 +109,7 @@ public class TriviaController extends JPanel {
     // public static QuestionFactory factory;
 
 
-    private static JMenuItem myStart;
+    private static JMenuItem mySave;
 
     private static JMenuItem myExit;
     private static final String DOOR_FILE = "door.ser";
@@ -406,14 +412,14 @@ public class TriviaController extends JPanel {
         myBar = new JMenuBar();
         myMenu = new JMenu("File");
         myMenu2 = new JMenu("Help");
-        myStart = new JMenuItem("Save Game");
+        mySave = new JMenuItem("Save Game");
         myReset = new JMenuItem("Load Game");
         myExit = new JMenuItem("Exit");
         myAbout = new JMenuItem("About");
         myRules = new JMenuItem("Rules");
 
 
-        myMenu.add(myStart);
+        myMenu.add(mySave);
         myMenu.add(myReset);
         myMenu.add(myExit);
         myMenu2.add(myAbout);
@@ -435,11 +441,9 @@ public class TriviaController extends JPanel {
                 loadObjects();
             }
         });
-        myStart.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveObjects();
-            }
+        mySave.addActionListener(e -> {
+            JOptionPane.showMessageDialog(frame, "Game was successfully saved!", "Game Saved", JOptionPane.INFORMATION_MESSAGE, resizeSaveIcon);
+            saveObjects();
         });
     }
 
@@ -510,6 +514,19 @@ public class TriviaController extends JPanel {
         }
 
 
+        // Load BufferedImage
+        try {
+            BufferedImage image = ImageIO.read(new File(IMAGE_FILE));
+            if (image != null) {
+                myMazePanel.setBufferedImage(image);
+                System.out.println("BufferedImage has been loaded");
+            } else {
+                System.out.println("No BufferedImage found to load");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         myMazePanel.setRoom(myRoom2);
         myCharacter.setCurrentRoom(myRoom2);
 
@@ -550,6 +567,18 @@ public class TriviaController extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            BufferedImage image = myMazePanel.getBufferedImage();
+            if (image != null) {
+                ImageIO.write(image, "png", new File(IMAGE_FILE));
+                System.out.println("BufferedImage has been saved");
+            } else {
+                System.out.println("No BufferedImage to save");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
     private void addCurrentArrowListeners() {
         myArrowsPanel.clearArrowPanelListeners();
@@ -596,7 +625,6 @@ public class TriviaController extends JPanel {
                 // a temporary listener for the sumbit button
                 questionPanel.addSubmitButtonListener(submitEvent -> {
                     String selectedAnswer = questionPanel.getSelectedAnswer();
-
 
                     if (selectedAnswer != null && !selectedAnswer.isEmpty()) {
                         // !myRoom[myCharacter.getRow()][myCharacter.getCol()].getUpDoor().isLocked()
@@ -847,18 +875,10 @@ public class TriviaController extends JPanel {
     private void addMenuListeners() {
 
 
-        myReset.addActionListener(e -> {
-            if (e.getSource().equals(myReset)) {
 
-                myStart.setEnabled(true);
-
-            }
-
-        });
-
-        myStart.addActionListener(e -> {
-            if (e.getSource().equals(myStart)) {
-                myStart.setEnabled(false);
+        mySave.addActionListener(e -> {
+            if (e.getSource().equals(mySave)) {
+                mySave.setEnabled(false);
 
 
             }
