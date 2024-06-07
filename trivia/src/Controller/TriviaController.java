@@ -13,7 +13,7 @@ import java.io.*;
 import static Model.QuestionFactoryF.getQuestionById;
 
 
-public class TriviaController extends JPanel {
+public class TriviaController extends JPanel implements Serializable{
 
     private String lastEnteredDirection = "";
 
@@ -440,83 +440,179 @@ public class TriviaController extends JPanel {
 
 
 
-    private static void loadObjects() {
-        //load Door object
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DOOR_FILE))) {
-            myDoor2 = (Door) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//    private static void loadObjects() {
+//        //load Door object
+//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DOOR_FILE))) {
+//            myDoor2 = (Door) ois.readObject();
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        int lastRow = 0;
+//        int lastCol = 0;
+//
+//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(CHARACTER_FILE))) {
+//            lastRow = ois.readInt();
+//            lastCol = ois.readInt();
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
+//
+//        myCharacter.setRow(lastRow);
+//        myCharacter.setCol(lastCol);
+//
+//        // load Room object
+//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ROOM_FILE))) {
+//            myRoom2 = (Room[][]) ois.readObject();
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // load Maze object
+////        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(MAZE_FILE))) {
+////            myMazePanel = (MazePanel) ois.readObject();
+////        } catch (IOException | ClassNotFoundException e) {
+////            e.printStackTrace();
+////        }
+//
+//
+//        myMazePanel.setRoom(myRoom2);
+//        myCharacter.setCurrentRoom(myRoom2);
+//
+//
+//        myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom2[lastRow][lastCol].getRoomName());
+//
+//        myMazePanel.repaint();
+//        System.out.println(  "repaineted:");
+//    }
+private static void loadObjects() {
+    //load Door object
+    try (FileInputStream fi = new FileInputStream(DOOR_FILE)) {
+        ObjectInputStream ois = new ObjectInputStream(fi);
+        myDoor2 = (Door) ois.readObject();
+    } catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+    }
 
-        int lastRow = 0;
-        int lastCol = 0;
+    int lastRow = 0;
+    int lastCol = 0;
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(CHARACTER_FILE))) {
-            lastRow = ois.readInt();
-            lastCol = ois.readInt();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+    try (FileInputStream fi = new FileInputStream(CHARACTER_FILE)) {
+        ObjectInputStream ois = new ObjectInputStream(fi);
+        lastRow = ois.readInt();
+        lastCol = ois.readInt();
+    } catch (IOException e){
+        e.printStackTrace();
+    }
 
-        myCharacter.setRow(lastRow);
-        myCharacter.setCol(lastCol);
+    myCharacter.setRow(lastRow);
+    myCharacter.setCol(lastCol);
 
-        // load Room object
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ROOM_FILE))) {
-            myRoom2 = (Room[][]) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    // load Room object
+    try (FileInputStream fi = new FileInputStream(ROOM_FILE)) {
+        ObjectInputStream ois = new ObjectInputStream(fi);
+        myRoom2 = (Room[][]) ois.readObject();
+    } catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+    }
 
-        // load Maze object
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(MAZE_FILE))) {
+    // load Maze object
+    try (FileInputStream fi = new FileInputStream(MAZE_FILE)) {
+        ObjectInputStream ois = new ObjectInputStream(fi);
             myMazePanel = (MazePanel) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
-        myMazePanel.setRoom(myRoom2);
-        myCharacter.setCurrentRoom(myRoom2);
-
-
-        myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom2[lastRow][lastCol].getRoomName());
-
-        myMazePanel.repaint();
-        System.out.println(  "repaineted:");
+    if (myRoom2 == null) {
+        throw new NullPointerException("myRoom2 is null after deserialization.");
     }
 
+
+    myMazePanel.setRoom(myRoom2);
+    myCharacter.setCurrentRoom(myRoom2);
+
+
+    myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom2[myCharacter.getRow()][myCharacter.getCol()].getRoomName());
+
+    myMazePanel.repaint();
+    System.out.println(  "repaineted:");
+}
     private static void saveObjects() {
         // Serialize Door object
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DOOR_FILE))) {
+        try (FileOutputStream fs = new FileOutputStream(DOOR_FILE)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fs);
             oos.writeObject(myDoor2);
+            oos.close();
+            fs.close();
             System.out.println("Door object has been serialized");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CHARACTER_FILE))) {
+        try (FileOutputStream fs = new FileOutputStream(CHARACTER_FILE)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fs);
             oos.writeInt(myCharacter.getRow());
             oos.writeInt(myCharacter.getCol());
+            oos.close();
+            fs.close();
             System.out.println("Character position saved");
         } catch (IOException e) {
             e.printStackTrace();
         }
         // Serialize Room object
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ROOM_FILE))) {
+        try (FileOutputStream fs = new FileOutputStream(ROOM_FILE)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fs);
             oos.writeObject(myRoom2);
+            oos.close();
+            fs.close();
             System.out.println("Room object has been serialized");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // Serialize MAze object
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAZE_FILE))) {
+        try (FileOutputStream fs = new FileOutputStream(MAZE_FILE)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fs);
             oos.writeObject(myMazePanel);
+            oos.close();
+            fs.close();
             System.out.println("MazePanel object has been serialized");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+//    private static void saveObjects() {
+//        // Serialize Door object
+//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DOOR_FILE))) {
+//            oos.writeObject(myDoor2);
+//            oos.close();
+//            System.out.println("Door object has been serialized");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CHARACTER_FILE))) {
+//            oos.writeInt(myCharacter.getRow());
+//            oos.writeInt(myCharacter.getCol());
+//            oos.close();
+//            System.out.println("Character position saved");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        // Serialize Room object
+//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ROOM_FILE))) {
+//            oos.writeObject(myRoom2);
+//            oos.close();
+//            System.out.println("Room object has been serialized");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        // Serialize MAze object
+//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAZE_FILE))) {
+//            oos.writeObject(myMazePanel);
+//            oos.close();
+//            System.out.println("MazePanel object has been serialized");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     private void addCurrentArrowListeners() {
         myArrowsPanel.clearArrowPanelListeners();
 

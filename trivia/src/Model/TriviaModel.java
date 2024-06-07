@@ -4,8 +4,9 @@ import org.sqlite.SQLiteDataSource;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 
-public class TriviaModel {
+public class TriviaModel implements Serializable {
 
     private final PropertyChangeSupport myPcs;
 
@@ -56,7 +57,7 @@ public class TriviaModel {
         myGameWon = theGameWon;
         myPcs.firePropertyChange("gameWon", false, myGameWon);
     }
-    private TriviaModel(){
+    public TriviaModel(){
         myPcs = new PropertyChangeSupport(this);
     }
 
