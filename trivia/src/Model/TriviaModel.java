@@ -4,8 +4,10 @@ import org.sqlite.SQLiteDataSource;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 
-public class TriviaModel {
+public class TriviaModel implements Serializable {
+    private static final long serialVersionUID = 34543955L;
 
     private final PropertyChangeSupport myPcs;
 

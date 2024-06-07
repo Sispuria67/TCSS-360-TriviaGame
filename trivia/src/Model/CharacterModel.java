@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class CharacterModel implements Serializable {
 
-    private static final long serialVersionUID = 134L;
+    private static final long serialVersionUID = 1387874L;
     private int row;
    private  int col;
 
@@ -20,8 +20,7 @@ public class CharacterModel implements Serializable {
         this.row = initialRow;
         this.col = initialCol;
         this.currentRoom = new Room[row][col];
-     //   myRoomCounter = 0;
-        //currentRoom = null;
+
     }
 
     public int getRow() {
@@ -40,18 +39,6 @@ public class CharacterModel implements Serializable {
         col = theCol;
     }
 
-/*
-    public int getRoomCounter() {
-        return myRoomCounter;
-    }
-
-    public void setRoomCounter(int theRoomCounter) {
-         myRoomCounter = theRoomCounter;
-    }
-
-
- */
-    //should this be in controller
     public void moveUp() {
         if (row > 0) {
             row--;
@@ -77,17 +64,11 @@ public class CharacterModel implements Serializable {
     }
 
     public Room getCurrentRoom() {
-      //  System.out.println(currentRoom[getRow()][getCol()]);
         return currentRoom[getRow()][getCol()];
     }
 
     public void setCurrentRoom(Room [][] room) {
-      //  if (room != null && row >= 0 && row < room.length && col >= 0 && col < room[0].length) {
             currentRoom = room;
-     //   } else {
-           // System.out.println("Invalid room values");
-        //}
-
     }
 
     public String toString() {

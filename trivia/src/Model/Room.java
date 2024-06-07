@@ -19,12 +19,12 @@ public class Room implements Serializable{
 
     private boolean hasPotion;
 
-    private final TriviaModel myModel;
+  //  private final TriviaModel myModel;
 
 
 
-    public Room(TriviaModel theModel){
-        myModel = theModel;
+    public Room(){
+       // myModel = theModel;
         doorQuestions = new HashMap<>();
         myUpDoor = new Door();
         myDownDoor = new Door();

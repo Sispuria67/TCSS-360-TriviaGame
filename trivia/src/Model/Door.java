@@ -10,7 +10,7 @@ public class Door implements Serializable {
 
     private final PropertyChangeSupport myPcs;
     @Serial
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1988664346L;
 
     private int myDoorStatus;
 

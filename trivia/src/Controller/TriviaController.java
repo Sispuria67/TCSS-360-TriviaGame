@@ -25,9 +25,6 @@ public class TriviaController extends JPanel {
 
     private static final String IMAGE_FILE = "trivia/src/Images/mike2.png";
 
-    private FloatControl volumeControl;
-
-
 
     private ArrayList<Integer> answeredQuestionIds = new ArrayList<>();
 
@@ -69,9 +66,6 @@ public class TriviaController extends JPanel {
     private int myNewCount;
 
 
-    private byte[] gameIconData;
-    private byte[] doorIconData;
-
     private final ArrowsPanel myArrowsPanel;
     private final QuestionPanel questionPanel;
 
@@ -85,7 +79,7 @@ public class TriviaController extends JPanel {
 
     private final Door myDoor;
 
-    private Room[][] myRoom ;
+    private static Room[][] myRoom ;
 
     private final JButton myPlayAgainButton;
 
@@ -99,7 +93,7 @@ public class TriviaController extends JPanel {
 
     private static JMenuBar myBar;
 
-    private static JMenuItem myReset;
+    private static JMenuItem myLoad;
 
 
     private static JMenuItem myAbout;
@@ -121,13 +115,10 @@ public class TriviaController extends JPanel {
     private static final String CHARACTER_FILE = "char.ser";
 
     private static Door myDoor2 = new Door();
-    private static Room[][] myRoom2;
-    private static QuestionFactoryF myQuestionFactory2 = new QuestionFactoryF();
+    //private static Room[][] myRoom;
+    private static QuestionFactoryF myQuestionFactory;
 
 
-    private static MazePanel myMazePanel2 = new MazePanel(TriviaModel.getMyTriviaInstance());
-
-    private static CharacterModel myCharacter2 = new CharacterModel(0, 0);
 /*
     public TriviaController(){
         myArrowsPanel = new ArrowsPanel();
@@ -152,20 +143,13 @@ public class TriviaController extends JPanel {
 
  */
     public TriviaController(final TriviaModel theModel) {
-      //  myTitleScreen = new TitleScreen();
-
-
-
-        // super(new GridLayout(2, 1));
-        // super(new BorderLayout());
-
-        // factory = new QuestionFactory();
+        myQuestionFactory = new QuestionFactoryF();
 
         myTriviaModel = theModel;
 
         myArrowsPanel = new ArrowsPanel(theModel);
         questionPanel = new QuestionPanel();
-        myMazePanel = new MazePanel(theModel);
+        myMazePanel = new MazePanel();
         myCharacter = new CharacterModel(0, 0);
         myDoor = new Door();
         myRoom = myMazePanel.getRoom();
@@ -187,15 +171,7 @@ public class TriviaController extends JPanel {
        assignQuestionsToDoors();
 
         myText = new JLabel();
-        /*
-        //SQL
-        try {
-            dbManager = new DatabaseManager("path to db");
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
 
-         */
         createAndShowGUI();
         createMenuBar();
         layoutComponents();
@@ -204,15 +180,6 @@ public class TriviaController extends JPanel {
         addPlayAgainButtonListener();
         addMenuListeners();
 
-        try {
-            BufferedImage gameIcon = ImageIO.read(new File("trivia/src/Images/triviaGame.png"));
-            BufferedImage doorIcon = ImageIO.read(new File("trivia/src/Images/doorPixel.png"));
-
-           // gameIconData = serializeImage(gameIcon);
-            //doorIconData = serializeImage(doorIcon);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
 
@@ -251,6 +218,8 @@ public class TriviaController extends JPanel {
         myCurrentRoomPanel.setPreferredSize(new Dimension(100, 80));
         questionPanel.setPreferredSize(new Dimension(100, 205));
         // JPanel myTopPanel = new JPanel(new GridLayout(1, 1, 10, 10));
+
+        myLoad.setEnabled(false);
 
     }
 
@@ -413,14 +382,14 @@ public class TriviaController extends JPanel {
         myMenu = new JMenu("File");
         myMenu2 = new JMenu("Help");
         mySave = new JMenuItem("Save Game");
-        myReset = new JMenuItem("Load Game");
+        myLoad = new JMenuItem("Load Game");
         myExit = new JMenuItem("Exit");
         myAbout = new JMenuItem("About");
         myRules = new JMenuItem("Rules");
 
 
         myMenu.add(mySave);
-        myMenu.add(myReset);
+        myMenu.add(myLoad);
         myMenu.add(myExit);
         myMenu2.add(myAbout);
         myMenu2.add(myRules);
@@ -435,15 +404,17 @@ public class TriviaController extends JPanel {
                         " \n 3. If you get the answer the door will be locked and must find another door to pass through. \n 4. If all the doors are locked, you lose. \n 5. There are hints in certain rooms that can help you answer the questions for those rooms.",
                 "Rules", JOptionPane.ERROR_MESSAGE, icon));
     
-        myReset.addActionListener(new ActionListener() {
+        myLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadObjects();
+                mySave.setEnabled(true);
             }
         });
         mySave.addActionListener(e -> {
             JOptionPane.showMessageDialog(frame, "Game was successfully saved!", "Game Saved", JOptionPane.INFORMATION_MESSAGE, resizeSaveIcon);
             saveObjects();
+            myLoad.setEnabled(true);
         });
     }
 
@@ -469,9 +440,6 @@ public class TriviaController extends JPanel {
         disableRightArrow();
     }
 
-
-
-
     private static void loadObjects() {
         //load Door object
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DOOR_FILE))) {
@@ -479,13 +447,15 @@ public class TriviaController extends JPanel {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
+/*
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(QUESTION_FILE))) {
-            myQuestionFactory2 = (QuestionFactoryF) ois.readObject();
+            myQuestionFactory = (QuestionFactoryF) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
+
+ */
         int lastRow = 0;
         int lastCol = 0;
 
@@ -501,10 +471,43 @@ public class TriviaController extends JPanel {
 
         // load Room object
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ROOM_FILE))) {
-            myRoom2 = (Room[][]) ois.readObject();
+            myRoom = (Room[][]) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        try {
+            BufferedImage newImage = ImageIO.read(new File(IMAGE_FILE)); // Load the image from the saved file
+            if (newImage != null) {
+
+                myMazePanel.setBufferedImage(newImage); // Set the new image to the panel
+                myMazePanel.repaint(); // Repaint the panel to display the new image
+                System.out.println("Image repainted to saved location");
+            } else {
+                System.out.println("Failed to load image from the saved file");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+/*
+        BufferedImage image = myMazePanel.getBufferedImage();
+        try {
+          File imageFile = new File(IMAGE_FILE);
+            if (imageFile.exists()) {
+                imageFile.delete();
+                myMazePanel.setBufferedImage(image);
+                System.out.println("BufferedImage has been loaded");
+                myMazePanel.repaint();
+
+            } else {
+                System.out.println("No BufferedImage found to load");
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+
+
+ */
 
         // load Maze object
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(MAZE_FILE))) {
@@ -515,26 +518,18 @@ public class TriviaController extends JPanel {
 
 
         // Load BufferedImage
-        try {
-            BufferedImage image = ImageIO.read(new File(IMAGE_FILE));
-            if (image != null) {
-                myMazePanel.setBufferedImage(image);
-                System.out.println("BufferedImage has been loaded");
-            } else {
-                System.out.println("No BufferedImage found to load");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        myMazePanel.setRoom(myRoom2);
-        myCharacter.setCurrentRoom(myRoom2);
 
 
-        myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom2[lastRow][lastCol].getRoomName());
 
-        myMazePanel.repaint();
-        System.out.println(  "repaineted:");
+
+
+        myMazePanel.setRoom(myRoom);
+        myCharacter.setCurrentRoom(myRoom);
+
+
+        myCurrentRoomPanel.setMyTextField("You are currently in " + myRoom[lastRow][lastCol].getRoomName());
+
+        System.out.println(  "end of load method reached");
     }
 
     private static void saveObjects() {
@@ -554,7 +549,7 @@ public class TriviaController extends JPanel {
         }
         // Serialize Room object
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ROOM_FILE))) {
-            oos.writeObject(myRoom2);
+            oos.writeObject(myRoom);
             System.out.println("Room object has been serialized");
         } catch (IOException e) {
             e.printStackTrace();
@@ -562,11 +557,13 @@ public class TriviaController extends JPanel {
 
         // Serialize MAze object
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAZE_FILE))) {
+
             oos.writeObject(myMazePanel);
             System.out.println("MazePanel object has been serialized");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         try {
             BufferedImage image = myMazePanel.getBufferedImage();
             if (image != null) {
@@ -578,6 +575,31 @@ public class TriviaController extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//deletes the image successfully
+        /*
+        try {
+            BufferedImage image = myMazePanel.getBufferedImage();
+            if (image != null) {
+                File imageFile = new File(IMAGE_FILE);
+                if (imageFile.exists()) {
+                    imageFile.delete(); // Delete the character image file
+                    System.out.println("Character image file deleted");
+                    myMazePanel.setBufferedImage(null);
+                    // Trigger a repaint on the panel to update it
+                    myMazePanel.repaint();
+                }
+                ImageIO.write(image, "png", imageFile);
+                System.out.println("BufferedImage has been saved");
+            } else {
+                System.out.println("No BufferedImage to save");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+         */
 
     }
     private void addCurrentArrowListeners() {
@@ -875,7 +897,6 @@ public class TriviaController extends JPanel {
     private void addMenuListeners() {
 
 
-
         mySave.addActionListener(e -> {
             if (e.getSource().equals(mySave)) {
                 mySave.setEnabled(false);
@@ -920,7 +941,8 @@ public class TriviaController extends JPanel {
                 myCharacter.setRow(0);
                 myCharacter.setCol(0);
 
-                //repaint character
+                //rep
+                // aint character
 
 
                 /*
@@ -1185,7 +1207,6 @@ public class TriviaController extends JPanel {
             SwingUtilities.invokeLater(() -> {
                 new TitleScreen();
 
-                new QuestionFactoryF();
               //  new TriviaController(TriviaModel.getMyTriviaInstance());
 
 

@@ -4,20 +4,23 @@ import javax.swing.*;
 import java.awt.*;
 import Model.*;
 import javax.imageio.ImageIO;
-
 import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class MazePanel extends JPanel implements Serializable {
-    private static final long serialVersionUID = 389L;
+    private static final long serialVersionUID = 389329324849384L;
     CharacterModel myCharacter;
 
+    private String imgBase64String;
+
     private transient BufferedImage characterImage;
-    private Image doorImage;
+
+
+    private transient Image doorImage;
 
     //original
    // private Image characterImage;
-    private Image potionImage;
+    private transient Image potionImage;
 
     static final int cols = 5;
     static final int rows = 5;
@@ -36,13 +39,13 @@ public class MazePanel extends JPanel implements Serializable {
     private static final int exitCol = 4;
 
     private Room[][] myRoom;
-    private final JLabel gameIconLabel;
+    private transient final JLabel gameIconLabel;
 
-    private final TriviaModel myModel;
+   // private final TriviaModel myModel;
 
 
-    public MazePanel(TriviaModel theModel) {
-        myModel = theModel;
+    public MazePanel() {
+       // myModel = theModel;
         Icon  gameIcon = new ImageIcon("trivia/src/Images/triviaGame.png");
 
         gameIconLabel = new JLabel(gameIcon);
@@ -52,292 +55,24 @@ public class MazePanel extends JPanel implements Serializable {
         initializeDoors();
         myNewCount = 0;
         myCharacter.setCurrentRoom(myRoom);
-
-
         loadDoorImage();
         loadPotionImage();
-
         loadImages();
-
         setPreferredSize(new Dimension(cols * cellSide + originX, rows * cellSide + originY));
-
         layoutComponents();
-
-
     }
 
-    public static void serializeBufferedImage(BufferedImage image, String filename) throws IOException {
-        File outputFile = new File(filename);
-        ImageIO.write(image, "png", outputFile);
-    }
 
-    // Deserialize BufferedImage from a file
-    public static BufferedImage deserializeBufferedImage(String filename) throws IOException {
-        File inputFile = new File(filename);
-        return ImageIO.read(inputFile);
-    }
     public Room[][] getRoom(){
         return myRoom;
     }
 
 
-/*
-    private void initializeDoors() {
-        doors = new Door[rows][cols];
-
-        for(int i =0; i <rows; i++){
-            for(int j =0; j <cols; j++){
-                doors[i][j] = new Door();
-            }
-        }
-       // doors[0][0].unlock();
-        doors[0][0].setDoorStatus(Door.LOCKED);
-        doors[0][1].setDoorStatus(Door.LOCKED);
-        doors[0][2].setDoorStatus(Door.LOCKED);
-        doors[0][3].setDoorStatus(Door.LOCKED);
-        doors[0][4].setDoorStatus(Door.LOCKED);
-        doors[1][0].setDoorStatus(Door.LOCKED);
-
-
-    }
-
- */
-/*
-    private void initializeDoors() {
-        room = new Room[rows][cols];
-
-        for(int i =0; i <rows; i++){
-            for(int j =0; j <cols; j++){
-                room[i][j] = new Room(myModel);
-                myNewCount++;
-               // myCharacter.setRoomCounter(myNewCount);
-
-               // System.out.println("room length: " + room.length); // = 5
-                //System.out.println("room[0][0]: " + room[0][0]);
-                //System.out.println("room[0][1]: " + room[0][1]);
-            }
-        }
-
-        room[3][3].setHasPotion(true);
-        room[2][1].setHasPotion(true);
-        room[0][4].setHasPotion(true);
-
-        room[4][0].setHasPotion(true);
-         //room 0
-        room[0][0].setUpDoor(false);
-        room[0][0].setDownDoor(true);
-        room[0][0].setLeftDoor(false);
-        room[0][0].setRightDoor(true);
-        room[0][0].setRoomName("Room 0");
-        room[0][0].setRoomNumber(0);
-
-
-
-        //room 1
-        room[0][1].setUpDoor(false);
-        room[0][1].setDownDoor(true);
-        room[0][1].setLeftDoor(true);
-        room[0][1].setRightDoor(true);
-        room[0][1].setRoomName("Room 1");
-        room[0][1].setRoomNumber(1);
-
-
-          //room 2
-        room[0][2].setUpDoor(false);
-        room[0][2].setDownDoor(true);
-        room[0][2].setLeftDoor(true);
-        room[0][2].setRightDoor(true);
-        room[0][2].setRoomName("Room 2");
-        room[0][2].setRoomNumber(2);
-
-        //room 3
-        room[0][3].setUpDoor(false);
-        room[0][3].setDownDoor(true);
-        room[0][3].setLeftDoor(true);
-        room[0][3].setRightDoor(true);
-        room[0][3].setRoomName("Room 3");
-        room[0][3].setRoomNumber(3);
-
-        //room 4
-        room[0][4].setUpDoor(false);
-        room[0][4].setDownDoor(true);
-        room[0][4].setLeftDoor(true);
-        room[0][4].setRightDoor(false);
-        room[0][4].setRoomName("Room 4");
-        room[0][4].setRoomNumber(4);
-
-
-        //room 5
-        room[1][0].setUpDoor(true);
-        room[1][0].setDownDoor(true);
-        room[1][0].setLeftDoor(false);
-        room[1][0].setRightDoor(true);
-        room[1][0].setRoomName("Room 5");
-        room[1][0].setRoomNumber(5);
-
-        //room 6
-        room[1][1].setUpDoor(true);
-        room[1][1].setDownDoor(true);
-        room[1][1].setLeftDoor(true);
-        room[1][1].setRightDoor(true);
-        room[1][1].setRoomName("Room 6");
-        room[1][1].setRoomNumber(6);
-
-        //room 7
-        room[1][2].setUpDoor(true);
-        room[1][2].setDownDoor(true);
-        room[1][2].setLeftDoor(true);
-        room[1][2].setRightDoor(true);
-        room[1][2].setRoomName("Room 7");
-        room[1][2].setRoomNumber(7);
-
-        //room 8
-        room[1][3].setUpDoor(true);
-        room[1][3].setDownDoor(true);
-        room[1][3].setLeftDoor(true);
-        room[1][3].setRightDoor(true);
-        room[1][3].setRoomName("Room 8");
-        room[1][3].setRoomNumber(8);
-
-        //room 9
-        room[1][4].setUpDoor(true);
-        room[1][4].setDownDoor(true);
-        room[1][4].setLeftDoor(true);
-        room[1][4].setRightDoor(false);
-        room[1][4].setRoomName("Room 9");
-        room[1][4].setRoomNumber(9);
-
-
-        //room 10
-        room[2][0].setUpDoor(true);
-        room[2][0].setDownDoor(true);
-        room[2][0].setLeftDoor(false);
-        room[2][0].setRightDoor(true);
-        room[2][0].setRoomName("Room 10");
-        room[2][0].setRoomNumber(10);
-
-        //room 11
-        room[2][1].setUpDoor(true);
-        room[2][1].setDownDoor(true);
-        room[2][1].setLeftDoor(true);
-        room[2][1].setRightDoor(true);
-        room[2][1].setRoomName("Room 11");
-        room[2][1].setRoomNumber(11);
-
-        //room 12
-        room[2][2].setUpDoor(true);
-        room[2][2].setDownDoor(true);
-        room[2][2].setLeftDoor(true);
-        room[2][2].setRightDoor(true);
-        room[2][2].setRoomName("Room 12");
-        room[2][2].setRoomNumber(12);
-
-        //room 13
-        room[2][3].setUpDoor(true);
-        room[2][3].setDownDoor(true);
-        room[2][3].setLeftDoor(true);
-        room[2][3].setRightDoor(true);
-        room[2][3].setRoomName("Room 13");
-        room[2][3].setRoomNumber(13);
-
-        //room 14
-        room[2][4].setUpDoor(true);
-        room[2][4].setDownDoor(true);
-        room[2][4].setLeftDoor(true);
-        room[2][4].setRightDoor(false);
-        room[2][4].setRoomName("Room 14");
-        room[2][4].setRoomNumber(14);
-
-        //room 15
-        room[3][0].setUpDoor(true);
-        room[3][0].setDownDoor(true);
-        room[3][0].setLeftDoor(false);
-        room[3][0].setRightDoor(true);
-        room[3][0].setRoomName("Room 15");
-        room[3][0].setRoomNumber(15);
-
-        //room 16
-        room[3][1].setUpDoor(true);
-        room[3][1].setDownDoor(true);
-        room[3][1].setLeftDoor(true);
-        room[3][1].setRightDoor(true);
-        room[3][1].setRoomName("Room 16");
-        room[3][1].setRoomNumber(16);
-
-        //room 17
-        room[3][2].setUpDoor(true);
-        room[3][2].setDownDoor(true);
-        room[3][2].setLeftDoor(true);
-        room[3][2].setRightDoor(true);
-        room[3][2].setRoomName("Room 17");
-        room[3][2].setRoomNumber(17);
-
-        //room 18
-        room[3][3].setUpDoor(true);
-        room[3][3].setDownDoor(true);
-        room[3][3].setLeftDoor(true);
-        room[3][3].setRightDoor(true);
-        room[3][3].setRoomName("Room 18");
-        room[3][3].setRoomNumber(18);
-
-        //room 19
-        room[3][4].setUpDoor(true);
-        room[3][4].setDownDoor(true);
-        room[3][4].setLeftDoor(true);
-        room[3][4].setRightDoor(false);
-        room[3][4].setRoomName("Room 19");
-        room[3][4].setRoomNumber(19);
-
-         //room 20
-        room[4][0].setUpDoor(true);
-        room[4][0].setDownDoor(false);
-        room[4][0].setLeftDoor(false);
-        room[4][0].setRightDoor(true);
-        room[4][0].setRoomName("Room 20");
-        room[4][0].setRoomNumber(20);
-
-        //room 21
-        room[4][1].setUpDoor(true);
-        room[4][1].setDownDoor(false);
-        room[4][1].setLeftDoor(true);
-        room[4][1].setRightDoor(true);
-        room[4][1].setRoomName("Room 21");
-        room[4][1].setRoomNumber(21);
-
-        //room 22
-        room[4][2].setUpDoor(true);
-        room[4][2].setDownDoor(false);
-        room[4][2].setLeftDoor(true);
-        room[4][2].setRightDoor(true);
-        room[4][2].setRoomName("Room 22");
-        room[4][2].setRoomNumber(22);
-
-        //room 23
-        room[4][3].setUpDoor(true);
-        room[4][3].setDownDoor(false);
-        room[4][3].setLeftDoor(true);
-        room[4][3].setRightDoor(true);
-        room[4][3].setRoomName("Room 23");
-        room[4][3].setRoomNumber(23);
-
-        //room 24
-        room[4][4].setUpDoor(true);
-        room[4][4].setDownDoor(false);
-        room[4][4].setLeftDoor(true);
-        room[4][4].setRightDoor(false);
-        room[4][4].setRoomName("Room 24");
-        room[4][4].setRoomNumber(24);
-
-    }
-
-
- */
 
     protected void paintComponent(Graphics g) {
         //the maze will be a 2d array where each index is either a wall, door, or walkable space
         //should we add some free spaces on maze where player doesnt need to answer question to pass
        // g.drawRect(originX, originX, rows, cols);
-
 
         super.paintComponent(g);
 
@@ -471,33 +206,11 @@ public class MazePanel extends JPanel implements Serializable {
      repaint();
     }
 
-
-
-
-        //myCharacter.setCurrentRoom(room[myCharacter.getRow()][myCharacter.getCol()]);
-
-
-   //System.out.println("CurrentRoomLocation:" + room[myCharacter.getRow()][myCharacter.getCol()]);
-        /*
-        System.out.println("row:" + myCharacter.getRow() + "col:" + myCharacter.getCol());
-        System.out.println("Right door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getRightDoor());
-        System.out.println("Left door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getLeftDoor());
-        System.out.println("Up door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getUpDoor());
-        System.out.println("Down door?: " + room[myCharacter.getRow()][myCharacter.getCol()].getDownDoor());
-       // System.out.println("Current room: " + myCharacter.getCurrentRoom().toString());
-        System.out.println("Current room: " + myCharacter.toString());
-
-
-         */
-
-
-
-
     private void initializeDoors() {
         myRoom = new Room[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                myRoom[i][j] = new Room(TriviaModel.getMyTriviaInstance());
+                myRoom[i][j] = new Room();
                 myNewCount++;
             }
         }
@@ -593,25 +306,58 @@ public class MazePanel extends JPanel implements Serializable {
         if (right) room.getRightDoor().unlock(); else room.getRightDoor().lock();
     }
     private void loadImages() {
-        try {
-            characterImage = ImageIO.read(new File("trivia/src/Images/mike2.png")); // load the character image file
 
+        try {
+
+            characterImage = ImageIO.read(new File("trivia/src/Images/mike2.png"));
+            serializeBufferedImage(characterImage, "trivia/src/Images/mike2_serialized.png");
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
+         }
+
+    private BufferedImage deserializeBufferedImage(String serializedFile) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(serializedFile))) {
+            int length = ois.readInt();
+            if (length > 0) {
+                byte[] imageBytes = new byte[length];
+                ois.readFully(imageBytes);
+                ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
+                return ImageIO.read(bais);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
+
     public void repaints(){
-        repaint();
+        this.repaint();
     }
 
     private void loadDoorImage() {
         try {
             doorImage = ImageIO.read(new File("trivia/src/Images/doorPixel.png")); // load the door image file
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
+
+    public static void serializeBufferedImage(BufferedImage image, String filename) {
+        try {
+            File outputFile = new File(filename);
+            ImageIO.write(image, "png", outputFile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void loadPotionImage() {
         try {
@@ -640,28 +386,88 @@ public class MazePanel extends JPanel implements Serializable {
 
     }
 
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        if (characterImage != null) {
-            ImageIO.write(characterImage, "png", out);
-        }
-    }
 
     public BufferedImage getBufferedImage() {
         return characterImage;
     }
 
     public void setBufferedImage(BufferedImage bufferedImage) {
-        characterImage = bufferedImage;
+        this.characterImage = bufferedImage;
         repaint();
     }
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        // Read the character image
-        try {
-            characterImage = ImageIO.read(in);
-        } catch (IOException e) {
-            e.printStackTrace();
+    //@Serial
+    public void writeObject(java.io.ObjectOutputStream out) throws IOException{
+        out.defaultWriteObject();
+        System.out.println("used maze write object");
+        writeBufferedImage(out, characterImage);
+
+
+       System.out.println("row in maze write object after repaint: " + myCharacter.getRow());
+       System.out.println("row in maze write object after repaint: " +myCharacter.getCol());
+
+    }
+/*
+    public void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+       in.defaultReadObject();
+        characterImage = readBufferedImage(in);
+
+       // readBufferedImage(in);
+        System.out.println("used maze read object");
+
+      //  myCharacter.setRow (in.readInt());
+        //myCharacter.setCol (in.readInt());
+
+        // Repaint the maze to reflect the character's new position
+        repaint();
+        loadDoorImage();
+        loadPotionImage();
+         //= (String) in.readObject()
+        //characterImage = readBufferedImage(in);
+        //System.out.println("row in maze read object: " + myCharacter.getRow());
+        //System.out.println("col in maze read object: " + myCharacter.getCol());
+
+    }
+
+ */
+//@Serial
+public void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    // Perform custom deserialization logic here
+    in.defaultReadObject();
+    characterImage = readBufferedImage(in);
+
+    // Additional custom deserialization logic if needed
+
+    // repaint the maze panel to reflect any changes
+    repaint();
+}
+
+
+    public void writeBufferedImage(ObjectOutputStream oos, BufferedImage image) throws IOException {
+        if (image != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+            byte[] imageBytes = baos.toByteArray();
+            oos.writeInt(imageBytes.length);
+            oos.write(imageBytes);
+            System.out.println("SUCCESSULLY  BUFFERED, in writeBufferedImage method in maze panel");
+        } else {
+            oos.writeInt(0);
+            System.out.println("NOT BUFFERED, in writeBufferedImage method in maze panel");
+        }
+    }
+
+    private BufferedImage readBufferedImage(ObjectInputStream ois) throws IOException {
+        int length = ois.readInt();
+        if (length > 0) {
+            byte[] imageBytes = new byte[length];
+            ois.readFully(imageBytes);
+            ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
+            System.out.println("SUCCESSULLY  BUFFERED, in readBufferedImage method in maze panel");
+            return ImageIO.read(bais);
+
+        } else {
+            System.out.println("NOT BUFFERED, in readBufferedImage method in maze panel");
+            return null;
         }
     }
     public void setRoom(Room[][] myRoom2) {
