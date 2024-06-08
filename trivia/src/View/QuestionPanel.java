@@ -1,3 +1,6 @@
+/**
+ * A package for view.
+ */
 package View;
 
 import Model.Question;
@@ -9,151 +12,139 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
+/**
+ * QuestionPanel is a class that represents a panel for displaying questions and options.
+ * It allows users to select answers and submit them.
+ *
+ * @author Sado Iman, Rohit Ark
+ * @version 06/7/24
+ */
 
 public class QuestionPanel extends JPanel {
 
-    private ArrayList<ActionListener> submitButtonListeners = new ArrayList<>();
-    private ButtonGroup buttonGroupMultiple;
+    /** A private field to store the submit button listeners. */
+    private ArrayList<ActionListener> mySubmitButtonListeners;
 
-    private ButtonGroup buttonGroupTrueFalse;
+    /** A private field representing the button group for multiple choice questions. */
+    private ButtonGroup myButtonGroupMultiple;
 
+    /** A private field representing the button group for true/false questions. */
+    private ButtonGroup myButtonGroupTrueFalse;
 
+    /** A private final field representing the submit button. */
     private final JButton mySubmit;
 
-    private int selectedIndex;
-
+    /** A private final field representing the label for the question. */
     private final JLabel myQuestion;
 
+    /** A private field representing the text field for short answer questions. */
     private JTextField myShortAnswer;
 
-    private JPanel optionsPanel;
-
-    private JPanel newPanel;
-
-    private final JLabel gameIconLabel;
-    private Question currentQuestion;
+    /** A private field representing the panel for displaying options. */
+    private JPanel myOptionsPanel;
 
 
+    /** A private field representing the panel for layout components. */
+    private JPanel myNewPanel;
 
+    /** A private final field representing the label for the game icon. */
+    private final JLabel myGameIconLabel;
+
+
+    /**
+     * QuestionPanel is a constructor that constructs a new QuestionPanel object.
+     */
     public QuestionPanel() {
-
         setLayout(new BorderLayout());
-
-        // Title panel
         Icon gameIcon = new ImageIcon("trivia/src/Images/triviaQuestion.png");
-        gameIconLabel = new JLabel(gameIcon);
-
-      newPanel = new JPanel();
-
-
-
-        gameIconLabel.setPreferredSize(new Dimension(30, 30));
-        gameIconLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
+        myGameIconLabel = new JLabel(gameIcon);
+        myNewPanel = new JPanel();
+        myGameIconLabel.setPreferredSize(new Dimension(30, 30));
+        myGameIconLabel.setHorizontalAlignment(SwingConstants.CENTER);
         myQuestion = new JLabel();
-
-
-        optionsPanel = new JPanel();
-        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
-
-
+        myOptionsPanel = new JPanel();
+        myOptionsPanel.setLayout(new BoxLayout(myOptionsPanel, BoxLayout.Y_AXIS));
         mySubmit = new JButton("Submit");
         mySubmit.setFont(new Font("Monospaced", Font.BOLD, 14));
         mySubmit.setMnemonic(KeyEvent.VK_ENTER);
-
-
-        // add panels to the main panel
-        this.add(gameIconLabel, BorderLayout.NORTH);
-        this.add(newPanel, BorderLayout.CENTER);
-
-
-        newPanel.setLayout(new BorderLayout());
-        newPanel.add(myQuestion, BorderLayout.NORTH);
-
-
-        newPanel.add(optionsPanel, BorderLayout.CENTER);
-        newPanel.add(mySubmit, BorderLayout.SOUTH);
-
-
-
+        this.add(myGameIconLabel, BorderLayout.NORTH);
+        this.add(myNewPanel, BorderLayout.CENTER);
+        mySubmitButtonListeners = new ArrayList<>();
+        myNewPanel.setLayout(new BorderLayout());
+        myNewPanel.add(myQuestion, BorderLayout.NORTH);
+        myNewPanel.add(myOptionsPanel, BorderLayout.CENTER);
+        myNewPanel.add(mySubmit, BorderLayout.SOUTH);
         layoutComponents();
     }
 
-
-
+    /**
+     * getMySubmit is a getter method that gets the submit button.
+     *
+     * @return The submit button.
+     */
     public JButton getMySubmit() {
         return mySubmit;
     }
 
-    //use radio buttons
+
+    /**
+     * layoutComponents is a method that sets up the
+     * formatting of the panel to be put on frame.
+     *
+     */
     private void layoutComponents() {
         this.setBackground(new Color(0, 137, 165));
-        newPanel.setBackground(new Color(0, 137, 165));
+        myNewPanel.setBackground(new Color(0, 137, 165));
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
     }
 
-    public void setSelectedIndex(int selectedIndex) {
-        this.selectedIndex = selectedIndex;
-    }
 
-    // Method to get the selected index
-    public int getSelectedIndex() {
-        return selectedIndex;
-    }
-
-
-
-
-
+    /**
+     * clearSubmitButtonListeners is a method that clears all submit button listeners.
+     */
     public void clearSubmitButtonListeners() {
-        for (ActionListener listener : submitButtonListeners) {
+        for (ActionListener listener : mySubmitButtonListeners) {
             mySubmit.removeActionListener(listener);
         }
-        submitButtonListeners.clear();
+        mySubmitButtonListeners.clear();
     }
-    public void updateQuestion(Question question) {
-        this.currentQuestion = question;
-        myQuestion.setText(question.getQuestion());
+
+    /**
+     * updateQuestion is a method that updates the question panel with a new question.
+     *
+     * @param theQuestion represents the new question.
+     */
+    public void updateQuestion(Question theQuestion) {
+        myQuestion.setText(theQuestion.getQuestion());
         myQuestion.setFont(new Font("Monospaced", Font.BOLD, 16));
         myQuestion.setForeground(new Color(0, 220, 120));
-        optionsPanel.setBackground(new Color(0, 137, 165));
-        optionsPanel.removeAll();
-
-        buttonGroupMultiple = null;
-        buttonGroupTrueFalse = null;
+        myOptionsPanel.setBackground(new Color(0, 137, 165));
+        myOptionsPanel.removeAll();
+        myButtonGroupMultiple = null;
+        myButtonGroupTrueFalse = null;
         myShortAnswer = null;
-
-
-        if (question instanceof Question.MultipleChoiceQuestion) {
-            Question.MultipleChoiceQuestion mcq = (Question.MultipleChoiceQuestion) question;
-            buttonGroupMultiple = new ButtonGroup();
-
+        if (theQuestion instanceof Question.MultipleChoiceQuestion) {
+            Question.MultipleChoiceQuestion mcq = (Question.MultipleChoiceQuestion) theQuestion;
+            myButtonGroupMultiple = new ButtonGroup();
             for (String option : mcq.getMyOptions()) {
                JRadioButton optionButton = new JRadioButton(option);
-
-                buttonGroupMultiple.add(optionButton);
-                optionsPanel.add(optionButton);
-
+                myButtonGroupMultiple.add(optionButton);
+                myOptionsPanel.add(optionButton);
             }
-        }else if (question instanceof Question.TrueFalseQuestion) {
-            buttonGroupTrueFalse = new ButtonGroup();
+        }else if (theQuestion instanceof Question.TrueFalseQuestion) {
+            myButtonGroupTrueFalse = new ButtonGroup();
             JRadioButton trueButton = new JRadioButton("True");
             JRadioButton falseButton = new JRadioButton("False");
-         //   trueButton.setBackground(new Color(0, 137, 165));
-          //  falseButton.setBackground(new Color(0, 137, 165));
-            buttonGroupTrueFalse.add(trueButton);
-            buttonGroupTrueFalse.add(falseButton);
-            optionsPanel.add(trueButton);
-            optionsPanel.add(falseButton);
-            //if it's true/false queston
+            myButtonGroupTrueFalse.add(trueButton);
+            myButtonGroupTrueFalse.add(falseButton);
+            myOptionsPanel.add(trueButton);
+            myOptionsPanel.add(falseButton);
 
-        } else if (question instanceof Question.ShortAnswerQuestion) {
+        } else if (theQuestion instanceof Question.ShortAnswerQuestion) {
             myShortAnswer = new JTextField(5);
             myShortAnswer.setBackground(Color.white);
-           // myShortAnswer.setSize(new Dimension(20, 10));
-            optionsPanel.add(myShortAnswer);
+            myOptionsPanel.add(myShortAnswer);
         }
         revalidate();
         repaint();
@@ -161,9 +152,27 @@ public class QuestionPanel extends JPanel {
     }
 
 
-    public String getSelectedOption() {
-        if (buttonGroupMultiple != null) {
-            for (AbstractButton button : Collections.list(buttonGroupMultiple.getElements())) {
+    /**
+     *  getSelectedAnswer is a method that gets the selected answer
+     *  that the player selects.
+     *
+     * @return The selected answer as a string.
+     */
+    public String getSelectedAnswer() {
+        if (myButtonGroupMultiple != null) {
+            int index = 0;
+            for (AbstractButton button : Collections.list(myButtonGroupMultiple.getElements())) {
+                if (button.isSelected()) {
+                    char optionLetter = (char) ('A' + index);
+                    return String.valueOf(optionLetter);
+                }
+                index++;
+            }
+        } else if (myShortAnswer != null) {
+            return myShortAnswer.getText();
+
+        } else if (myButtonGroupTrueFalse != null) {
+            for (AbstractButton button : Collections.list(myButtonGroupTrueFalse.getElements())) {
                 if (button.isSelected()) {
                     return button.getText();
                 }
@@ -172,48 +181,12 @@ public class QuestionPanel extends JPanel {
         return null;
     }
 
-    public String getSelectedAnswer() {
-        if (buttonGroupMultiple != null) { // If it's a multiple choice question
-            int index = 0;
-            for (AbstractButton button : Collections.list(buttonGroupMultiple.getElements())) {
-                if (button.isSelected()) {
-                    // Convert index to option letter (A, B, C, D)
-                    char optionLetter = (char) ('A' + index);
-                    return String.valueOf(optionLetter);
-                }
-                index++;
-            }
-        } else if (myShortAnswer != null) { // If it's a short answer question
-            return myShortAnswer.getText(); // Return the text entered in the short answer field
 
-        } else if (buttonGroupTrueFalse != null) { // If it's a true/false question
-            // Check which true/false option is selected
-            for (AbstractButton button : Collections.list(buttonGroupTrueFalse.getElements())) {
-                if (button.isSelected()) {
-                    return button.getText(); // Return "True" or "False"
-                }
-            }
-        }
-        return null; // Return null if no option is selected or no text is entered
-    }
-
-
-
-
-
-
-
-    public Question getCurrentQuestion() {
-        return currentQuestion;
-    }
-
-    public String getAnswerFieldText() {
-        if (myShortAnswer != null) {
-            return myShortAnswer.getText();
-        }
-        return null;
-    }
-
+    /**
+     * addSubmitButtonListener is a method that adds a submit button listener.
+     *
+     * @param theListener represents the listener to add.
+     */
     public void addSubmitButtonListener(ActionListener theListener) {
         mySubmit.addActionListener(theListener);
     }

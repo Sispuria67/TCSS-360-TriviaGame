@@ -1,3 +1,6 @@
+/**
+ * A package for view.
+ */
 package View;
 
 import javax.swing.*;
@@ -7,53 +10,66 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
+/**
+ * MazePanel is a class representing the panel of the maze in the game view.
+ * It displays the maze, character, doors, potions, and exit.
+ *
+ *  @author Sado Iman, Rohit Ark
+ *  @version 06/7/24
+ *
+ */
 public class MazePanel extends JPanel implements Serializable {
+    /** Unique class identifier used for serialization */
     private static final long serialVersionUID = 389329324849384L;
-    CharacterModel myCharacter;
 
-    private String imgBase64String;
+    /* A private field representing the character in the maze.*/
+    private CharacterModel myCharacter;
 
-    private transient BufferedImage characterImage;
+    /** A private transient BufferedImage representing the character's image. */
+    private transient BufferedImage myCharacterImage;
 
-
+    /** A private transient Image representing the door image. */
     private transient Image doorImage;
 
-    //original
-   // private Image characterImage;
+    /** A private transient Image representing the potion image. */
     private transient Image potionImage;
 
-    static final int cols = 5;
-    static final int rows = 5;
-    //starting x position
-    static final int originX = 23;
-
-    //starting y position
-    static final int originY = 37;
-    //length of each grid square side
-    static final int cellSide = 90;
-
-    private int myNewCount;
-
-    //exit square
-    private static final int exitRow = 4;
-    private static final int exitCol = 4;
-
-    private Room[][] myRoom;
+    /** A private transient final JLabel representing the game icon label. */
     private transient final JLabel gameIconLabel;
 
-   // private final TriviaModel myModel;
+    /** A private  field for the number of columns in the maze. */
+    private static final int cols = 5;
+
+    /** A private  field for the number of rows in the maze. */
+    private  static final int rows = 5;
+
+    /** A private field representing the x-coordinate origin. */
+    private static final int originX = 23;
+
+    /** A private field representing the y-coordinate origin. */
+    private static final int originY = 37;
+
+    /** A private field representing the side length of each cell. */
+    private static final int cellSide = 90;
+
+    /** A private field representing the row index of the exit cell. */
+    private static final int exitRow = 4;
+    /** A private field representing the column index of the exit cell. */
+    private static final int exitCol = 4;
+
+    /** A private 2D array representing the rooms in the maze. */
+    private Room[][] myRoom;
 
 
+    /**
+     * MazePanel is a constructor that constructs a new MazePanel object.
+     */
     public MazePanel() {
-       // myModel = theModel;
         Icon  gameIcon = new ImageIcon("trivia/src/Images/triviaGame.png");
-
         gameIconLabel = new JLabel(gameIcon);
-        //mazeGrid = new int[rows][cols];
         myRoom = new Room[rows][cols];
         myCharacter = new CharacterModel(0, 0);
         initializeDoors();
-        myNewCount = 0;
         myCharacter.setCurrentRoom(myRoom);
         loadDoorImage();
         loadPotionImage();
@@ -62,21 +78,26 @@ public class MazePanel extends JPanel implements Serializable {
         layoutComponents();
     }
 
-
+    /**
+     * getRoom is a getter method that retrieves the array of rooms.
+     *
+     * @return The array of rooms.
+     */
     public Room[][] getRoom(){
         return myRoom;
     }
 
 
 
+    /**
+     * paintComponent is a method that overrides the paintComponent method to
+     * customize the panel's appearance.
+     *
+     * @param g represents the Graphics object to paint on.
+     */
+
     protected void paintComponent(Graphics g) {
-        //the maze will be a 2d array where each index is either a wall, door, or walkable space
-        //should we add some free spaces on maze where player doesnt need to answer question to pass
-       // g.drawRect(originX, originX, rows, cols);
-
         super.paintComponent(g);
-
-        //draw potions
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (myRoom[i][j].hasPotion()) {
@@ -86,7 +107,6 @@ public class MazePanel extends JPanel implements Serializable {
                 }
             }
         }
-//for maze
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setStroke(new BasicStroke(2));
@@ -99,93 +119,58 @@ public class MazePanel extends JPanel implements Serializable {
 
         }
 
-
-        //doors
         g.setColor(new Color(139, 69, 19));
-        //horizontal doors
-        //i =1 means skip first row, start at second row
         for (int i = 1; i < rows ; i++) {
-           // g.drawLine(originX,originY + i* cellSide, originX+cols* cellSide, originY +i * cellSide);
-            //draws one rectangle
-
-            //the only thing changing between each row is where the x value is being drawn, + moves it left, - moves it right
-            //first row
           g.fillRect((originX + cellSide /4), (originY + i * cellSide - cellSide / 4) + 10 , cellSide / 2, cellSide / 4);
-          //second row
+
           g.fillRect((originX + cellSide) + 20, (originY + i * cellSide - cellSide /4) +10, cellSide / 2 , cellSide / 4);
-           //third row
-            g.fillRect((originX + cellSide) + 110, (originY + i * cellSide - cellSide /4) +10, cellSide / 2 , cellSide / 4);
 
-            //fourth row
-            g.fillRect((originX + cellSide) + 200, (originY + i * cellSide - cellSide /4) +10, cellSide / 2 , cellSide / 4);
+          g.fillRect((originX + cellSide) + 110, (originY + i * cellSide - cellSide /4) +10, cellSide / 2 , cellSide / 4);
 
-            //fifth row
-            g.fillRect((originX + cellSide) + 290, (originY + i * cellSide - cellSide /4) +10, cellSide / 2 , cellSide / 4);
+          g.fillRect((originX + cellSide) + 200, (originY + i * cellSide - cellSide /4) +10, cellSide / 2 , cellSide / 4);
+
+          g.fillRect((originX + cellSide) + 290, (originY + i * cellSide - cellSide /4) +10, cellSide / 2 , cellSide / 4);
 
         }
 
-// Vertical doors
+
         for (int i = 1; i < cols ; i++) {
-            //the only thign chaging each time is the y value, + moves it down, - moves it up
-         //first col
            g.fillRect(originX + i * cellSide - cellSide /8, originY + cellSide / 4, cellSide / 4, cellSide / 2);
-            //second col
+
             g.fillRect(originX + i * cellSide - cellSide /8, (originY + cellSide) + 17 , cellSide / 4, cellSide / 2);
-            //third col
+
             g.fillRect(originX + i * cellSide - cellSide / 8, (originY + cellSide) + 115, cellSide / 4, cellSide / 2);
-            //fourth col
+
             g.fillRect(originX + i * cellSide - cellSide / 8, (originY + cellSide) + 200, cellSide / 4, cellSide / 2);
-            //fifth col
+
            g.fillRect(originX + i * cellSide - cellSide / 8, (originY + cellSide) + 290, cellSide / 4, cellSide / 2);
 
         }
 
-
-
-        //exit door image
         int doorX = originX + exitCol * cellSide;
         int doorY = originY + exitRow * cellSide;
         g.drawImage(doorImage, doorX + 10, doorY, cellSide, cellSide, this);
-
-        /*
-        //character( blue circle)
         int characterX = originX + myCharacter.getCol() * cellSide;
         int characterY = originY + myCharacter.getRow() * cellSide;
-        g.setColor(Color.BLUE);
-        g.fillOval(characterX +20 , characterY +20 , cellSide -40 , cellSide- 40);
-
-         */
-
-        // Draw character image
-        int characterX = originX + myCharacter.getCol() * cellSide;
-        int characterY = originY + myCharacter.getRow() * cellSide;
-        g.drawImage(characterImage, characterX, characterY, cellSide, cellSide, this);
-
-   //draws green square to signify exut
-        /*
-          int exitX = originX + exitCol * cellSide + cellSide / 4;
-        int exitY = originY + exitRow * cellSide + cellSide / 4;
-        g.setColor(Color.GREEN);
-        g.fillRect(exitX, exitY, cellSide / 2, cellSide / 2);
-
-
-
-         */
-
-        //exit
-  //it's position in relation to the maze/square
+        g.drawImage(myCharacterImage, characterX, characterY, cellSide, cellSide, this);
         int exitX = (originX + exitCol * cellSide + cellSide / 3) + 5  ;
         int exitY = (originY + exitRow * cellSide + cellSide /2) + 1;
         g.setColor(Color.RED);
         Font font = new Font("Arial", Font.BOLD, 11);
         g.setFont(font);
         g.drawString("EXIT", exitX, exitY);
-
     }
 
 
-    public void moveCharacter(String direction) {
-   switch(direction){
+    /**
+     * moveCharacter is a method that moves the player
+     * in the given direction.
+     *
+     * @param theDirection represents the direction player wants to move.
+     *
+     */
+    public void moveCharacter(String theDirection) {
+   switch(theDirection){
            case "up":
                myCharacter.moveUp();
                myCharacter.setCurrentRoom(myRoom);
@@ -206,12 +191,16 @@ public class MazePanel extends JPanel implements Serializable {
      repaint();
     }
 
+
+    /**
+     * initializeDoors is a method that initializes the rooms and sets up
+     * their properties and connections.
+     */
     private void initializeDoors() {
         myRoom = new Room[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 myRoom[i][j] = new Room();
-                myNewCount++;
             }
         }
 
@@ -296,31 +285,47 @@ public class MazePanel extends JPanel implements Serializable {
         setRoomAndDoors(myRoom[4][4], "Room 24", 24, true, false, true, false);
     }
 
-    private void setRoomAndDoors(Room room, String roomName, int roomNumber, boolean up, boolean down, boolean left, boolean right) {
-        room.setRoomName(roomName);
-        room.setRoomNumber(roomNumber);
+    /**
+     * setRoomAndDoors is a method that sets up the properties and connections of a room.
+     *
+     * @param theRoom represents the room to set up.
+     * @param theRoomName represents the name of the room.
+     * @param theRoomNumber represents the number of the room.
+     * @param theUp represents whether there is an upward door.
+     * @param theDown represents whether there is a downward door.
+     * @param theLeft represents whether there is a leftward door.
+     * @param theRight represents whetherr there is a rightward door.
+     */
 
-        if (up) room.getUpDoor().unlock(); else room.getUpDoor().lock();
-        if (down) room.getDownDoor().unlock(); else room.getDownDoor().lock();
-        if (left) room.getLeftDoor().unlock(); else room.getLeftDoor().lock();
-        if (right) room.getRightDoor().unlock(); else room.getRightDoor().lock();
+    private void setRoomAndDoors(Room theRoom, String theRoomName, int theRoomNumber, boolean theUp, boolean theDown, boolean theLeft, boolean theRight) {
+        theRoom.setRoomName(theRoomName);
+        theRoom.setRoomNumber(theRoomNumber);
+        if (theUp) theRoom.getUpDoor().unlock(); else theRoom.getUpDoor().lock();
+        if (theDown) theRoom.getDownDoor().unlock(); else theRoom.getDownDoor().lock();
+        if (theLeft) theRoom.getLeftDoor().unlock(); else theRoom.getLeftDoor().lock();
+        if (theRight) theRoom.getRightDoor().unlock(); else theRoom.getRightDoor().lock();
     }
+
+    /**
+     * loadImages is a method that loads images required for the maze.
+     */
     private void loadImages() {
-
         try {
-
-            characterImage = ImageIO.read(new File("trivia/src/Images/mike2.png"));
-            serializeBufferedImage(characterImage, "trivia/src/Images/mike2_serialized.png");
-
+            myCharacterImage = ImageIO.read(new File("trivia/src/Images/mike2.png"));
+            serializeBufferedImage(myCharacterImage, "trivia/src/Images/mike2_serialized.png");
         } catch (IOException e) {
-
             e.printStackTrace();
         }
-
          }
 
-    private BufferedImage deserializeBufferedImage(String serializedFile) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(serializedFile))) {
+    /**
+     * deserializeBufferedImage is a method that deserializes a BufferedImage from a file.
+     *
+     * @param theSerializedFile represents the file containing the serialized image.
+     * @return The deserialized BufferedImage.
+     */
+    private BufferedImage deserializeBufferedImage(String theSerializedFile) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(theSerializedFile))) {
             int length = ois.readInt();
             if (length > 0) {
                 byte[] imageBytes = new byte[length];
@@ -334,31 +339,39 @@ public class MazePanel extends JPanel implements Serializable {
         return null;
     }
 
-    public void repaints(){
-        this.repaint();
-    }
 
+    /**
+     * loadDoorImage is a method that loads the door image required for the maze.
+     */
     private void loadDoorImage() {
         try {
-            doorImage = ImageIO.read(new File("trivia/src/Images/doorPixel.png")); // load the door image file
+            doorImage = ImageIO.read(new File("trivia/src/Images/doorPixel.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-
-    public static void serializeBufferedImage(BufferedImage image, String filename) {
+    /**
+     * serializeBufferedImage is a method that serializes a BufferedImage to a file.
+     *
+     * @param theImage represents the BufferedImage to serialize.
+     * @param theFilename represents the name of the file to write the serialized image to.
+     */
+    public static void serializeBufferedImage(BufferedImage theImage, String theFilename) {
         try {
-            File outputFile = new File(filename);
-            ImageIO.write(image, "png", outputFile);
+            File outputFile = new File(theFilename);
+            ImageIO.write(theImage, "png", outputFile);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
+    /**
+     * loadPotionImage is a methof that loads the potion image.
+     */
     private void loadPotionImage() {
         try {
 
@@ -367,110 +380,124 @@ public class MazePanel extends JPanel implements Serializable {
             e.printStackTrace();
         }
     }
+    /**
+     * getCol is a getter method for the column value.
+     *
+     * @return the column value
+     */
     public int getCols(){
         return cols;
     }
 
+    /**
+     * getRow is a getter method for the row value.
+     *
+     * @return the row value
+     */
     public int getRows(){
         return rows;
     }
 
+    /**
+     * layoutComponents is a method that sets up the
+     * formatting of the panel to be put on frame.
+     *
+     */
     private void layoutComponents() {
-
         this.setBackground(new Color(0, 137, 165));
         this.add(gameIconLabel, BorderLayout.NORTH);
-     //   JPanel myTopCenterPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        // this.setLayout(new BorderLayout());
-       // myTopCenterPanel.setBorder(BorderFactory.createTitledBorder("Map"));
-        //this.add(myTopCenterPanel, BorderLayout.CENTER);
-
     }
 
 
+    /**
+     *  getBufferedImage is a method that Gets the buffered image.
+     *
+     * @return The buffered image.
+     */
     public BufferedImage getBufferedImage() {
-        return characterImage;
+        return myCharacterImage;
     }
 
-    public void setBufferedImage(BufferedImage bufferedImage) {
-        this.characterImage = bufferedImage;
+    /**
+     * setBufferedImageis a methof that sets the buffered image.
+     *
+     * @param theBufferedImage The buffered image to set.
+     */
+    public void setBufferedImage(BufferedImage theBufferedImage) {
+        myCharacterImage = theBufferedImage;
         repaint();
     }
-    //@Serial
-    public void writeObject(java.io.ObjectOutputStream out) throws IOException{
-        out.defaultWriteObject();
-        System.out.println("used maze write object");
-        writeBufferedImage(out, characterImage);
 
-
-       System.out.println("row in maze write object after repaint: " + myCharacter.getRow());
-       System.out.println("row in maze write object after repaint: " +myCharacter.getCol());
-
-    }
-/*
-    public void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-       in.defaultReadObject();
-        characterImage = readBufferedImage(in);
-
-       // readBufferedImage(in);
-        System.out.println("used maze read object");
-
-      //  myCharacter.setRow (in.readInt());
-        //myCharacter.setCol (in.readInt());
-
-        // Repaint the maze to reflect the character's new position
-        repaint();
-        loadDoorImage();
-        loadPotionImage();
-         //= (String) in.readObject()
-        //characterImage = readBufferedImage(in);
-        //System.out.println("row in maze read object: " + myCharacter.getRow());
-        //System.out.println("col in maze read object: " + myCharacter.getCol());
-
+    /**
+     * writeObject is a method that Serializes the object to the output stream.
+     *
+     * @param theOut represent the output stream to write to.
+     * @throws IOException If an I/O error occurs.
+     */
+    public void writeObject(java.io.ObjectOutputStream theOut) throws IOException{
+        theOut.defaultWriteObject();
+        writeBufferedImage(theOut, myCharacterImage);
     }
 
- */
-//@Serial
-public void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-    // Perform custom deserialization logic here
-    in.defaultReadObject();
-    characterImage = readBufferedImage(in);
-
-    // Additional custom deserialization logic if needed
-
-    // repaint the maze panel to reflect any changes
+    /**
+     * readObject is a method that deserializes the object from the input stream.
+     *
+     * @param theIn represents the input stream to read from.
+     * @throws IOException  If an I/O error occurs.
+     * @throws ClassNotFoundException If the class of a serialized object cannot be found.
+     */
+public void readObject(ObjectInputStream theIn) throws IOException, ClassNotFoundException {
+    theIn.defaultReadObject();
+    myCharacterImage = readBufferedImage(theIn);
     repaint();
 }
 
-
-    public void writeBufferedImage(ObjectOutputStream oos, BufferedImage image) throws IOException {
-        if (image != null) {
+    /**
+     * writeBufferedImage is a method that writes the BufferedImage to the output stream.
+     *
+     * @param theOos reprsent the output stream to write to.
+     * @param theImage reprsents the BufferedImage to write.
+     * @throws IOException If an I/O error occurs.
+     */
+    public void writeBufferedImage(ObjectOutputStream theOos, BufferedImage theImage) throws IOException {
+        if (theImage != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", baos);
+            ImageIO.write(theImage, "png", baos);
             byte[] imageBytes = baos.toByteArray();
-            oos.writeInt(imageBytes.length);
-            oos.write(imageBytes);
-            System.out.println("SUCCESSULLY  BUFFERED, in writeBufferedImage method in maze panel");
+            theOos.writeInt(imageBytes.length);
+            theOos.write(imageBytes);
         } else {
-            oos.writeInt(0);
-            System.out.println("NOT BUFFERED, in writeBufferedImage method in maze panel");
+            theOos.writeInt(0);
         }
     }
 
-    private BufferedImage readBufferedImage(ObjectInputStream ois) throws IOException {
-        int length = ois.readInt();
+    /**
+     * readBufferedImage is a method that reads a BufferedImage from the input stream.
+     *
+     * @param theOis reprsents the input stream to read from.
+     * @return The read BufferedImage.
+     * @throws IOException If an I/O error occurs.
+     */
+    private BufferedImage readBufferedImage(ObjectInputStream theOis) throws IOException {
+        int length = theOis.readInt();
         if (length > 0) {
             byte[] imageBytes = new byte[length];
-            ois.readFully(imageBytes);
+            theOis.readFully(imageBytes);
             ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
-            System.out.println("SUCCESSULLY  BUFFERED, in readBufferedImage method in maze panel");
             return ImageIO.read(bais);
 
         } else {
-            System.out.println("NOT BUFFERED, in readBufferedImage method in maze panel");
             return null;
         }
     }
-    public void setRoom(Room[][] myRoom2) {
-        myRoom = myRoom2;
+
+
+    /**
+     * setRoom is a stter method that sets the rooms of the maze.
+     *
+     * @param theRoom represents the rooms to set.
+     */
+    public void setRoom(Room[][] theRoom) {
+        myRoom = myRoom;
     }
 }
