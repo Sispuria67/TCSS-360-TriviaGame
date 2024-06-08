@@ -28,16 +28,6 @@ public class Question {
 
 
     /**
-     * getMyOptions is a getter method for the options of the question.
-     *
-     * @return an array of options for the question.
-     */
-    public String[] getMyOptions() {
-        return new String[0];
-    }
-
-
-    /**
      * Question is a constructor method that creates a new Question object.
      *
      * @param theQuestionId represents the unique identifier for the question.
@@ -50,6 +40,16 @@ public class Question {
         myAnswer = theAnswer;
         myQuestionId = theQuestionId;
         myType = theType;
+    }
+
+
+    /**
+     * getMyOptions is a getter method for the options of the question.
+     *
+     * @return an array of options for the question.
+     */
+    public String[] getMyOptions() {
+        return new String[0];
     }
 
     /**

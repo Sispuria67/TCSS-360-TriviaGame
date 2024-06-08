@@ -35,17 +35,12 @@ public class TitleScreen {
         myFrame = new JFrame();
         myMainPanel = new JPanel();
         myFrame.setResizable(false);
-
-
         myFrame.setSize(700, 700);
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setTitle("Trivia Maze");
-
         myMainPanel.setBackground(new Color(0, 137, 165));
         myMainPanel.setLayout(new BoxLayout(myMainPanel, BoxLayout.Y_AXIS));
-
         myFrame.add(myMainPanel, BorderLayout.CENTER);
-
         addMainPanelContent();
         myFrame.setVisible(true);
         setTitleScreenSound();
@@ -53,37 +48,26 @@ public class TitleScreen {
 
     public void addMainPanelContent() {
 
-        //game Icon Panel
         JPanel gameIconPanel = new JPanel();
         gameIconPanel.setBackground(new Color(0, 137, 165));
         JLabel gameIconLabel = new JLabel(gameIcon);
         gameIconPanel.add(gameIconLabel);
 
-        //name Panel
         JPanel namePanel = new JPanel();
         namePanel.setBackground(new Color(0, 137, 165));
         JLabel nameLabel = new JLabel("Rohit Ark & Sado Iman");
         nameLabel.setFont(new Font("Monospaced", Font.BOLD, 30));
-
         namePanel.add(nameLabel);
 
-
-
-        // Door Icon Panel
         JPanel doorPanel = new JPanel();
         doorPanel.setBackground(new Color(0, 137, 165));
         doorIconLabel = new JLabel(doorImg);
         doorPanel.add(doorIconLabel);
 
-
-
-        //button Panel
-      JPanel buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(0, 137, 165));
         JButton playButton = new JButton("Play");
         playButton.setFont(new Font("Monospaced", Font.BOLD, 25));
-
-        //load Panel
         JButton loadButton = new JButton("Load");
         loadButton.setFont(new Font("Monospaced", Font.BOLD, 25));
 
@@ -102,7 +86,6 @@ public class TitleScreen {
 
         myMainPanel.add(Box.createVerticalGlue());
         myMainPanel.add(gameIconPanel);
-       // myMainPanel.add(titlePanel);
         myMainPanel.add(namePanel);
 
         myMainPanel.add(doorPanel);
@@ -112,7 +95,6 @@ public class TitleScreen {
 
     private void setTitleScreenSound() {
         try {
-
             String fileName = "Sounds/titleSound.wav";
             File file = new File(fileName);
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);

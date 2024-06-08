@@ -17,18 +17,15 @@ public class QuestionFactoryFTest {
 
     @Before
     public void setUp() {
-        // Initialize and create the database
         QuestionFactoryF.createDataBase();
     }
 
     @Test
     public void testCreateDatabase() {
-        // Check if the database file exists
         File dbFile = new File("practSQL.db");
         assertTrue(dbFile.exists());
 
-        // Check if the table was created
-        try (Connection conn = QuestionFactoryF.ds.getConnection();
+        try (Connection conn = QuestionFactoryF.getDs().getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='questions'")) {
             assertTrue(rs.next());
