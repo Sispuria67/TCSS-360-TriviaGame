@@ -1,78 +1,147 @@
+/**
+ * A package for model.
+ */
 package Model;
 
 
 import java.io.Serializable;
 
+/**
+ * CharacterModel is a class that represents the player.
+ * @author Sado Iman, Rohit Ark
+ * @version 06/7/24
+ */
+
 public class CharacterModel implements Serializable {
-
+    /** Unique class identifier used for serialization */
     private static final long serialVersionUID = 1387874L;
-    private int row;
-   private  int col;
 
-    private Room [][] currentRoom;
+    /** A private field for row value */
+    private int myRow;
 
-    //private int myRoomCounter;
+    /** A private field for column value */
+    private  int myCol;
 
-   //make the maze a 2D array?[row][col]
+    /** A private field for the current room */
+    private Room [][] myCurrentRoom;
 
-
-    public CharacterModel(int initialRow, int initialCol) {
-        this.row = initialRow;
-        this.col = initialCol;
-        this.currentRoom = new Room[row][col];
+    /**
+     * CharacterModel is constructor method that initializes
+     * the rooms row and column.
+     *
+     */
+    public CharacterModel(int theInitialRow, int theInitialCol) {
+        myRow = theInitialRow;
+        myCol = theInitialCol;
+        myCurrentRoom = new Room[myRow][myCol];
 
     }
+
+    /**
+     * getRow is a getter method for the row value.
+     *
+     * @return the row value
+     */
 
     public int getRow() {
-        return row;
+        return myRow;
     }
-
+    /**
+     * getCol is a getter method for the column value.
+     *
+     * @return the column value
+     */
     public int getCol() {
-        return col;
+        return myCol;
     }
 
+    /**
+     * setRow is a setter method for the row value.
+     *
+     * @param theRow represents the row value.
+     */
     public void setRow(int theRow) {
-       row = theRow;
+       myRow = theRow;
     }
 
+    /**
+     * setCol is a setter method for the column value.
+     *
+     * @param theCol represents the column value.
+     */
     public void setCol(int theCol) {
-        col = theCol;
+        myCol = theCol;
     }
 
+    /**
+     * moveUp is a method that moves the row up
+     * by one.
+     */
     public void moveUp() {
-        if (row > 0) {
-            row--;
+        if (myRow > 0) {
+            myRow--;
         }
     }
-
+    /**
+     * moveDown is a method that moves the row down
+     * by one.
+     */
     public void moveDown() {
-        if (row < 4) {
-            row++;
+        if (myRow < 4) {
+            myRow++;
         }
     }
 
+    /**
+     * moveLeft is a method that moves the row left
+     * by one.
+     */
     public void moveLeft() {
-        if (col > 0) {
-            col--;
+        if (myCol > 0) {
+            myCol--;
         }
     }
 
+    /**
+     * moveRight is a method that moves the row right
+     * by one.
+     */
     public void moveRight() {
-        if (col < 4) {
-            col++;
+        if (myCol < 4) {
+            myCol++;
         }
     }
 
+    /**
+     * getCurrentRoom is a getter method for the current room.
+     *
+     * @return the current room.
+     */
     public Room getCurrentRoom() {
-        return currentRoom[getRow()][getCol()];
+        return myCurrentRoom[getRow()][getCol()];
     }
 
-    public void setCurrentRoom(Room [][] room) {
-            currentRoom = room;
+    /**
+     * setCurrentRoom is a setter method for the current room.
+     *
+     * @param theRoom represents the current room.
+     */
+    public void setCurrentRoom(Room [][] theRoom) {
+            myCurrentRoom = theRoom;
     }
 
+    /**
+     * toString method for the entire class.
+     *
+     * @return the string value of the class
+     */
+    @Override
     public String toString() {
-        return "room number is " + currentRoom[getRow()][getCol()].getRoomName().toString();
+        return "CharacterModel{" +
+                "row=" + myRow +
+                ", col=" + myCol +
+                ", currentRoom=" + (myCurrentRoom[myRow][myCol] != null ? myCurrentRoom[myRow][myCol].getRoomName() : "null") +
+                '}';
     }
 
 }

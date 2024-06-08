@@ -10,21 +10,13 @@ public class QuestionFactoryF implements Serializable {
 
     private static final long serialVersionUID = 13454L;
     public static SQLiteDataSource ds;
-    private static String answerResult;
-    private static String option1Result;
-    private static String questionResult;
 
     public QuestionFactoryF() {
         createDataBase();
-        this.answerResult = QuestionFactoryF.answerResult;
-        this.option1Result = QuestionFactoryF.option1Result;
-        this.questionResult = QuestionFactoryF.questionResult;
     }
 
     public static void createDataBase() {
        SQLiteDataSource ds1 =  new SQLiteDataSource();
-
-
         var url = "jdbc:sqlite:practSQL.db";
 
         File dbFile = new File("practSQL.db");
@@ -32,7 +24,6 @@ public class QuestionFactoryF implements Serializable {
         if(dbFile.exists()){
             dbFile.delete();
         }
-
 
         try {
             ds = new SQLiteDataSource();
@@ -43,8 +34,6 @@ public class QuestionFactoryF implements Serializable {
         }
 
 
-
-
         var query = "CREATE TABLE IF NOT EXISTS questions ("
                 + " doorNumber INTEGER PRIMARY KEY,"
                 + " question TEXT NOT NULL,"
@@ -53,9 +42,8 @@ public class QuestionFactoryF implements Serializable {
                 + " option3 TEXT,"
                 + " option4 TEXT,"
                 + " answer TEXT NOT NULL,"
-                + " type TEXT NOT NULL" // for question types
+                + " type TEXT NOT NULL"
                 + ");";
-
 
         try (Connection conn = ds.getConnection();
              Statement stmt = conn.createStatement()) {
@@ -65,12 +53,8 @@ public class QuestionFactoryF implements Serializable {
             e.printStackTrace();
             System.exit(0);
         }
-
-        // insert questions into the database
                String[] queries = {
-                       //mltiple choice questions
                       "INSERT INTO questions (doorNumber, question, option1, option2, option3, option4, answer, type) VALUES (1, 'What is the capital of Canada?', 'Toronto', 'Ottawa', 'Montreal', 'Vancouver', 'B', 'multiple')",
-
                        "INSERT INTO questions (doorNumber, question, option1, option2, option3, option4, answer, type) VALUES (2, 'Which of the following is not a primary color?', 'Red', 'Green', 'Yellow', 'Black', 'D', 'multiple')",
                        "INSERT INTO questions (doorNumber, question, option1, option2, option3, option4, answer, type) VALUES (3, 'Who painted the Mona Lisa?', 'Leonardo da Vinci', 'Vincent van Gogh', 'Pablo Picasso', 'Michelangelo', 'A', 'multiple')",
                        "INSERT INTO questions (doorNumber, question, option1, option2, option3, option4, answer, type) VALUES (4, 'What is the chemical symbol for gold?', 'Au', 'Ag', 'Fe', 'Pb', 'A', 'multiple')",
@@ -83,8 +67,6 @@ public class QuestionFactoryF implements Serializable {
                        "INSERT INTO questions (doorNumber, question, option1, option2, option3, option4, answer, type) VALUES (11, 'What film won Best Picture at the Oscars in 2020?', 'Parasite', '1917', 'Joker', 'Once Upon a Time in Hollywood', 'A', 'multiple')",
                        "INSERT INTO questions (doorNumber, question, option1, option2, option3, option4, answer, type) VALUES (12, 'Which NBA team won the finals in 2016?', 'Warriors', 'Cavaliers',  'Celtics', 'Knicks', 'B', 'multiple')",
                        "INSERT INTO questions (doorNumber, question, option1, option2, option3, option4, answer, type) VALUES (13, 'What is the most popular ice cream flavor in America?', 'Chocolate', 'Mint Chocolate Chip', 'Strawberry', 'Vanilla', 'D', 'multiple')",
-
-                       //true/false questions
                        "INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (14, 'The Pacific Ocean is the largest ocean in the world.', 'True', 'False', 'True', 'truefalse')",
         "INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (15, 'The Java programming language was created by James Gosling.', 'True', 'False', 'True', 'truefalse')",
         "INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (16, 'The square root of 25 is 5.', 'True', 'False', 'True', 'truefalse')",
@@ -99,11 +81,6 @@ public class QuestionFactoryF implements Serializable {
                        "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (25, 'The American Civil War ended in 1865.', 'True', 'False', 'True', 'truefalse')",
         "  INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (26, 'The Shawshank Redemption is the highest-rated movie on IMDb.', 'True', 'False', 'True', 'truefalse')",
                        "   INSERT INTO questions (doorNumber, question, option1, option2, answer, type) VALUES (27, 'Harry Potter and the Philosophers Stone is the first book in the Harry Potter series.', 'True', 'False', 'True', 'truefalse')",
-
-
-
-
-        //shortanswer qquestions
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (28, 'Who is considered the father of modern computer science?', 'Alan Turing', 'shortanswer')",
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (29, 'What color is a stop sign?', 'Red', 'shortanswer')",
                        "INSERT INTO questions (doorNumber, question, answer, type) VALUES (30, 'What is the most populated country in the world?', 'India', 'shortanswer')",
@@ -208,33 +185,14 @@ public class QuestionFactoryF implements Serializable {
     }
 
 
-    public String getAnswerResult() {
-        return answerResult;
-    }
 
     public static boolean checkAnswer(int questionId, String playerAnswer) {
         String correctAnswer = getAnswerForQuestion(questionId);
         return correctAnswer.equalsIgnoreCase(playerAnswer); // Case-insensitive comparison
     }
 
-    public void setAnswerResult(String answerResult) {
-        this.answerResult = answerResult;
-    }
-
-    public String getOption1Result() {
-        return option1Result;
-    }
-
-    public String getQuestionResult() {
-        return questionResult;
-    }
 
 
-/*
-    public static void main(String[] args) {
-        createDataBase();
-    }
 
 
- */
 }

@@ -1,9 +1,6 @@
 package View;
 
-import Model.TriviaModel;
-
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -18,22 +15,16 @@ public class ArrowsPanel extends JPanel {
     private final JButton myLeftArrow;
     private final JButton myRightArrow;
 
-    private final TriviaModel myModel;
-
-
-    public ArrowsPanel(final TriviaModel theModel) {
-        myModel = theModel;
 
 
 
-
-
+    public ArrowsPanel() {
         ImageIcon upIcon = new ImageIcon("trivia/src/Images/upArrow.png");
         ImageIcon downIcon = new ImageIcon("trivia/src/Images/downArrow.png");
         ImageIcon leftIcon = new ImageIcon("trivia/src/Images/leftArrow.png");
         ImageIcon rightIcon = new ImageIcon("trivia/src/Images/rightArrow.png");
 
-        Image image = upIcon.getImage(); // transform it
+        Image image = upIcon.getImage();
         Image imageDown = downIcon.getImage();
         Image imageRight = rightIcon.getImage();
         Image imageLeft = leftIcon.getImage();
@@ -51,20 +42,8 @@ public class ArrowsPanel extends JPanel {
         myLeftArrow = new JButton(leftIcon);
         myRightArrow = new JButton(rightIcon);
 
-       // System.out.println("Left Icon: " + (leftIcon.getImage() != null));
-       // System.out.println("Right Icon: " + (rightIcon.getImage() != null));
-
-
-        /*
-        myUpArrow= new BasicArrowButton(BasicArrowButton.NORTH);
-       myDownArrow=new BasicArrowButton(BasicArrowButton.SOUTH);
-       myRightArrow=new BasicArrowButton(BasicArrowButton.EAST);
-      myLeftArrow=new BasicArrowButton(BasicArrowButton.WEST);
-
-         */
        setButtonSizes();
         layoutComponents();
-        //up and left are disabed to behin with
         myUpArrow.setEnabled(false);
         myLeftArrow.setEnabled(false);
 
@@ -73,7 +52,6 @@ public class ArrowsPanel extends JPanel {
     }
 
     public void removeArrowListeners() {
-            // Remove listener from all buttons
             myUpArrow.removeActionListener(currentListener);
             myDownArrow.removeActionListener(currentListener);
             myLeftArrow.removeActionListener(currentListener);
@@ -91,32 +69,29 @@ public class ArrowsPanel extends JPanel {
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        //myUpArrow.setBackground(Color.green);
 
 
-        //left arrow
+
         gbc.gridx = 0;
         gbc.gridy= 1;
         gbc.anchor=GridBagConstraints.LINE_END;
         gbc.insets = new Insets(3, 3, 3, 3);
-       // gbc.gridheight = 5;
-       // gbc.gridwidth = 5;
+
         this.add(myLeftArrow, gbc);
 
-       // up arrow
-       gbc.gridx= 1;
-       gbc.gridy = 0;
+
+        gbc.gridx= 1;
+        gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         this.add(myUpArrow, gbc);
 
 
-        //donw arrow
+
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         this.add(myDownArrow, gbc);
 
-        // right arrow
         gbc.gridx = 2;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.LINE_START;
@@ -137,13 +112,6 @@ public class ArrowsPanel extends JPanel {
         myDownArrow.setPreferredSize(buttonSize);
         myLeftArrow.setPreferredSize(buttonSize);
         myRightArrow.setPreferredSize(buttonSize);
-        /*
-        myUpArrow.setPreferredSize(getPreferredSize());
-        myDownArrow.setPreferredSize(getPreferredSize());
-        myLeftArrow.setPreferredSize(getPreferredSize());
-        myRightArrow.setPreferredSize(getPreferredSize());
-
-         */
     }
     public JButton getMyUpArrow() {
         return myUpArrow;

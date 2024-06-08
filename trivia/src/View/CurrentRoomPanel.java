@@ -1,6 +1,5 @@
 package View;
 
-import Model.TriviaModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,15 +7,11 @@ import java.awt.event.ActionListener;
 
 public class CurrentRoomPanel extends JPanel {
 
-    private final TriviaModel myModel;
 
     JLabel myText;
 
-    public CurrentRoomPanel(TriviaModel theModel) {
-        myModel = theModel;
+    public CurrentRoomPanel() {
         myText = new JLabel();
-
-       // this.add(myText);
 
         layoutComponents();
 
@@ -26,9 +21,7 @@ public class CurrentRoomPanel extends JPanel {
         setLayout(new BorderLayout());
 
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        // this.setBorder(BorderFactory.createTitledBorder("Current Room"));
        this.setBackground(new Color(0, 130, 120));
-       // this.setBackground(new Color(0, 137, 165));
 
         String imagePath = "trivia/src/Images/currentRoom2.png";
         ImageIcon titleIcon = new ImageIcon(imagePath);

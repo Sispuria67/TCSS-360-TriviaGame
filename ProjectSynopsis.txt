@@ -1,0 +1,16 @@
+
+
+Group members: Sado Iman, Rohit Ark
+
+Breakdown of contribution: 
+
+
+Shortcomings/concerns: Model, View, Control was not followed as exactly as I would have liked,
+Zach left group, we had 3 weeks to complete the new project 
+We also could not get the character image to load back to the saved position correctly, the game saves correctly because after loading in the current room panel it displays the saved room location accurately but we could not get the character image to repaint to the saved location although internally it is in the saved position.  
+
+Total hours contributed by members: 
+
+Problems we overcame: Finishing the project, 
+
+Extra credit: We added sounds for the title screen of the game, for the door opening(correct answer), for door locked (incorrect answer), for game won and for game lost. Sado also created pixel art for the game using pixilart.com (door images, exit image, door locked image, character image, potion image, exit image, save image, question mark image, game won image, potion image). We also added hints in some of the rooms marked by a potion and if the player goes into these rooms they get hints to all of the doors for that room. 

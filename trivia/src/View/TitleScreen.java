@@ -1,7 +1,6 @@
 package View;
 
 import Controller.TriviaController;
-import Model.TriviaModel;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -93,7 +92,7 @@ public class TitleScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 myFrame.setVisible(false);
-                TriviaController TV = new TriviaController(TriviaModel.getMyTriviaInstance());
+                TriviaController TV = new TriviaController();
                 TV.createAndShowGUI();
                 stopTitleScreenSound();
             }
