@@ -1,3 +1,6 @@
+/**
+ * A package for Tests.
+ */
 package Tests;
 
 import Model.Door;
@@ -7,15 +10,27 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * RoomTest is a class that contains unit tests for the Room class.
+ *
+ * @author Sado Iman, Rohit Ark
+ * @version 06/7/24
+ */
 public class RoomTest {
 
     private Room room;
 
+    /**
+     * setUp method initializes a new Room object before each test.
+     */
     @Before
     public void setUp() {
         room = new Room();
     }
 
+    /**
+     * testInitialDoorsAreClosed method tests if the initial doors are closed.
+     */
     @Test
     public void testInitialDoorsAreClosed() {
         assertEquals(Door.CLOSED, room.getUpDoor().getDoorStatus());
@@ -24,6 +39,9 @@ public class RoomTest {
         assertEquals(Door.CLOSED, room.getRightDoor().getDoorStatus());
     }
 
+    /**
+     * testLockAndUnlockDoors method tests locking and unlocking of doors.
+     */
     @Test
     public void testLockAndUnlockDoors() {
         room.lockDoor("up");
@@ -33,6 +51,9 @@ public class RoomTest {
         assertEquals(Door.OPEN, room.getUpDoor().getDoorStatus());
     }
 
+    /**
+     * testSetAndGetDoorQuestions method tests setting and getting questions for doors.
+     */
     @Test
     public void testSetAndGetDoorQuestions() {
         room.setQuestionForDoor("up", 1);
@@ -42,6 +63,9 @@ public class RoomTest {
         assertEquals(Integer.valueOf(2), room.getQuestionForDoor("down"));
     }
 
+    /**
+     * testPotionPresence method tests the presence of a potion in the room.
+     */
     @Test
     public void testPotionPresence() {
         assertFalse(room.hasPotion());
@@ -50,18 +74,27 @@ public class RoomTest {
         assertTrue(room.hasPotion());
     }
 
+    /**
+     * testSetAndGetRoomName method tests setting and getting the room name.
+     */
     @Test
     public void testSetAndGetRoomName() {
         room.setRoomName("Test Room");
         assertEquals("Test Room", room.getRoomName());
     }
 
+    /**
+     * testSetAndGetRoomNumber method tests setting and getting the room number.
+     */
     @Test
     public void testSetAndGetRoomNumber() {
         room.setRoomNumber(1);
         assertEquals(1, room.getRoomNumber());
     }
 
+    /**
+     * testGetDoor method tests getting doors in different directions.
+     */
     @Test
     public void testGetDoor() {
         assertNotNull(room.getDoor("up"));
@@ -71,6 +104,9 @@ public class RoomTest {
         assertNull(room.getDoor("invalid_direction"));
     }
 
+    /**
+     * testToString method tests the string representation of the Room object.
+     */
     @Test
     public void testToString() {
         room.setRoomName("Test Room");

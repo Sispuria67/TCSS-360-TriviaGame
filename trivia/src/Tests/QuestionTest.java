@@ -1,63 +1,132 @@
+/**
+ * A package for Tests.
+ */
 package Tests;
+
+import static org.junit.Assert.*;
 
 import Model.Question;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
+/**
+ * QuestionTest is a class that contains unit tests for the Question class.
+ *
+ * @author Sado Iman, Rohit Ark
+ * @version 06/7/24
+ */
 public class QuestionTest {
 
-    private Question shortAnswerQuestion;
-    private Question multipleChoiceQuestion;
-    private Question trueFalseQuestion;
+    private Question question;
 
+    /**
+     * setUp method initializes a new Question object before each test.
+     */
     @Before
     public void setUp() {
-        shortAnswerQuestion = new Question.ShortAnswerQuestion(1, "What is 2 + 2?", "4", "shortanswer");
-        multipleChoiceQuestion = new Question.MultipleChoiceQuestion(2, "What is the capital of France?", new String[]{"Paris", "London", "Berlin"}, "Paris", "multiple");
-        trueFalseQuestion = new Question.TrueFalseQuestion(3, "The sky is blue.", new String[]{"True", "False"}, "True", "truefalse");
+        question = new Question(1, "What is the capital of France?", "Paris", "shortanswer");
     }
 
+    /**
+     * testGetQuestionText method checks if the correct question text is returned.
+     */
     @Test
     public void testGetQuestionText() {
-        assertEquals("What is 2 + 2?", shortAnswerQuestion.getQuestionText());
-        assertEquals("What is the capital of France?", multipleChoiceQuestion.getQuestionText());
-        assertEquals("The sky is blue.", trueFalseQuestion.getQuestionText());
+        assertEquals("What is the capital of France?", question.getQuestionText());
     }
 
+    /**
+     * testCheckAnswer method checks if the answer checking method works correctly.
+     */
     @Test
     public void testCheckAnswer() {
-        assertTrue(shortAnswerQuestion.checkAnswer("4"));
-        assertFalse(shortAnswerQuestion.checkAnswer("5"));
-
-        assertTrue(multipleChoiceQuestion.checkAnswer("Paris"));
-        assertFalse(multipleChoiceQuestion.checkAnswer("London"));
-
-        assertTrue(trueFalseQuestion.checkAnswer("True"));
-        assertFalse(trueFalseQuestion.checkAnswer("False"));
+        assertTrue(question.checkAnswer("Paris"));
+        assertFalse(question.checkAnswer("London"));
     }
 
+    /**
+     * testGetSelectedAnswer method checks if the correct selected answer is returned.
+     */
     @Test
     public void testGetSelectedAnswer() {
-        assertNull(shortAnswerQuestion.getSelectedAnswer(new String[]{}, 0));
-
-        String[] options = {"Paris", "London", "Berlin"};
-        assertEquals("Paris", multipleChoiceQuestion.getSelectedAnswer(options, 0));
-        assertEquals("London", multipleChoiceQuestion.getSelectedAnswer(options, 1));
-        assertEquals("Berlin", multipleChoiceQuestion.getSelectedAnswer(options, 2));
-        assertNull(multipleChoiceQuestion.getSelectedAnswer(options, 3));
-
-        String[] trueFalseOptions = {"True", "False"};
-        assertEquals("True", trueFalseQuestion.getSelectedAnswer(trueFalseOptions, 0));
-        assertEquals("False", trueFalseQuestion.getSelectedAnswer(trueFalseOptions, 1));
-        assertNull(trueFalseQuestion.getSelectedAnswer(trueFalseOptions, 2));
+        assertNull(question.getSelectedAnswer(new String[]{"A", "B", "C"}, 0));
+        assertEquals(null, question.getSelectedAnswer(new String[]{"A", "B", "C"}, 2));
     }
 
+    /**
+     * testGetQuestion method checks if the correct question is returned.
+     */
     @Test
-    public void testGetMyOptions() {
-        assertArrayEquals(new String[]{"Paris", "London", "Berlin"}, ((Question.MultipleChoiceQuestion) multipleChoiceQuestion).getMyOptions());
-        assertArrayEquals(new String[]{"True", "False"}, ((Question.TrueFalseQuestion) trueFalseQuestion).getMyOptions());
-        assertArrayEquals(new String[0], shortAnswerQuestion.getMyOptions());
+    public void testGetQuestion() {
+        assertEquals("What is the capital of France?", question.getQuestion());
+    }
+
+    /**
+     * testGetAnswer method checks if the correct answer is returned.
+     */
+    @Test
+    public void testGetAnswer() {
+        assertEquals("Paris", question.getAnswer());
+    }
+
+    /**
+     * testGetMyType method checks if the correct question type is returned.
+     */
+    @Test
+    public void testGetMyType() {
+        assertEquals("shortanswer", question.getMyType());
+    }
+
+    /**
+     * testGetMyQuestionId method checks if the correct question ID is returned.
+     */
+    @Test
+    public void testGetMyQuestionId() {
+        assertEquals(1, question.getMyQuestionId());
+    }
+
+    /**
+     * testSetQuestion method tests setting a new question text.
+     */
+    @Test
+    public void testSetQuestion() {
+        question.setQuestion("What is the capital of Spain?");
+        assertEquals("What is the capital of Spain?", question.getQuestion());
+    }
+
+    /**
+     * testSetAnswer method tests setting a new answer text.
+     */
+    @Test
+    public void testSetAnswer() {
+        question.setAnswer("Madrid");
+        assertEquals("Madrid", question.getAnswer());
+    }
+
+    /**
+     * testSetMyType method tests setting a new question type.
+     */
+    @Test
+    public void testSetMyType() {
+        question.setMyType("multiple");
+        assertEquals("multiple", question.getMyType());
+    }
+
+    /**
+     * testSetMyQuestionId method tests setting a new question ID.
+     */
+    @Test
+    public void testSetMyQuestionId() {
+        question.setMyQuestionId(2);
+        assertEquals(2, question.getMyQuestionId());
+    }
+
+    /**
+     * testToString method tests the string representation of the Question object.
+     */
+    @Test
+    public void testToString() {
+        String expected = "Question{myQuestionId=1, myQuestion='What is the capital of France?', myAnswer='Paris', myType='shortanswer'}";
+        assertEquals(expected, question.toString());
     }
 }

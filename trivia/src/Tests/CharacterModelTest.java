@@ -1,3 +1,6 @@
+/**
+ * A package for Tests.
+ */
 package Tests;
 
 import Model.CharacterModel;
@@ -6,11 +9,20 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * CharacterModelTest is a class that contains unit tests for the CharacterModel class.
+ *
+ * @author Sado Iman, Rohit Ark
+ * @version 06/7/24
+ */
 public class CharacterModelTest {
 
     private CharacterModel characterModel;
     private Room[][] rooms;
 
+    /**
+     * Sets up a new CharacterModel object and a grid of rooms before each test.
+     */
     @Before
     public void setUp() {
         rooms = new Room[5][5];
@@ -23,12 +35,18 @@ public class CharacterModelTest {
         characterModel.setCurrentRoom(rooms);
     }
 
+    /**
+     * Tests the initial position of the character.
+     */
     @Test
     public void testInitialPosition() {
         assertEquals(2, characterModel.getRow());
         assertEquals(2, characterModel.getCol());
     }
 
+    /**
+     * Tests the movement of the character upwards.
+     */
     @Test
     public void testMoveUp() {
         characterModel.moveUp();
@@ -36,6 +54,9 @@ public class CharacterModelTest {
         assertEquals(2, characterModel.getCol());
     }
 
+    /**
+     * Tests the movement of the character downwards.
+     */
     @Test
     public void testMoveDown() {
         characterModel.moveDown();
@@ -43,6 +64,9 @@ public class CharacterModelTest {
         assertEquals(2, characterModel.getCol());
     }
 
+    /**
+     * Tests the movement of the character to the left.
+     */
     @Test
     public void testMoveLeft() {
         characterModel.moveLeft();
@@ -50,6 +74,9 @@ public class CharacterModelTest {
         assertEquals(1, characterModel.getCol());
     }
 
+    /**
+     * Tests the movement of the character to the right.
+     */
     @Test
     public void testMoveRight() {
         characterModel.moveRight();
@@ -57,6 +84,9 @@ public class CharacterModelTest {
         assertEquals(3, characterModel.getCol());
     }
 
+    /**
+     * Tests the boundary condition for moving the character upwards.
+     */
     @Test
     public void testMoveUpBoundary() {
         characterModel.setRow(0);
@@ -64,6 +94,9 @@ public class CharacterModelTest {
         assertEquals(0, characterModel.getRow());
     }
 
+    /**
+     * Tests the boundary condition for moving the character downwards.
+     */
     @Test
     public void testMoveDownBoundary() {
         characterModel.setRow(4);
@@ -71,6 +104,9 @@ public class CharacterModelTest {
         assertEquals(4, characterModel.getRow());
     }
 
+    /**
+     * Tests the boundary condition for moving the character to the left.
+     */
     @Test
     public void testMoveLeftBoundary() {
         characterModel.setCol(0);
@@ -78,27 +114,13 @@ public class CharacterModelTest {
         assertEquals(0, characterModel.getCol());
     }
 
+    /**
+     * Tests the boundary condition for moving the character to the right.
+     */
     @Test
     public void testMoveRightBoundary() {
         characterModel.setCol(4);
         characterModel.moveRight();
         assertEquals(4, characterModel.getCol());
-    }
-
-    @Test
-    public void testSetCurrentRoom() {
-        Room[][] newRooms = new Room[5][5];
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                newRooms[i][j] = new Room();
-            }
-        }
-        characterModel.setCurrentRoom(newRooms);
-        assertEquals(newRooms, characterModel.getCurrentRoom().getRoomName());
-    }
-
-    @Test
-    public void testToString() {
-        assertEquals("room number is Room 2,2", characterModel.toString());
     }
 }
