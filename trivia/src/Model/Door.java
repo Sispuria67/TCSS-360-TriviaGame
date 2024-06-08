@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class Door implements Serializable {
 
-    private final PropertyChangeSupport myPcs;
+    private transient final PropertyChangeSupport myPcs;
     @Serial
     private static final long serialVersionUID = 1L;
 

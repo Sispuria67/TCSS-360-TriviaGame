@@ -490,6 +490,7 @@ private static void loadObjects() {
     try (FileInputStream fi = new FileInputStream(DOOR_FILE)) {
         ObjectInputStream ois = new ObjectInputStream(fi);
         myDoor2 = (Door) ois.readObject();
+        System.out.println("Door object deserialized successfully.");
     } catch (IOException | ClassNotFoundException e) {
         e.printStackTrace();
     }
@@ -501,6 +502,7 @@ private static void loadObjects() {
         ObjectInputStream ois = new ObjectInputStream(fi);
         lastRow = ois.readInt();
         lastCol = ois.readInt();
+        System.out.println("Character position deserialized successfully.");
     } catch (IOException e){
         e.printStackTrace();
     }
@@ -512,20 +514,33 @@ private static void loadObjects() {
     try (FileInputStream fi = new FileInputStream(ROOM_FILE)) {
         ObjectInputStream ois = new ObjectInputStream(fi);
         myRoom2 = (Room[][]) ois.readObject();
+        System.out.println("Room object deserialized successfully.");
+        if (myRoom2 == null) {
+            System.out.println("myRoom2 is null after deserialization.");
+        } else {
+            System.out.println("myRoom2 length: " + myRoom2.length);
+            if (myRoom2.length > 0) {
+                System.out.println("myRoom2[0] length: " + myRoom2[0].length);
+            }
+        }
     } catch (IOException | ClassNotFoundException e) {
         e.printStackTrace();
+    }
+    if (myRoom2 == null || myRoom2.length == 0 || myRoom2[0].length == 0) {
+        throw new NullPointerException("myRoom2 is null or empty after deserialization.");
     }
 
     // load Maze object
     try (FileInputStream fi = new FileInputStream(MAZE_FILE)) {
         ObjectInputStream ois = new ObjectInputStream(fi);
             myMazePanel = (MazePanel) ois.readObject();
+        System.out.println("MazePanel object deserialized successfully.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-    if (myRoom2 == null) {
-        throw new NullPointerException("myRoom2 is null after deserialization.");
-    }
+//    if (myRoom2 == null) {
+//        throw new NullPointerException("myRoom2 is null after deserialization.");
+//    }
 
 
     myMazePanel.setRoom(myRoom2);

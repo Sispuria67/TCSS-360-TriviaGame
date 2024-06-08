@@ -19,7 +19,7 @@ public class Room implements Serializable{
 
     private boolean hasPotion;
 
-    private final TriviaModel myModel;
+    private transient final TriviaModel myModel;
 
 
 
